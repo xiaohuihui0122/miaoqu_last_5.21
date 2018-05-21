@@ -1,0 +1,238 @@
+.game_over{
+  overflow: hidden;
+  position:fixed;
+  width:100%;
+  height:100%;
+}
+.darkbackground{
+     position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     overflow: hidden;
+     z-index:1;
+}
+.mirror{
+    position: absolute;
+     top:10.2%;
+     left:1.9%;
+     width:96.3%;
+     height:66.4%;
+     overflow: hidden;
+     z-index:2;
+}
+.box{
+    position: absolute;
+     top:10.2%;
+     left:1.9%;
+     width:96.3%;
+     height:66.4%;
+     overflow: hidden;
+     z-index:3;
+    animation:gradual_show 2s linear 1s;
+}
+@keyframes gradual_show{
+    0% {
+       opacity:0
+    } 
+    100% {
+        opacity:1
+    }
+  }
+.star{
+    position: absolute;
+     top:20.5%;
+     left:14.4%;
+     width:70.9%;
+     height:26.64%;
+     overflow: hidden;
+     z-index:3;
+
+     /* 猫和猫爪子index：2 */
+}
+.clock{
+    position: absolute;
+     top:65%;
+     left:17.2%;
+     width:28.8%;
+     height:9.9%;
+     overflow: hidden;
+     z-index:3;
+}
+.coin{
+   position: absolute;
+     top:66.6%;
+     left:53.7%;
+    width:27.15%;
+     height:7.9%;
+     overflow: hidden;
+     z-index:3;
+}
+.bill{
+     position: absolute;
+     top:78.8%;
+     left:29.9%;
+     width:12.2%;
+     height:9.48%;
+     overflow: hidden;
+     z-index:3;
+}
+.back{
+     position: absolute;
+      top:78.8%;
+     left:57.6%;
+     width:12.2%;
+     height:9.48%;
+     overflow: hidden;
+     z-index:3;
+}
+.cat_line{
+     position: absolute;
+     top:20%;
+     left:31.5%;
+     width:36.8%;
+     height:43%;
+     overflow: hidden;
+     z-index:2;
+}
+.cat_down{
+    position: absolute;
+    top:18.1%;
+     left:27.5%;
+     width:47%;
+     height:50%; 
+     overflow: hidden;
+     z-index:2;
+}
+ @keyframes cat_down{
+    0% {
+       top:18.1%; left:27.5%;
+    } 
+    100% {
+        top:60.3%;left:27.5%;
+    }
+  } 
+  .benju{
+    position: absolute;
+    top:47%;
+     left:27.5%;
+     width:35%;
+     height:10%; 
+     overflow: hidden;
+     z-index:3;
+     font-size:45rpx;
+     border-bottom:6rpx dotted #F89101;
+     font-weight:600;
+     padding-left:10%;
+     padding-top:3%;
+     color:rgb(116,83,64);
+  }
+  .clock_num{
+     position: absolute;
+      top:67.5%;
+     left:29%;
+    width:16%;
+     height:7.9%;
+     z-index:3;
+     color:#fff;
+  }
+.coin_box{
+  position: absolute;
+     top:66.6%;
+     left:53.7%;
+    width:16%;
+     height:7.9%;
+     overflow: hidden;
+     z-index:3;
+     padding-left:10%;
+     padding-top:1%;
+     color:#fff;
+}
+.close{
+     position: absolute;
+     top:18.1%;
+     left:85.6%;
+    width:14.5%;
+     height:7%;
+     overflow: hidden;
+     z-index:500;
+}
+@keyframes scaling{
+    0% {
+       transform:scale(1,1);
+    } 
+    50% {
+        transform:scale(1.2,1.2);
+    }
+    100% {
+        transform:scale(1,1);
+    }
+  }
+  .yellow_l{
+     position: absolute;
+     top:30.1%;
+     left:15%;
+     width:21.05%;
+     height:17.83%;
+     z-index:3;   
+      animation:bounceIn 2s linear 3s;
+  }
+   .yellow_m{
+     position: absolute;
+     top:20%;
+     left:34%;
+     width:33%;
+     height:27%;
+     z-index:3;   
+      animation:bounceIn 2s linear 3s;
+  }
+   .yellow_r{
+     position: absolute;
+     top:30.1%;
+     left:63%;
+    width:21.05%;
+     height:17.83%;
+     z-index:3;   
+     animation:bounceIn 2s linear 3s;
+  }
+  /* 弹星星的效果 */
+ @keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0, 0, 0);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+} 
+
+

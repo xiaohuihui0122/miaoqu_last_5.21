@@ -1,0 +1,103 @@
+<!--pages/billboard/billboard.wxml-->
+<view class="bill_model">
+  <view class="bg">
+      <image  src="../../imgs/billboard/dark_background.png" class="darkbackground"></image>
+  </view> 
+  <view class="bill">
+      <image src="../../imgs/billboard/wall.png" class="wall"></image>
+       <image src="../../imgs/billboard/paper.png" class="paper"></image>
+      <image src="../../imgs/billboard/close.png" class="close" bindtap="close_bill"></image>
+      <image src="../../imgs/billboard/one.png" class="one"></image>
+      <image src="../../imgs/billboard/two.png" class="two"></image>
+      <image src="../../imgs/billboard/three.png" class="three"></image>
+      <image src="../../imgs/billboard/trangle.png" class="trangle"></image>
+      <image src="../../imgs/billboard/bottom_wood.png" class="bottom_wood"></image> 
+      <button open-type="share" class="share_button">
+              <image src="../../imgs/billboard/back.png" class="share"></image>
+      </button>
+      
+      <!-- 前三名的头像 -->
+      <view class="con-show01">
+        <view class="con-show02">
+           <view  class="con-show03">
+              <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+           </view> 
+        </view>
+      </view>
+      <view class="box2">
+          <text class="top">{{1}}</text>
+      </view> 
+      <view class="score_box2">
+      <text class="bottom">{{11}}</text>
+      </view>
+
+
+
+       <view class="con-show04">
+        <view class="con-show05">
+           <view  class="con-show06">
+           <image class="userinfo-avatar_top" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+           </view> 
+        </view>
+      </view>
+      <view class="box1">
+          <text class="top">{{1}}</text>
+      </view> 
+      <view class="score_box1">
+      <text class="bottom">{{11}}</text>
+      </view>
+
+
+
+       <view class="con-show07">
+        <view class="con-show08">
+           <view  class="con-show09" >
+              <image class="userinfo-avatar" src="../../imgs/billboard/1.jpg" background-size="cover"></image>
+           </view> 
+        </view>
+      </view>
+      <view class="box3">
+          <text class="top">{{userInfo.nickName}}</text>
+      </view> 
+      <view class="score_box3">
+      <text class="bottom">{{111}}</text>
+      </view>
+
+
+       <!-- 列表模板 -->
+       <!-- 待添加滑动事件 -->
+       <!-- <scroll-view class='bill_list'  scroll-y  bindscrolltolower='bindscrolltolower1'> -->
+       <scroll-view class='bill_list'  scroll-y>
+           <view class='list_box' wx:for='{{bill_list}}'> 
+           <!-- 分数 -->
+              <view class='rank'>{{item.rank}}</view>
+              <!-- 头像 -->
+              <view class="show1  list_item">
+                  <view class="show2">
+                        <view  class="show3" > 
+                              <image class="user_img" src="{{item.avatar_url}}" background-size="cover"></image>
+                          </view>
+                  </view>
+              </view> 
+               <view class='user_name'>{{item.user_name}}</view>
+              <view class='user_score'>{{item.score}}</view>
+          </view>
+       </scroll-view>
+
+       <!-- 个人排名底部 -->
+        <view class="person">
+              <text class='rank1'>14</text>
+               <view class="show1">
+                  <view class="show2">
+                        <view  class="show3" > 
+                              <image class="user_img1" src="../../imgs/billboard/1.jpg" background-size="cover"></image>
+                          </view>
+                  </view>
+              </view> 
+               <view class='user_name1'>{{userInfo.nickName}}</view>
+              <view class='user_score1'>123060</view>
+        </view>
+
+
+  </view>
+</view>

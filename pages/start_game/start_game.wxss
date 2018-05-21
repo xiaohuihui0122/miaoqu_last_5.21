@@ -1,0 +1,448 @@
+/* 闪屏的页面样式 */
+ .splash_box{
+  overflow: hidden;
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:1000;
+ }
+ .white_background{
+     position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     overflow: hidden;
+     z-index:1000;
+     background-color:#fff;
+ }
+
+/* 时间结束后闪屏的变化 */
+.splash_change {
+    left:-100%;
+    transition: left .2s linear;
+}
+/* 闪屏的三条鱼的样式 */
+.fly_fish1{
+   position: absolute;
+     width:30%;
+     height:10%;
+     z-index:1001;
+     animation:l_to_r1  2s linear infinite;
+}
+@keyframes l_to_r1 {
+  0% {
+     top:20%;left:0;
+  }
+  100% {
+    top:20%;left:100%;
+  }
+}
+  .fly_fish2{
+   position: absolute;
+     width:25%;
+     height:9%;
+     top:30%;
+      left:-200rpx;
+     z-index:1001;
+     animation:l_to_r2  1.5s linear .7s;
+}
+@keyframes l_to_r2{
+  0% {
+     top:30%;left:-10%;
+  }
+  100% {
+    top:30%;left:100%;
+  }
+}  
+ .fly_fish3{
+   position: absolute;
+     width:20%;
+     height:8%;
+     z-index:1001;
+      top:13%;
+      left:-10rpx;
+     animation:l_to_r3  2s linear 0.5s;
+}
+@keyframes l_to_r3 {
+  0% {
+     top:13%;left:0;
+  }
+  100% {
+    top:13%;left:100%;
+  }
+} 
+.splash_logo{
+    position: absolute;
+     top:10.6%;
+     left:15.7%;
+     width:68.8%;
+     height:32.5%;
+      z-index:2000; 
+}
+.splash_cat{
+  position: absolute;
+     top:45%;
+     left:8%;
+     width:100%;
+     height:60%;
+     z-index:2000;
+}
+
+
+
+
+
+
+.container{
+  overflow: hidden;
+  position:fixed;
+  width:100%;
+  height:100%;
+}
+.back{
+    position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     overflow: hidden;
+     z-index:1;
+}
+.logo{
+    position: absolute;
+     top:10.6%;
+     left:15.7%;
+     width:68.8%;
+     height:32.5%;
+      z-index:1; 
+}
+.start_game{
+    position: absolute;
+     top:50.2%;
+     left:14.1%;
+     width:71.73%;
+     height:10.9%;
+     z-index:20;
+}
+.trumpet{
+    position: absolute;
+     top:90.7%;
+     left:84.5%;
+     width:12.8%;
+     height:7.2%;
+     z-index:2;
+}
+.notice{
+     position: absolute;
+     top:90.7%;
+     left:2.7%;
+     width:12.8%;
+     height:7.29%;
+     z-index:2;
+}
+.cat{
+    position: absolute;
+     top:47.2%;
+     left:0;
+     width:150%;
+     height:45.5%;
+     z-index:1;
+}
+/* 慢慢显示的动画 */
+  @keyframes gradual_show{
+    0% {
+       opacity:0
+    } 
+    100% {
+        opacity:1
+    }
+  }
+  /* 晃动的动画 */
+  @keyframes tada {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  10%,
+  20% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+  }
+
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+  }
+
+  40%,
+  60%,
+  80% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+/* 喇叭的按下去的动画 */
+@keyframes press_down {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  100% {
+    transform: scale3d(0.7, 0.7, 0.7);
+  }
+}
+/* 喵趣掉落的动画 */
+@keyframes bounceInDown {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.alert_trump{
+    position: absolute;
+     top:31.3%;
+     left:1.9%;
+     width:96.3%;
+     height:36.4%;
+     z-index:20;
+}
+.alert_notice{
+    position: absolute;
+     top:31.5%;
+     left:1.9%;
+     width:96.3%;
+     height:43.8%;
+     z-index:20;
+}
+.close_notice{
+    position: absolute;
+     top:40%;
+     left:85.6%;
+     width:11.7%;
+     height:5.8%;
+     z-index:20;
+}
+.close_trump{
+    position: absolute;
+     top:40%;
+     left:85.6%;
+     width:11.7%;
+     height:5.8%;
+     z-index:23;
+}
+.intro{
+    position: absolute;
+     top:45%;
+     left:21.1%;
+     width:60%;
+     height:56.8%;
+     z-index:20;
+     font-size:36rpx;
+     color:rgb(78,38,35);
+     font-weight:bold;
+}
+/* loading页面的样式 */
+.loading_box{
+    position: absolute;
+     top:32.2%;
+     left:2.4%;
+     width:94.9%;
+     height:23.5%;
+     z-index:14;
+}
+.loading_img{
+  position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     z-index:20;
+}
+.loading_text{
+  position: absolute;
+     top:0.1%;
+     left:31%;
+     width:36%;
+     height:6.3%;
+     z-index:20;
+     font-size:60rpx;
+     color:rgb(255,255,255);
+}
+.progress{
+  position: absolute;
+     top:70.6%;
+     left:40.6%;
+     width:69.4%;
+     height:53.8%;
+     z-index:20;
+     font-size:55rpx;
+     color:rgb(255,255,255);
+}
+.loading_pro{
+     position: absolute;
+     top:40%;
+     left:11.7%;
+     width:76%;
+     height:5%;
+     z-index:20;
+}
+/* 音乐设置 */
+ .music_box{
+    position: absolute;
+     top:31.3%;
+     left:1.9%;
+     width:96.3%;
+     height:36.4%;
+     z-index:20;
+     border:1px solid red；
+} 
+.yinxiao_text{
+     position: absolute;
+     top:48.3%;
+     left:24.5%;
+     z-index:20;
+     font-size:40rpx;
+     color:rgb(78,38,35);
+     font-weight:600;
+}
+.yinyue_text{
+    position: absolute;
+     top:48.3%;
+     left:65.3%;
+     z-index:20;
+     font-size:40rpx;
+     color:rgb(78,38,35);
+     font-weight:600;
+}
+.yinxiao{
+    position: absolute;
+     top:59.3%;
+     left:12.5%;
+     width:32.13%;
+     height:15.64%;
+     z-index:20;
+     font-size:40rpx;
+}
+ .yinxiao_brown{
+    position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     z-index:20;
+     font-size:40rpx;
+ }
+ .on1{
+    position: absolute;
+     top:10%;
+     left:44.8%;
+     width:50.9%;
+     height:78.9%;
+     z-index:20;
+     font-size:40rpx;
+ }
+ .off1{
+    position: absolute;
+     top:10%;
+    left:4%;
+     width:50.9%;
+     height:78.9%;
+     z-index:20;
+     font-size:40rpx;
+ }
+ .yinyue{
+    position: absolute;
+     top:59.3%;
+     left:54.8%;
+     width:32.13%;
+     height:15.64%;
+     z-index:20;
+     font-size:40rpx;
+ }
+  .yinyue_brown{
+   position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     z-index:20;
+     font-size:40rpx;
+ } 
+ .on2{
+    position: absolute;
+     top:10%;
+     left:44.8%;
+     width:50.9%;
+     height:78.9%;
+     z-index:20;
+     font-size:40rpx;
+
+ }
+ .off2{
+     position: absolute;
+     top:10%;
+     left:4%;
+     width:50.9%;
+     height:78.9%;
+     z-index:20;
+     font-size:40rpx;
+ }
+ /* 首页的叶子 */
+ .leave{
+     position: absolute;
+     top:50%;
+     left:35%;
+     width:50%;
+     height:50%;
+     z-index:1;
+ }
+.getuserinfo{
+      position: absolute;
+     top:68%;
+     left:50%;
+      color:#fff !important;
+     z-index:20;
+      padding:12px 18px !important;
+      border:1px solid #fff !important;
+      border-radius: 5px;
+      text-align: center;
+      transform: translateX(-50%);
+      line-height: 1;
+}

@@ -1,0 +1,69 @@
+     <!-- 闪屏加载的页面  -->
+      <view class='splash_box  {{index_page?" ":"splash_change"}}'>
+           <view class="white_background"></view>
+          <!-- <image src="../../imgs/start/logo13.png" class="splash_logo"></image>   -->
+
+          <image src = "../../imgs/gif/fish.gif" class="fly_fish1"  wx:if="{{splash_fish}}"></image>
+          <image src = "../../imgs/gif/fish.gif" class="fly_fish2"  wx:if="{{splash_fish}}"></image>
+          <image src = "../../imgs/gif/fish.gif" class="fly_fish3"  wx:if="{{splash_fish}}"></image>
+          <image src = "../../imgs/gif/splash_cat.gif" class="splash_cat" wx:if="{{splash_cat_show}}"></image>
+     </view>     
+<view class="container">
+      <!-- 页面的背景 -->
+       <image src="{{is_dark == true?'../../imgs/start/back.png' : '../../imgs/start/dark.png' }}"  style="z-index:{{is_dark == true? 1 : 19}}" class="back"></image> 
+       <!-- logo -->
+        <image src="../../imgs/start/logo13.png" class="logo"  wx:if="{{logo_show}}"  style="animation:bounceInDown  3s linear"></image> 
+      <!-- 开始游戏 -->
+       <image src="../../imgs/start/start_game.png" class="start_game"  wx:if="{{!is_show}}" style="animation:{{animate1.style}} {{animate1.time}} linear {{animate1.freq}}"  bindtap="go_index"></image>
+       <button plain  wx:if="{{getuserinfo&&!is_show}}" class="getuserinfo" open-type="getUserInfo" bindgetuserinfo='bindGetUserInfo'>头像授权</button>
+       
+      <!-- 喇叭 -->
+      <image src="../../imgs/start/trumpet.png" class="trumpet" wx:if="{{!is_show}}" style="animation:{{is_press_trump==true?'press_down 0.5s linear' : ' ' }}"
+      bindtap="trump"></image>
+      <!-- 游戏须知 -->
+      <image src="../../imgs/start/notice.png" class="notice" wx:if="{{!is_show}}
+    style="animation:{{is_press_notice==true?'press_down 0.5s linear' : ' ' }}"
+       bindtap="notice"></image>
+       <!-- 猫 -->
+       <image src="../../imgs/start/cat.gif" class="cat"  wx:if="{{cat_show}}"></image> 
+      <!-- 叶子 -->
+      <image src="../../imgs/gif/leave.gif" class="leave"  wx:if="{{leave_show}}"></image> 
+
+      <!-- 页面上的游戏须知显示 -->
+      <image wx:if="{{start_notice}}" src="../../imgs/start/game_rule.png" class="alert_notice"></image>
+            <image  wx:if="{{start_notice}}" src="../../imgs/billboard/close.png" class="close_notice" bindtap="close_notice"></image>
+      <!-- 喇叭显示 -->
+      <image wx:if="{{start_trump}}" src="../../imgs/start/set_music.png" class="alert_trump"></image>
+            <image wx:if="{{start_trump}}"  src="../../imgs/billboard/close.png" class="close_trump" bindtap="close_trump"></image>
+            <!-- 游戏说明的显示 -->
+            <text wx:if="{{start_notice}}" class="intro">点击小溪中蹦出来的鱼获取金币，金币越高则排名越高。切记，只能抓小鱼，boss碰不得，否则game over !</text>
+            <!-- 音乐的view -->
+              <view class="music_box" wx:if="{{start_trump}}">
+                <text class="yinxiao_text">音效</text>  
+                <!-- 音效框 -->
+                 <view class="yinxiao" bindtap="yx_change">
+                     <image src="../../imgs/start/brown.png" class="yinxiao_brown"></image>
+                    <image wx:if="{{yx_control}}"  src="../../imgs/start/on.png" class="on1"></image> 
+                    <image wx:else src="../../imgs/start/off.png" class="off1"></image>
+                </view>
+
+                  <text class="yinyue_text">音乐</text>  
+                 <!-- 音乐框 -->
+                 <view class="yinyue" bindtap="yy_change">
+                     <image src="../../imgs/start/brown.png" class="yinyue_brown"></image>
+                     <image wx:if="{{yy_control}}" src="../../imgs/start/on.png" class="on2"></image>
+                    <image wx:else src="../../imgs/start/off.png" class="off2"></image> 
+                </view>
+             </view>  
+
+
+            <!-- 页面上的Loading页面的显示 -->
+              <view wx:if="{{is_loading}}"  class="loading_box"> -->
+                   <image src="../../imgs/start/loading.png" class="loading_img"></image>
+                   <text class="loading" class="loading_text">LOADING</text>
+                  <text class="progress">{{loading_progress}}</text>
+                   <text class="progress">{{pro_text}}%</text>
+            </view>
+            <!-- 加载样式条 -->
+            <image  wx:if="{{is_loading}}" src="../../imgs/start/progress.png"  class="loading_pro" style="width:{{loading_width}}%"></image>
+</view>

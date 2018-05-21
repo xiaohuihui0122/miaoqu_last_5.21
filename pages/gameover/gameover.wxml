@@ -1,0 +1,35 @@
+<view class="game_over">
+  <view class="bg">
+      <image  src="../../imgs/over/dark.png" class="darkbackground"></image>
+  </view>
+   <image  src="../../imgs/over/mirror.png" class="mirror"></image>
+    <image  src="../../imgs/over/close.png" class="close" bindtap="go_startgame"></image> 
+   <image  src="../../imgs/over/cat_line.png" class="cat_line"></image>
+    <image  src="../../imgs/over/cat_down.png" class="cat_down" 
+   style = "animation:{{slip_cat ?  'cat_down 1s linear' : ' ' }};top:{{slip_cat? ' ' : '60.3%'}}" ></image> 
+
+
+  <!-- 内部的内容 -->
+    <view class="box" style="opacity:{{opacity_num}}">
+           <image  src="../../imgs/over/star.png" class="star"></image>
+           <image  src="../../imgs/over/clock.png" class="clock"></image>
+          <image  src="../../imgs/over/coin.png" class="coin"></image>
+          <image  src="../../imgs/over/bill.png" class="bill" bindtap="go_billboard"></image>
+          <image  src="../../imgs/over/back.png" class="back" bindtap="go_startgame"></image>
+          <view class="benju">本局情况</view>
+
+
+             <!-- 时间 -->
+          <text class="clock_num">{{m}}:{{s}}</text>
+
+              <!-- 金币数量 -->
+          <view class="coin_box">
+              <text class="coin_num">{{coin}}</text>
+          </view>
+             <!-- 黄色星星 需要做判断-->
+           <image  src="../../imgs/over/yellow.png" class="yellow_l" style = "opacity:{{star_opacity}}"></image>
+           <image  src="../../imgs/over/yellow.png" class="yellow_m" style = "opacity:{{star_opacity}}"></image>
+           <image  src="../../imgs/over/yellow.png" class="yellow_r" style = "opacity:{{star_opacity}}"></image> 
+
+    </view>
+</view>

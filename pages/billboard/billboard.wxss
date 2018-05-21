@@ -1,0 +1,450 @@
+/* pages/billboard/billboard.wxss */
+.bill_model{
+  overflow: hidden;
+  position:fixed;
+  width:100%;
+  height:100%;
+}
+.bg{
+     position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     overflow: hidden;
+     z-index:1;
+}
+.bill{
+     position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     overflow: hidden;
+     z-index:10;
+}
+.darkbackground{
+    position: absolute;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     overflow: hidden;
+     z-index:2;
+}
+.wall{
+     position: absolute;
+     width:96.3%;
+     height:77.5%;
+     top:9.9%;
+     left:1.85%;
+     overflow: hidden;
+     z-index:11;
+}
+.paper{
+    position: absolute;
+     width:82.9%;
+     height:67.67%;
+     top:18.3%;
+     left:8.52%;
+     z-index:12;
+}
+.three{
+     position: absolute;
+     width:5.3%;
+     height:3%;
+     top:30.44%;
+      left:63.2%;
+     z-index:13;
+}
+.one{
+    position: absolute;
+     width:5.3%;
+     height:3%;
+     top:30.43%;
+     left:40.53%;
+     z-index:13;
+}
+.two{
+    position: absolute;
+    width:5.3%;
+     height:3%;
+     top:30.44%;
+     left:19.73%;
+     z-index:13;
+}
+.close{
+    position: absolute;
+     width:11.7%;
+     height:5.85%;
+     top:17.69%;
+     left:85.59%;
+     z-index:13;
+}
+@keyframes scaling{
+    0% {
+       transform:scale(1,1);
+    } 
+    50% {
+        transform:scale(1.2,1.2);
+    }
+    100% {
+        transform:scale(1,1);
+    }
+  }
+  .trangle{
+    position: absolute;
+     width:6.13%;
+     height:3.15%;
+     top:81.41%;
+     left:46.93%;
+     z-index:13;
+  }
+  .bottom_wood{
+     position: absolute;
+     width:91.47%;
+     height:9.15%;
+     top:88.9%;
+     left:5.87%;
+     z-index:13;
+  } 
+
+  /* 六角形图片的样式 */
+  /* 左边 */
+.con-show01{
+    width:12.53%;
+     height:7.8%;
+    overflow: hidden;
+    transform:rotate(120deg);
+    position:absolute;
+    z-index:12;
+    left:22.13%;
+    top:25.34%;
+  }  
+.con-show02{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform:rotate(-60deg);
+  }  
+.con-show03{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform:rotate(-60deg);
+  position: relative;
+  background: pink;
+  } 
+
+ .box2{
+    position:absolute;
+    left:22.67%;
+    top:33.43%;
+    height:3%;
+    width:11.2%;
+    overflow:hidden;
+    z-index:14;
+   color:rgb(78,38, 35);
+   text-align:center;
+    font-size:28rpx;
+ }
+.score_box2{
+  position:absolute;
+    left:22.67%;
+    top:36.13%;
+    height:2.55%;
+    width:11.2%;
+    z-index:14;
+   color:rgb(8,191,118);
+   text-align:center;
+    font-size:25rpx;
+}
+
+
+
+
+
+
+
+
+
+  /* 中间*/
+.con-show04{
+    width:14.67%;
+     height:9.15%;
+    overflow: hidden;
+    transform:rotate(120deg);
+    position:absolute;
+    z-index:12;
+    left:42.67%;
+    top:23.99%;
+  }  
+.con-show05{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform:rotate(-60deg);
+  }  
+.con-show06{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform:rotate(-60deg);
+  position: relative;
+  background: pink;
+  } 
+   .box1{
+    position:absolute;
+    left:42.67%;
+    top:33.43%;
+    height:3%;
+    width:14.67%;
+    overflow:hidden;
+    z-index:14;
+   color:rgb(78,38, 35);
+   text-align:center;
+    font-size:28rpx;
+ }
+  .score_box1{
+  position:absolute;
+   left:42.67%;
+    top:36.13%;
+    height:2.55%;
+    width:14.67%;
+    z-index:14;
+   color:rgb(8,191,118);
+   text-align:center;
+    font-size:25rpx;
+}
+
+
+
+
+
+
+  /* 右边 */
+  .con-show07{
+    width:12.53%;
+     height:7.8%;
+    overflow: hidden;
+    transform:rotate(120deg);
+    position:absolute;
+    z-index:12;
+    top:25.34%;
+    left:65.33%;
+  }  
+.con-show08{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform:rotate(-60deg);
+  }  
+.con-show09{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform:rotate(-60deg);
+  position: relative;
+  background: pink;
+  } 
+   .box3{
+    position:absolute;
+    left:65.33%;
+    top:33.43%;
+    height:3%;
+    width:12.53%;
+    overflow:hidden;
+    z-index:14;
+   color:rgb(78,38, 35);
+   text-align:center;
+    font-size:28rpx;
+ }
+.score_box3{
+  position:absolute;
+  left:65.33%;
+    top:36.13%;
+    height:2.55%;
+   width:12.53%;
+    z-index:14;
+   color:rgb(8,191,118);
+   text-align:center;
+    font-size:25rpx;
+}
+
+  .top{
+    margin:auto;
+    text-align:center;
+  } 
+  .bottom{
+    margin:auto;
+    text-align:center;
+  }
+
+
+  .userinfo-avatar {
+  width: 95rpx;
+  height: 120rpx;
+}
+ .userinfo-avatar_top {
+  width: 110rpx;
+  height: 137rpx;
+}
+/* 底部个人的样式 */
+.person{
+   position:absolute;
+  left:18.13%;
+    top:91.2%;
+    height:4.3%;
+   width:59.7%;
+    z-index:14;
+}
+/* 用户头像样式 */
+ .user_img{
+  width: 55rpx;
+  height: 55rpx;
+} 
+.rank{
+    font-size:25rpx;
+    position:absolute;
+    /* top: 50%;
+    transform: translateY(-50%); */
+    color:rgb(116,83,64);
+    margin-top:30rpx;
+}
+/* 昵称 */
+.user_name{
+  width: 150rpx;
+  height: 50rpx;
+   position:absolute;
+    /* top: 50%;
+    transform: translateY(-50%); */
+    font-size:25rpx;
+    margin-left:27%;
+    line-height:50rpx;
+    overflow:hidden;
+    color:rgb(116,83,64);
+    margin-top:30rpx;
+}
+.user_score{
+  width: 100rpx;
+  height: 50rpx;
+   position:absolute;
+     /* top: 50%;
+    transform: translateY(-50%); */
+    font-size:25rpx;
+    margin-left:80%;
+    color:rgb(8,191,118);
+    margin-top:35rpx;
+}
+
+
+
+
+
+/* 个人头像六角形 */
+ .show1{
+    width:52rpx;
+     height:58rpx;
+    overflow: hidden;
+    transform:rotate(120deg);
+    position:absolute;
+    left:12%;
+    z-index:12;
+  }  
+.show2{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform:rotate(-60deg);
+  }  
+.show3{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform:rotate(-60deg);
+  position: relative;
+  background: pink;
+  } 
+  .myself{
+   position:absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left:10%;
+  }
+
+/* 列表的样式 */
+.bill_list{
+  position:absolute;
+  width:59.73%;
+  top:41.08%;
+  left:19.73%;
+  z-index:14;
+  height:40%;
+  overflow:hidden;
+}
+/* 列表单个项的样式 */
+ .list_box{
+   width:100%; 
+  height:100rpx; 
+ border-top:1px dotted #F89101;
+} 
+.list_item{
+  margin-top:20rpx;
+
+}
+
+/* 个人最底部的头像的样式 */
+ .user_img1{
+  width: 55rpx;
+  height: 55rpx;
+} 
+.rank1{
+    font-size:25rpx;
+    position:absolute;
+     top: 50%;
+    transform: translateY(-50%); 
+    color:rgb(116,83,64);
+}
+/* 昵称 */
+.user_name1{
+  width: 150rpx;
+  height: 50rpx;
+   position:absolute;
+     top: 50%;
+    transform: translateY(-50%); 
+    font-size:25rpx;
+    margin-left:27%;
+    line-height:50rpx;
+    overflow:hidden;
+    color:rgb(116,83,64);
+}
+.user_score1{
+  width: 100rpx;
+  height: 50rpx;
+   position:absolute;
+      top: 50%;
+    transform: translateY(-50%); 
+    font-size:25rpx;
+    margin-left:80%;
+    color:rgb(8,191,118);
+     margin-top:10rpx; 
+}
+ .share{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:13;
+} 
+.share_button{
+  position:absolute;
+  top:79.5%;
+  left:84.5%;
+  width:12%;
+  height:7%;
+  border-radius:50%;
+  z-index:13;
+}
+
+
