@@ -86,13 +86,21 @@ Page({
 
   },
   go_billboard() {
-    wx.navigateTo({
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
+    wx.redirectTo({
       url: '../../pages/billboard/billboard'
     })
   },
   go_startgame() {
-    wx.navigateTo({
-      url: '../../pages/start_game/start_game?start=1'
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
+    wx.redirectTo({
+      url: '../../pages/start_game2/start_game2'
     })
   },
 

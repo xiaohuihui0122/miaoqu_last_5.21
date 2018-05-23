@@ -43,8 +43,12 @@ Page({
   },
  
   close_bill(){
-    wx.navigateTo({
-      url: '../../pages/start_game/start_game?start=1'
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
+    wx.redirectTo({
+      url: '../../pages/start_game2/start_game2'
     })
   },
   share_bill(){
@@ -105,6 +109,11 @@ Page({
   onShareAppMessage: function (e) {
     if (e.from === 'button') {
       // 来自页面内转发按钮
+      // 加上按键音效
+      if (app.globalData.effect == true && app.globalData.music == true) {
+        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+        app.AppMusic3.loop = false
+      }
       var text = null;
       var sub = parseInt(Math.random()*3)
       text = this.data.share[sub]

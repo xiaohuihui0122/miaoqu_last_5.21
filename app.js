@@ -54,6 +54,7 @@ App({
             userInfo: null,
             index_page: true,
             music: true,
+            effect:true,
             getuserinfo:true,
             cs_http: 'http://192.168.1.250:8301/',//测试地址
             API_CODE: 'd2c01f59edb4e10583d465bb1667927a',//小程序编码 32位

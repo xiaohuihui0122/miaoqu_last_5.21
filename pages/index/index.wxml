@@ -80,17 +80,17 @@
         <image wx:if="{{isSplash9}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
 
     <!-- 页面上的小鱼 -->
-          <image
+           <image
         wx:for='{{show_sf_list}}' 
         src='../../imgs/gif/smallfish{{item.sf_category}}.gif' 
         class='small_fish' 
         bindtap='getFish{{item.sub}}'
         data-sub='{{item.sub}}'
          style="top:{{item.smallfishT}};left:{{item.smallfishL}};animation:{{item.start_animation? item.jump : ' ' }}"  
-         ></image> 
+         ></image>  
 
          <!-- 进鱼篓的小鱼一共有九只 -->
-         <image  wx:if="{{tap_start1}}" class="new_fish" src='../../imgs/gif/smallfish1.gif'    style = "top:{{new_fishT1}};left:{{new_fishL1}};transform:rotate({{rotat1}})"></image>
+         <image  wx:if="{{tap_start1}}" class="new_fish" src='../../imgs/gif/smallfish1.gif'    style = "top:{{new_fishT1}};left:{{new_fishL1}};transform:rotate({{rotat1}});"></image>
 
          <image  wx:if="{{tap_start2}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT2}};left:{{new_fishL2}};transform:rotate({{rotat2}})"></image>
 
@@ -126,13 +126,6 @@
   </view>
   <image src="../../imgs/start/time.png" class="time"></image>
   <text class="time_num">{{m}}:{{s}}</text>
-
-    <!-- 能量条的添加 -->
-     <image wx:if="{{bar_start}}" src = "../../imgs/index/wood.png" class="wood"></image>
-     <view  wx:if="{{bar_start}}"  class="pro_box" >
-            <image src = "../../imgs/index/pro.png" class="pro" style="width:{{bar_width}}rpx"></image>
-     </view>
-    <image  wx:if="{{bar_start}}" src = "../../imgs/index/tran.png" class="tran" style = "left:{{tran_left}}"></image> 
 </view>
 
 

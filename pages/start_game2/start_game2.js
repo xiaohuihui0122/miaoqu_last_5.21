@@ -49,8 +49,6 @@ Page({
       logo_show: false
     })
     if (app.globalData.music == true) {
-      // app.AppMusic1.src = 'http://192.168.1.250:8301/Public/music/mq_music/ksn2.mp3'
-      // 点击开始按钮的音效的控制
       app.AppMusic2.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
     } else {
       app.AppMusic1.pause()
@@ -85,6 +83,10 @@ Page({
     }, 3000)
   },
   trump() {
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
     this.setData({
       start_trump: true
     })
@@ -102,6 +104,10 @@ Page({
     }, 600)
   },
   notice() {
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
     this.setData({
       start_notice: true
     })
@@ -121,6 +127,10 @@ Page({
   },
   // 关闭
   close_trump() {
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
     this.setData({
       start_trump: false
     })
@@ -130,6 +140,10 @@ Page({
     console.log(22222)
   },
   close_notice() {
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
     this.setData({
       start_notice: false
     })
@@ -142,6 +156,7 @@ Page({
     if (app.globalData.music == true) {
       app.AppMusic1.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bg.mp3'
       app.AppMusic2.src = 'http://192.168.1.250:8301/Public/music/mq_music/mj2.mp3'
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/sy1.mp3'
       app.AppMusic2.loop = false
     } else {
       app.AppMusic1.pause()
@@ -158,12 +173,12 @@ Page({
     if (app.globalData.effect == true) {
       app.globalData.effect = false
       this.setData({
-        effect: app.globalData.music
+        effect: app.globalData.effect
       })
     } else {
       app.globalData.effect = true
       this.setData({
-        effect: app.globalData.music
+        effect: app.globalData.effect
       })
     }
   },

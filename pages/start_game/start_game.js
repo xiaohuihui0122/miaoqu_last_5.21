@@ -42,8 +42,8 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面加载
-   */ bindGetUserInfo: function (e) {
+   * 生命周期函数--监听页面加载*/ 
+   bindGetUserInfo: function (e) {
         console.log(e.detail.userInfo);
         if (e.detail.userInfo){
               this.setData({
@@ -315,9 +315,6 @@ Page({
         // app.AppMusic1.src = 'http://192.168.1.250:8301/Public/music/mq_music/ksn2.mp3'
         // 点击开始按钮的音效的控制
         app.AppMusic2.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
-    }else{
-      app.AppMusic1.pause()
-      app.AppMusic2.pause()
     }
     this.setData({
       is_show:true
@@ -348,6 +345,11 @@ Page({
     },3000)
   },
   trump(){
+    // 点击喇叭时候的声音
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
       this.setData({
         start_trump:true
       })
@@ -365,6 +367,11 @@ Page({
       },600)
   },
   notice(){
+    // 点击游戏说明时候的声音
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
       this.setData({
         start_notice:true
       })
@@ -384,6 +391,11 @@ Page({
   },
   // 关闭
   close_trump() {
+    // 关闭按钮时候的声音
+    if (app.globalData.effect == true && app.globalData.music == true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop = false
+    }
     this.setData({
       start_trump: false
     })
@@ -393,6 +405,10 @@ Page({
     console.log(22222)
   },
   close_notice() {
+    if (app.globalData.effect == true && app.globalData.music==true) {
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
+      app.AppMusic3.loop=false
+    }
     this.setData({
       start_notice: false
     })
@@ -404,6 +420,7 @@ Page({
   start_voice() {
     if (app.globalData.music == true) {
       app.AppMusic1.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bg.mp3'
+      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/sy1.mp3'
       app.AppMusic2.src = 'http://192.168.1.250:8301/Public/music/mq_music/mj2.mp3'
       app.AppMusic2.loop = false
       // 猫跑
@@ -414,9 +431,10 @@ Page({
       setTimeout(() => {
         app.AppMusic2.src = 'http://192.168.1.250:8301/Public/music/mq_music/tjcc.mp3'
       }, 6300)
-    } else {
+    }else{
       app.AppMusic1.pause()
       app.AppMusic2.pause()
+      app.AppMusic3.pause()
     }
   },
 // 音效改变的方法
@@ -429,12 +447,12 @@ yx_change(){
     if (app.globalData.effect == true) {
       app.globalData.effect = false
       this.setData({
-        effect: app.globalData.music
+        effect: app.globalData.effect
       })
     } else {
       app.globalData.effect = true
       this.setData({
-        effect: app.globalData.music
+        effect: app.globalData.effect
       })
     }
 },
@@ -444,11 +462,14 @@ yx_change(){
       yy_control: !this.data.yy_control
     })
     // 音乐的开关
+    console.log(app.globalData.music)
     if (app.globalData.music==true){
       app.globalData.music=false
       this.setData({
         music: app.globalData.music
       })
+      console.log(this.data.music)
+      console.log(app.globalData.music)
     }else{
       app.globalData.music = true
       this.setData({
@@ -456,6 +477,7 @@ yx_change(){
       })
     }
     this.start_voice()
+   
  },
  
  

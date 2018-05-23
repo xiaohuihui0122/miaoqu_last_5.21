@@ -128,7 +128,6 @@ Page({
 
   onLoad: function () {
     var me = this
-
     this.fish_time();
 
     // 获得使用的手机屏幕的宽度/高度
@@ -186,14 +185,6 @@ Page({
       })
       // console.log(n)
     }, 1000);
-
-
-
-
-
-
-
-
 
 
 
@@ -256,12 +247,7 @@ Page({
     if (app.globalData.music == true) {
       // 河流声音，鸟叫声音
       app.AppMusic1.src = 'http://192.168.1.250:8301/Public/music/mq_music/hl.mp3'
-      app.AppMusic2.src = 'http://192.168.1.250:8301/Public/music/mq_music/sy1.mp3'
-    } else {
-      app.AppMusic1.pause()
-      app.AppMusic2.pause()
     }
-
   },
   getUserInfo: function (e) {
     app.globalData.userInfo = e.detail.userInfo
@@ -334,7 +320,6 @@ Page({
   // 用户抓到鱼之后的函数
   getFish1(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -391,10 +376,13 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
+    // var new_l = (e.detail.x-50)/this.data.screen_width*100+'%'
+    // var new_t = (e.detail.y-37)/this.data.screen_height*100+'%'
+    // var new_t = e.target.offsetTop * 2 - 170 + 'rpx'
+    // var new_l = e.target.offsetLeft * 2 + 'rpx'
     var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
+    var new_l = e.target.offsetLeft + 50 + 'px'    
+    
     this.setData({
       new_fishT1: new_t
     })
@@ -406,6 +394,7 @@ Page({
       this.setData({
         rotat1: '30deg'
       })
+
     }, 400)
     // 3s之后设置top和left为水桶处
     setTimeout(() => {
@@ -454,22 +443,12 @@ Page({
       // console.log(this.data.coin)
     }, 2500)
 
-
-    // 能量条的显示的开关
-    // this.setData({
-    //   bar_start: true
-    // })
-    // if (this.data.bar_width !== 300) {
-    //   this.data.bar_width = 300
-    // }
-    // 能量条打开
  
 
   },
   //2
   getFish2(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -526,10 +505,8 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
     var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
+    var new_l = e.target.offsetLeft + 60 + 'px'
     this.setData({
       new_fishT2: new_t
     })
@@ -592,7 +569,6 @@ Page({
 
   getFish3(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -649,8 +625,6 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
     var new_t = e.target.offsetTop - 80 + 'px'
     var new_l = e.target.offsetLeft + 50 + 'px'
     this.setData({
@@ -715,7 +689,6 @@ Page({
   },
   getFish4(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -772,8 +745,6 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
     var new_t = e.target.offsetTop - 80 + 'px'
     var new_l = e.target.offsetLeft + 50 + 'px'
     this.setData({
@@ -838,7 +809,6 @@ Page({
   },
   getFish5(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -895,8 +865,6 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
     var new_t = e.target.offsetTop - 80 + 'px'
     var new_l = e.target.offsetLeft + 50 + 'px'
     this.setData({
@@ -961,7 +929,6 @@ Page({
   },
   getFish6(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -1018,8 +985,6 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
     var new_t = e.target.offsetTop - 80 + 'px'
     var new_l = e.target.offsetLeft + 50 + 'px'
     this.setData({
@@ -1085,7 +1050,6 @@ Page({
   },
   getFish7(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -1142,8 +1106,6 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
     var new_t = e.target.offsetTop - 80 + 'px'
     var new_l = e.target.offsetLeft + 50 + 'px'
     this.setData({
@@ -1206,7 +1168,6 @@ Page({
   },
   getFish8(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -1263,8 +1224,6 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
     var new_t = e.target.offsetTop - 80 + 'px'
     var new_l = e.target.offsetLeft + 50 + 'px'
     this.setData({
@@ -1327,7 +1286,6 @@ Page({
   },
   getFish9(e) {
     var me = this
-    console.log("鱼被点击")
     setTimeout(() => {
       // 先控制将水花的图片显示
       me.setData({
@@ -1384,8 +1342,6 @@ Page({
       sf_category: category
     })
     //  保存点击位置，将点击位置处的小鱼激活
-    // var new_t = e.detail.x/this.data.screen_width*100+'%'
-    // var new_l = e.detail.y/this.data.screen_height*100+'%'
     var new_t = e.target.offsetTop - 80 + 'px'
     var new_l = e.target.offsetLeft + 50 + 'px'
     this.setData({
@@ -1444,42 +1400,17 @@ Page({
         this.data.coin += 300
         coin: this.data.coin
       }
-
     }, 2500)
 
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // 页面中开始跳出鱼,3s
   fish_time() {
     this.data.fish_timer = setInterval(() => {
-      console.log("小鱼的定时器启动")
       // 为调试暂时注释掉
-      // this.random_boss();
+      this.random_boss();
       if (this.data.boss_open || this.data.gameover) {
         clearInterval(this.data.fish_timer);
-        console.log("小鱼的定时器关闭")
         return false;
       }
       var me = this
@@ -1545,7 +1476,6 @@ Page({
   },
   random_boss() {
     var this_num = this.data.n;
-    console.log(this.data.n)
     if (this_num >= 30) { this_num = 30 };
     var boss_open_random = Math.floor(Math.random() * (100 - 1 + 1) + 1);
     if (boss_open_random < this_num) {
@@ -1630,11 +1560,6 @@ Page({
         console.log('我点中了');
         // 躲避boss的音效
         //boss出水音效
-        if (app.globalData.music == true) {
-          app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/db.mp3'
-          app.AppMusic3.loop = false;
-        }
-
 
         this.setData({
           boss_number: this.data.boss_number - 1,
@@ -1674,6 +1599,7 @@ Page({
           click_btn: false,
         });
         // 跳转时候将结束的时间传递给gameover页面
+        // console.log("跳入游戏结束页面")
         wx.redirectTo({
           url: '../gameover/gameover?m=' + this.data.m + '&s=' + this.data.s + '&coin_num=' + this.data.coin
         })

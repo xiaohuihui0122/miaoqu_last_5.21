@@ -464,7 +464,7 @@
 }
 .time_num{
      position: absolute;
-     top:17.2%;
+     top:17.4%;
      left:68.3%;
      width:17.3%;
      height:4.95%;
@@ -690,30 +690,7 @@
       opacity: 1;
       transition: opacity 1s  linear;
 }
-/* 能量条的显示 */
- .wood{
-      position: absolute;
-      top: 83.1%;
-      left: 9.3%;
-      width: 42.8%;
-      height: 5.8%;
-      z-index:200;
-} 
-.pro_box{
-    position: absolute;
-      top: 83.5%;
-      left: 10%;
-      width: 40.8%;
-      height: 4.8%;
-      z-index:200;
-}
-.pro{
-  position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      z-index:200;
-}
+
 
 
 

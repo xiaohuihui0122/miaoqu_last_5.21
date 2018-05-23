@@ -50,7 +50,14 @@
 				{
 					"id": -1,
 					"name": "主页面",
-					"pathName": "pages/index/index"
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "游戏开始页面",
+					"pathName": "pages/start_game/start_game",
+					"query": ""
 				}
 			]
 		}
