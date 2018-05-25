@@ -3,6 +3,7 @@ let MD5 = require('../utils/md5.js');
 function sign(signdata, API_CODE){
       var signdata = signdata;
       var info_data = sort(signdata) + 'key=' + API_CODE;
+      console.log(info_data)
       info_data = MD5.hexMD5(info_data).toUpperCase();
       return info_data;
 }

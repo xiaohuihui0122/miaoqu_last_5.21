@@ -1,6 +1,6 @@
 <view class="game_over">
   <view class="bg">
-      <image  src="../../imgs/over/dark.png" class="darkbackground"></image>
+      <image  src="https://maoqb.5izhuan.com/Public/img/mq_gif/dark.png" class="darkbackground"></image>
   </view>
    <image  src="../../imgs/over/mirror.png" class="mirror"></image>
     <image  src="../../imgs/over/close.png" class="close" bindtap="go_startgame"></image> 
@@ -10,7 +10,7 @@
 
 
   <!-- 内部的内容 -->
-    <view class="box" style="opacity:{{opacity_num}}">
+    <view class="box" style="opacity:{{opacity_num}}" wx:if="{{is_box}}">
            <image  src="../../imgs/over/star.png" class="star"></image>
            <image  src="../../imgs/over/clock.png" class="clock"></image>
           <image  src="../../imgs/over/coin.png" class="coin"></image>
@@ -27,9 +27,9 @@
               <text class="coin_num">{{coin}}</text>
           </view>
              <!-- 黄色星星 需要做判断-->
-           <image  src="../../imgs/over/yellow.png" class="yellow_l" style = "opacity:{{star_opacity}}"></image>
-           <image  src="../../imgs/over/yellow.png" class="yellow_m" style = "opacity:{{star_opacity}}"></image>
-           <image  src="../../imgs/over/yellow.png" class="yellow_r" style = "opacity:{{star_opacity}}"></image> 
+           <image wx:if='{{star_num>=1}}'  src="../../imgs/over/yellow.png" class="yellow_l" style = "opacity:{{star_opacity}}"></image>
+           <image wx:if='{{star_num>=3}}' src="../../imgs/over/yellow.png" class="yellow_m" style = "opacity:{{star_opacity}}"></image>
+           <image wx:if='{{star_num>=2}}'  src="../../imgs/over/yellow.png" class="yellow_r" style = "opacity:{{star_opacity}}"></image> 
 
     </view>
 </view>

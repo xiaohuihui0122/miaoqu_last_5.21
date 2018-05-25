@@ -71,7 +71,14 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-  
+  onShareAppMessage: function (e) {
+        var text = null;
+        var sub = parseInt(Math.random() * 5)
+        text = this.data.share[sub]
+        return {
+              title: text,
+              path: '/pages/start_game/start_game?friend_id=' + app.globalData.uid,
+              imageUrl: '../../imgs/share/ace.png',
+        }
   }
 })

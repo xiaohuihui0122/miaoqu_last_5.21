@@ -1,11 +1,11 @@
 <!--pages/billboard/billboard.wxml-->
 <view class="bill_model">
   <view class="bg">
-      <image  src="../../imgs/billboard/dark_background.png" class="darkbackground"></image>
+      <image  src="https://maoqb.5izhuan.com/Public/img/mq_gif/dark_background.png" class="darkbackground"></image>
   </view> 
   <view class="bill">
-      <image src="../../imgs/billboard/wall.png" class="wall"></image>
-       <image src="../../imgs/billboard/paper.png" class="paper"></image>
+      <image src="https://maoqb.5izhuan.com/Public/img/mq_gif/wall.png" class="wall"></image>
+       <image src="https://maoqb.5izhuan.com/Public/img/mq_gif/paper.png" class="paper"></image>
       <image src="../../imgs/billboard/close.png" class="close" bindtap="close_bill"></image>
       <image src="../../imgs/billboard/one.png" class="one"></image>
       <image src="../../imgs/billboard/two.png" class="two"></image>
@@ -20,15 +20,15 @@
       <view class="con-show01">
         <view class="con-show02">
            <view  class="con-show03">
-              <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+              <image class="userinfo-avatar" src="{{list[1].image}}" background-size="cover"></image>
            </view> 
         </view>
       </view>
       <view class="box2">
-          <text class="top">{{1}}</text>
+          <text class="top">{{list[1].nickname}}</text>
       </view> 
       <view class="score_box2">
-      <text class="bottom">{{11}}</text>
+      <text class="bottom">{{list[1].integral}}</text>
       </view>
 
 
@@ -36,15 +36,15 @@
        <view class="con-show04">
         <view class="con-show05">
            <view  class="con-show06">
-           <image class="userinfo-avatar_top" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+           <image class="userinfo-avatar_top" src="{{list[0].image}}" background-size="cover"></image>
            </view> 
         </view>
       </view>
       <view class="box1">
-          <text class="top">{{1}}</text>
+          <text class="top">{{list[0].nickname}}</text>
       </view> 
       <view class="score_box1">
-      <text class="bottom">{{11}}</text>
+      <text class="bottom">{{list[0].integral}}</text>
       </view>
 
 
@@ -52,15 +52,15 @@
        <view class="con-show07">
         <view class="con-show08">
            <view  class="con-show09" >
-              <image class="userinfo-avatar" src="../../imgs/billboard/1.jpg" background-size="cover"></image>
+              <image class="userinfo-avatar" src="{{list[2].image}}" background-size="cover"></image>
            </view> 
         </view>
       </view>
       <view class="box3">
-          <text class="top">{{userInfo.nickName}}</text>
+          <text class="top">{{list[2].nickname}}</text>
       </view> 
       <view class="score_box3">
-      <text class="bottom">{{111}}</text>
+      <text class="bottom">{{list[2].integral}}</text>
       </view>
 
 
@@ -68,34 +68,34 @@
        <!-- 待添加滑动事件 -->
        <!-- <scroll-view class='bill_list'  scroll-y  bindscrolltolower='bindscrolltolower1'> -->
        <scroll-view class='bill_list'  scroll-y>
-           <view class='list_box' wx:for='{{bill_list}}'> 
-           <!-- 分数 -->
-              <view class='rank'>{{item.rank}}</view>
+           <view class='list_box' wx:for='{{user_list}}'> 
+           <!-- 排名 -->
+              <view class='rank'>{{index+4}}</view>
               <!-- 头像 -->
               <view class="show1  list_item">
                   <view class="show2">
                         <view  class="show3" > 
-                              <image class="user_img" src="{{item.avatar_url}}" background-size="cover"></image>
+                              <image class="user_img" src="{{item.image}}" background-size="cover"></image>
                           </view>
                   </view>
               </view> 
-               <view class='user_name'>{{item.user_name}}</view>
-              <view class='user_score'>{{item.score}}</view>
+               <view class='user_name'>{{item.nickname}}</view>
+              <view class='user_score'>{{item.integral}}</view>
           </view>
        </scroll-view>
 
        <!-- 个人排名底部 -->
         <view class="person">
-              <text class='rank1'>14</text>
+              <text class='rank1'>{{myself_data.sort}}</text>
                <view class="show1">
                   <view class="show2">
                         <view  class="show3" > 
-                              <image class="user_img1" src="../../imgs/billboard/1.jpg" background-size="cover"></image>
+                              <image class="user_img1" src="{{userInfo.image}}" background-size="cover"></image>
                           </view>
                   </view>
               </view> 
-               <view class='user_name1'>{{userInfo.nickName}}</view>
-              <view class='user_score1'>123060</view>
+               <view class='user_name1'>{{userInfo.nickname}}</view>
+              <view class='user_score1'>{{myself_data.integral}}</view>
         </view>
 
 

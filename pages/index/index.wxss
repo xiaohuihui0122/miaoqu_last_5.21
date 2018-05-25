@@ -1,512 +1,604 @@
 /**index.wxss**/
+
 /* 背景图片*/
+
 /* 游戏的主页面*/
-.container{
-  overflow: hidden;
-  position:fixed;
-  width:100%;
-  height:100%;
+
+.container {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
 }
+
 /* 水背景图 */
-.waterbg{
-     position: absolute;
-     top:0;
-     left:0;
-     width:100%;
-     height:100%;
-     overflow-x: hidden;
+
+.waterbg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
 }
 
 /* 山水图 */
- .greenbg1{
-     position: absolute;
-     top:0;
-     left:0;
-     width:90%;
-     height:100%;
-     overflow: hidden;
-     z-index:11;
-} 
- .greenbg2{
-     position: absolute;
-     top:0;
-     right:0;
-     width:53%;
-     height:45%;
-     overflow: hidden;
-     z-index:11;
-} 
-.darkbg{
-     position: absolute;
-     top:0;
-     left:0;
-     width:100%;
-     height:100%;
-     overflow: hidden;
-     z-index:12;
+
+.greenbg1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 90%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 11;
+}
+
+.greenbg2 {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 53%;
+      height: 45%;
+      overflow: hidden;
+      z-index: 11;
+}
+
+.darkbg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 12;
 }
 
 /* 阴影要用的动画 */
-  @keyframes firstshadow{
-    0% {
-        top:6%;left:25%;
-        opacity:0.3;
-    } 
-    100% {
-        top:8%;left:23%;
-        opacity:1
-    }
-  }
 
-  @keyframes secondshadow{
-    0% {
-        top:30%;left:36%;
-        transform:rotateZ(20deg);
-        opacity:0.3;
-    }
-    100% {
-        top:32%;left:40%;
-        transform:rotateZ(-10deg);
-        opacity:1;
-    }
-  }
+@keyframes firstshadow {
+      0% {
+            top: 6%;
+            left: 25%;
+            opacity: 0.3;
+      }
 
-  @keyframes thirdshadow{
-    0% {
-        top:75%;left:76%;
-        opacity:0.3;
-        transform:rotateZ(17deg);
-    }
-    100% {
-        top:78%;left:79%;
-        opacity:1;
-        transform:rotateZ(17deg);
-    }
-  }  
+      100% {
+            top: 8%;
+            left: 23%;
+            opacity: 1;
+      }
+}
+
+@keyframes secondshadow {
+      0% {
+            top: 30%;
+            left: 36%;
+            transform: rotateZ(20deg);
+            opacity: 0.3;
+      }
+
+      100% {
+            top: 32%;
+            left: 40%;
+            transform: rotateZ(-10deg);
+            opacity: 1;
+      }
+}
+
+@keyframes thirdshadow {
+      0% {
+            top: 75%;
+            left: 76%;
+            opacity: 0.3;
+            transform: rotateZ(17deg);
+      }
+
+      100% {
+            top: 78%;
+            left: 79%;
+            opacity: 1;
+            transform: rotateZ(17deg);
+      }
+}
 
 /* 阴影 */
-.firstshadow{
-   position:absolute;
-   width:60rpx;
-   height:83rpx;
-   z-index:10;
-   animation: firstshadow 2s linear infinite;
+
+.firstshadow {
+      position: absolute;
+      width: 60rpx;
+      height: 83rpx;
+      z-index: 10;
+      animation: firstshadow 2s linear infinite;
 }
 
-.secondshadow{
-   position:absolute;
-   width:70rpx;
-   height:72rpx;
-   z-index:10;
-   animation: secondshadow 2s linear infinite;
+.secondshadow {
+      position: absolute;
+      width: 70rpx;
+      height: 72rpx;
+      z-index: 10;
+      animation: secondshadow 2s linear infinite;
 }
 
-.thirdshadow{
-   position:absolute;
-   width:114rpx;
-   height:80rpx;
-   z-index:10;
-   animation: thirdshadow 2s linear infinite;
+.thirdshadow {
+      position: absolute;
+      width: 114rpx;
+      height: 80rpx;
+      z-index: 10;
+      animation: thirdshadow 2s linear infinite;
 }
 
 /* 浪花的样式 */
-.topwave{
-   position:absolute;
-   top:19%;
-   left:1%;
-   width:52%;
-   height:11%;
-   z-index:10; 
+
+.topwave {
+      position: absolute;
+      top: 19%;
+      left: 1%;
+      width: 52%;
+      height: 11%;
+      z-index: 10;
 }
 
-.middlewave{
-   position:absolute;
-   top:38%;
-   left:20%;
-   width:69%;
-   height:13%;
-   z-index:10; 
-   transform: rotateZ(2deg);
+.middlewave {
+      position: absolute;
+      top: 38%;
+      left: 20%;
+      width: 69%;
+      height: 13%;
+      z-index: 10;
+      transform: rotateZ(2deg);
 }
 
-.bottomwave{
-   position:absolute;
-   bottom:24%;
-   right:0;
-   width:51%;
-   height:22%;
-   z-index:102;
-   transform: rotateZ(5deg);  
+.bottomwave {
+      position: absolute;
+      bottom: 24%;
+      right: 0;
+      width: 51%;
+      height: 22%;
+      z-index: 102;
+      transform: rotateZ(5deg);
 }
 
-  /* 石头 */
-  .stone{
-   position:absolute;
-   width:500rpx;
-   height:800rpx;
-   z-index:101;
-   top:14%;
-   right:0;
-  }
+/* 石头 */
+
+.stone {
+      position: absolute;
+      width: 500rpx;
+      height: 800rpx;
+      z-index: 101;
+      top: 14%;
+      right: 0;
+}
 
 /* 几种倒影的样式 */
-.firstdaoying{
-   position:absolute;
-   top:17%;
-   left:1%;
-   width:60%;
-   height:18%;
-   z-index:1;
+
+.firstdaoying {
+      position: absolute;
+      top: 17%;
+      left: 1%;
+      width: 60%;
+      height: 18%;
+      z-index: 1;
 }
-.seconddaoying{
-   position:absolute;
-   top:36%;
-   left:12%;
-   width:85%;
-   height:21%;
-   z-index:1;
+
+.seconddaoying {
+      position: absolute;
+      top: 36%;
+      left: 12%;
+      width: 85%;
+      height: 21%;
+      z-index: 1;
 }
-.thirddaoying{
-   position:absolute;
-   bottom:19%;
-   right:0;
-   width:56%;
-   height:32.2%;
-   z-index:1;
+
+.thirddaoying {
+      position: absolute;
+      bottom: 19%;
+      right: 0;
+      width: 56%;
+      height: 32.2%;
+      z-index: 1;
 }
 
 /* 飞溅的水花 */
+
 /* 飞溅的水花的变化样式 */
-@keyframes fly_wave_opacity{
-    0% {
-        opacity:0;
-    }
-    80%{
-        opacity:1;
-    }
-    100% {
-        opacity:1;
-    }
-  } 
+
+@keyframes fly_wave_opacity {
+      0% {
+            opacity: 0;
+      }
+
+      80% {
+            opacity: 1;
+      }
+
+      100% {
+            opacity: 1;
+      }
+}
+
 /* 第一个浪花处 */
- .fly_wave1{
-   position:absolute;
-   width:35%;
-   height:6%;
-   z-index:100;
-   top:19%;
-   left:6%;
-   animation:fly_wave_opacity 2s linear infinite;   
-} 
+
+.fly_wave1 {
+      position: absolute;
+      width: 35%;
+      height: 6%;
+      z-index: 100;
+      top: 19%;
+      left: 6%;
+      animation: fly_wave_opacity 2s linear infinite;
+}
+
 /* 第二个浪花处 */
-  .fly_wave2{
-   position:absolute;
-   width:40%;
-   height:5%;
-   z-index:100;
-   top:38%;
-   left:26%;
-   animation:fly_wave_opacity 2s linear infinite;   
-}  
+
+.fly_wave2 {
+      position: absolute;
+      width: 40%;
+      height: 5%;
+      z-index: 100;
+      top: 38%;
+      left: 26%;
+      animation: fly_wave_opacity 2s linear infinite;
+}
 
 /* 第三个浪花处 */
-  .fly_wave3{
-   position:absolute;
-   width:40%;
-   height:5%;
-   z-index:100;
-   bottom:35%;
-   right:9%;
-   animation:fly_wave_opacity 2s linear infinite;   
-}  
+
+.fly_wave3 {
+      position: absolute;
+      width: 40%;
+      height: 5%;
+      z-index: 100;
+      bottom: 35%;
+      right: 9%;
+      animation: fly_wave_opacity 2s linear infinite;
+}
 
 /* 鱼篓的样式 */
-.fishbox{
-   position:absolute;
-   width:36%;
-   height:20%;
-   z-index:101;
-   top:54%;
-   left:8%;
+
+.fishbox {
+      position: absolute;
+      width: 36%;
+      height: 20%;
+      z-index: 101;
+      top: 54%;
+      left: 8%;
 }
-.fishbox_line{
-   position:absolute;
-   width:202rpx;
-   height:40rpx;
-   z-index:101;
-   top:56%;
-   left:9%;
+
+.fishbox_line {
+      position: absolute;
+      width: 202rpx;
+      height: 40rpx;
+      z-index: 101;
+      top: 56%;
+      left: 9%;
 }
+
 /* 鱼篓里面的水 */
-.water1{
-   position:absolute;
-   width:26.6%;
-   height:2.9%;
-   z-index:105;
-   top:56%;
-   left:9%;
+
+.water1 {
+      position: absolute;
+      width: 26.6%;
+      height: 2.9%;
+      z-index: 105;
+      top: 56%;
+      left: 9%;
 }
-.water2{   
-   position:absolute;
-  width:20%;
-   height:5%;
-   z-index:105;
-   top:52%;
-   left:13%;
+
+.water2 {
+      position: absolute;
+      width: 20%;
+      height: 5%;
+      z-index: 105;
+      top: 52%;
+      left: 13%;
 }
 
 /* 水中阴影小鱼的样式 */
-@keyframes topfish1{
-    0% {
-        top:7%;left:32%;
-    }
-    50% {
-        top:10%;left:26%;
-        transform:rotateZ(-20deg);
-    }
-    100% {
-        top:17%;left:20%;
-        transform:rotateZ(-30deg);
-    }
-  }
 
-.fish1{
-   position:absolute;
-   width:85rpx;
-   height:45rpx;
-   z-index:10;
-   animation:topfish1 6s linear infinite;    
+@keyframes topfish1 {
+      0% {
+            top: 7%;
+            left: 32%;
+      }
+
+      50% {
+            top: 10%;
+            left: 26%;
+            transform: rotateZ(-20deg);
+      }
+
+      100% {
+            top: 17%;
+            left: 20%;
+            transform: rotateZ(-30deg);
+      }
 }
+
+.fish1 {
+      position: absolute;
+      width: 85rpx;
+      height: 45rpx;
+      z-index: 10;
+      animation: topfish1 6s linear infinite;
+}
+
 /* 中间部分鱼的样式 */
-@keyframes middlefish1{
-    0% {
-        top:30.5%;left:22%;
-        transform:rotateZ(20deg);
-    }
-    100% {
-        top:43%;left:30.5%;
-        transform:rotateZ(30deg);
-    }
-  }
 
-.fish2{
-   position:absolute;
-   width:90rpx;
-   height:48rpx;
-   z-index:10;
-   animation:middlefish1 8s linear infinite;    
+@keyframes middlefish1 {
+      0% {
+            top: 30.5%;
+            left: 22%;
+            transform: rotateZ(20deg);
+      }
+
+      100% {
+            top: 43%;
+            left: 30.5%;
+            transform: rotateZ(30deg);
+      }
 }
-@keyframes middlefish2{
-    0% {
-        top:30%;left:29%;
-        transform:rotateZ(20deg);
-    }
-    100% {
-        top:40%;left:40%;
-        transform:rotateZ(10deg);
-    }
-  }
 
-.fish3{
-   position:absolute;
-   width:90rpx;
-   height:48rpx;
-   z-index:10;
-   animation:middlefish2 8s linear 3s infinite;    
+.fish2 {
+      position: absolute;
+      width: 90rpx;
+      height: 48rpx;
+      z-index: 10;
+      animation: middlefish1 8s linear infinite;
 }
-@keyframes mfish1{
-    0% {
-        top:55%;left:40%;
-        transform:rotateZ(20deg);
-    }
-    100% {
-        top:70%;left:57%;
-        transform:rotateZ(10deg);
-    }
-  }
 
-.fish4{
-   position:absolute;
-   width:90rpx;
-   height:48rpx;
-   z-index:10;
-   animation:mfish1 5s linear 1s infinite;    
+@keyframes middlefish2 {
+      0% {
+            top: 30%;
+            left: 29%;
+            transform: rotateZ(20deg);
+      }
+
+      100% {
+            top: 40%;
+            left: 40%;
+            transform: rotateZ(10deg);
+      }
 }
-@keyframes mfish2{
-    0% {
-        top:50%;left:55%;
-    }
-    50% {
-        top:60%;left:85%;
-    }
-    100% {
-        top:65%;left:90%;
-        transform:rotateZ(10deg);
-    }
-  }
 
-.fish5{
-   position:absolute;
-   width:50rpx;
-   height:30rpx;
-   z-index:10;
-   animation:mfish2 5s linear 2s infinite;    
+.fish3 {
+      position: absolute;
+      width: 90rpx;
+      height: 48rpx;
+      z-index: 10;
+      animation: middlefish2 8s linear 3s infinite;
 }
-@keyframes mfish3{
-    0% {
-        top:55%;left:47%;
-        transform:rotateZ(20deg);
-    }
-    100% {
-        top:70%;left:66%;
-        transform:rotateZ(10deg);
-    }
-  }
 
-.fish6{
-   position:absolute;
-   width:90rpx;
-   height:48rpx;
-   z-index:10;
-   animation:mfish3 8s linear 3s infinite;    
+@keyframes mfish1 {
+      0% {
+            top: 55%;
+            left: 40%;
+            transform: rotateZ(20deg);
+      }
+
+      100% {
+            top: 70%;
+            left: 57%;
+            transform: rotateZ(10deg);
+      }
+}
+
+.fish4 {
+      position: absolute;
+      width: 90rpx;
+      height: 48rpx;
+      z-index: 10;
+      animation: mfish1 5s linear 1s infinite;
+}
+
+@keyframes mfish2 {
+      0% {
+            top: 50%;
+            left: 55%;
+      }
+
+      50% {
+            top: 60%;
+            left: 85%;
+      }
+
+      100% {
+            top: 65%;
+            left: 90%;
+            transform: rotateZ(10deg);
+      }
+}
+
+.fish5 {
+      position: absolute;
+      width: 50rpx;
+      height: 30rpx;
+      z-index: 10;
+      animation: mfish2 5s linear 2s infinite;
+}
+
+@keyframes mfish3 {
+      0% {
+            top: 55%;
+            left: 47%;
+            transform: rotateZ(20deg);
+      }
+
+      100% {
+            top: 70%;
+            left: 66%;
+            transform: rotateZ(10deg);
+      }
+}
+
+.fish6 {
+      position: absolute;
+      width: 90rpx;
+      height: 48rpx;
+      z-index: 10;
+      animation: mfish3 8s linear 3s infinite;
 }
 
 /* 8只小鱼跳起的动画样式 */
-@keyframes before_catch{
-   0% {
-        transform:translateY(0rpx) rotate(-50deg);
-    }
-     50%{
-        transform:translate(150rpx,-150rpx) rotate(50deg);
-    } 
-    100% {
-        transform:translate(150rpx,200rpx) rotate(90deg);
-    }
-} 
+
+@keyframes before_catch {
+      0% {
+            transform: translateY(0rpx) rotate(-50deg);
+      }
+
+      50% {
+            transform: translate(150rpx, -150rpx) rotate(50deg);
+      }
+
+      100% {
+            transform: translate(150rpx, 200rpx) rotate(90deg);
+      }
+}
+
 /* 第九只小鱼跳起的样式 */
- @keyframes before_catch2{
-   0% {
-        transform:translateY(0rpx         ) rotate(-50deg);
-    }
-     50%{
-        transform:translateY(-200rpx) rotate(50deg);
-    } 
-    100% {
-        transform:translateY(0rpx) rotate(100deg);
-    }
-}  
+
+@keyframes before_catch2 {
+      0% {
+            transform: translateY(0rpx) rotate(-50deg);
+      }
+
+      50% {
+            transform: translateY(-200rpx) rotate(50deg);
+      }
+
+      100% {
+            transform: translateY(0rpx) rotate(100deg);
+      }
+}
+
 /* 9只小鱼的位置 */
-.small_fish{
-   position:absolute;
-   width:200rpx;
-   height:148rpx;
-   z-index:102;
-   top:300rpx;
-   left:400rpx;
-   /* animation:before_catch 8s linear 3s;   */
+
+.small_fish {
+      position: absolute;
+      width: 200rpx;
+      height: 148rpx;
+      z-index: 102;
+      top: 300rpx;
+      left: 400rpx;
+      /* animation:before_catch 8s linear 3s;   */
 }
+
 /* 圆圈的样式 */
-.circle{
-       position:absolute;
-       width:50px;
-       height:50px;
-       z-index:100;
+
+.circle {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      z-index: 100;
 }
+
 /* 圆圈的变化的样式 */
- @keyframes turn_big{
-   0% {
-        transform:scale(1);
-    }
-    50%{
-        transform:scale(1.3);
-    }
-    100%{
-      transform:scale(1.5);
-      opacity:0;
-    } 
-}  
+
+@keyframes turn_big {
+      0% {
+            transform: scale(1);
+      }
+
+      50% {
+            transform: scale(1.3);
+      }
+
+      100% {
+            transform: scale(1.5);
+            opacity: 0;
+      }
+}
+
 /* 金币 */
-.coin{
-    position: absolute;
-     top:9%;
-     left:45.1%;
-     width:52.27%;
-     height:5.55%;
-     z-index:30;
+
+.coin {
+      position: absolute;
+      top: 9%;
+      left: 45.1%;
+      width: 52.27%;
+      height: 5.55%;
+      z-index: 30;
 }
-.time{
-    position: absolute;
-     top:15.6%;
-     left:63.2%;
-     width:34.13%;
-     height:6.6%;
-     z-index:30;
+
+.time {
+      position: absolute;
+      top: 15.6%;
+      left: 63.2%;
+      width: 34.13%;
+      height: 6.6%;
+      z-index: 30;
 }
- .coin_num{
-     position: absolute;
-     top:15.6%;
-     left:57%;
-     width:34.13%;
-     height:6.6%;
-     z-index:31;
-} 
+
+.coin_num {
+      position: absolute;
+      top: 15.6%;
+      left: 57%;
+      width: 34.13%;
+      height: 6.6%;
+      z-index: 31;
+}
+
 /* 金币样式待改正 */
-.coin_num{
-     position: absolute;
-     top:9.3%;
-     right:80%;
-     width:30%;
-     height:4.95%;
-     z-index:30;
-     font-size:50rpx;
-     color:#FFFFFF;
-     text-align:right;
+
+.coin_num {
+      position: absolute;
+      top: 9.3%;
+      right: 80%;
+      width: 30%;
+      height: 4.95%;
+      z-index: 30;
+      font-size: 50rpx;
+      color: #fff;
+      text-align: right;
 }
-.time_num{
-     position: absolute;
-     top:17.4%;
-     left:68.3%;
-     width:17.3%;
-     height:4.95%;
-     z-index:30;
-     font-size:50rpx;
-     color:#FFFFFF;
+
+.time_num {
+      position: absolute;
+      top: 17.4%;
+      left: 68.3%;
+      width: 17.3%;
+      height: 4.95%;
+      z-index: 30;
+      font-size: 50rpx;
+      color: #fff;
 }
+
 /* .text_coin{
     margin:0 auto;
 } */
 
 /* 模拟方块 */
-.view{
-  position: absolute;
-     top:50%;
-     left:50%;
-     width:17.3%;
-     height:4.95%;
-     z-index:30;
-     border:1px solid red;
+
+.view {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 17.3%;
+      height: 4.95%;
+      z-index: 30;
+      border: 1px solid red;
 }
+
 /* 点击产生新小鱼的样式 */
- .new_fish{
-  position:absolute;
-   width:200rpx;
-   height:148rpx;
-   z-index:103;
-  transition:all .8s linear 0.8s;
-} 
-.bar{
-   position:absolute;
-   height:50rpx;
-   z-index:103;
-   color:red;
-   top:80%;
-   left:10%;
-   border:1px solid red;
+
+.new_fish {
+      position: absolute;
+      width: 200rpx;
+      height: 148rpx;
+      z-index: 103;
+      transition: all 0.8s linear 0.8s;
+}
+
+.bar {
+      position: absolute;
+      height: 50rpx;
+      z-index: 103;
+      color: red;
+      top: 80%;
+      left: 10%;
+      border: 1px solid red;
 }
 
 /* Boss的样式 */
-
-
 
 .bossbg {
       position: fixed;
@@ -518,15 +610,16 @@
       height: 100%;
       z-index: 100;
       animation: bossbg 1.5s linear 3;
+      animation-fill-mode: both;
 }
 
 @keyframes bossbg {
       0% {
-            opacity: 0;
+            opacity: 1;
       }
 
       100% {
-            opacity: 1;
+            opacity: 0;
       }
 }
 
@@ -547,7 +640,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 99;
+      z-index: 101;
 }
 
 .boss_warter_bo {
@@ -576,10 +669,10 @@
 
 .boss-border {
       position: absolute;
-      width: 600rpx;
-      height: 600rpx;
-      top: 100rpx;
-      left: 50%;
+      width: 524rpx;
+      height: 661rpx;
+      top: 14rpx;
+      left: 51%;
       transform: translate(-50%, 0);
       /* border:2px solid red; */
       overflow: hidden;
@@ -587,12 +680,75 @@
 }
 
 .boss {
-      width: 400rpx;
-      height: 400rpx;
+      width: 524rpx;
+      height: 661rpx;
       top: 100%;
       left: 0;
       z-index: 99;
       position: absolute;
+}
+
+.boss_before {
+      width: 524rpx;
+      height: 661rpx;
+      top: 100%;
+      left: 0;
+      z-index: 99;
+      position: absolute;
+}
+
+.boss_before_active {
+      animation: boss_before_active 3s linear;
+      animation-fill-mode: both;
+}
+
+.boss-border {
+}
+
+@keyframes boss_before_active {
+      0% {
+            top: 100%;
+      }
+
+      10% {
+            top: 60%;
+      }
+
+      20% {
+            top: 63%;
+      }
+
+      30% {
+            top: 60%;
+      }
+
+      40% {
+            top: 63%;
+      }
+
+      50% {
+            top: 60%;
+      }
+
+      60% {
+            top: 63%;
+      }
+
+      70% {
+            top: 60%;
+      }
+
+      80% {
+            top: 63%;
+      }
+
+      90% {
+            top: 60%;
+      }
+
+      100% {
+            top: 63%;
+      }
 }
 
 .boss_active {
@@ -607,8 +763,8 @@
 
       50%, 100% {
             top: 0;
-            width: 600rpx;
-            height: 600rpx;
+            width: 524rpx;
+            height: 661rpx;
       }
 }
 
@@ -623,7 +779,7 @@
       }
 
       100% {
-            transform: translate(-50%, 50%);
+            transform: translate(-50%, 30%);
       }
 }
 
@@ -655,43 +811,38 @@
 }
 
 .click_box {
-      width: 200rpx;
-      height: 200rpx;
+      width: 189px;
+      height: 93px;
       position: absolute;
       left: 50%;
-      margin-left: -100rpx;
+      margin-left: -94.5px;
       top: 70%;
       z-index: 100;
+   
 }
 
-.self_round {
+.round1 {
+      width: 189px;
+      height: 93px;
       position: absolute;
       top: 0;
       left: 0;
-      width: 180rpx;
-      height: 180rpx;
-      border-radius: 50%;
-      border: 10rpx solid rgba(255, 255, 255, 0.6);
-      z-index: 999;
 }
 
-.pk_round {
+.round2 {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 180rpx;
-      height: 180rpx;
-      border-radius: 50%;
-      border: 10rpx solid rgba(255, 255, 255, 0.4);
-      transform: scale(3);
-      opacity:1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
 }
-.click_btn{
+.round3{
+     position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+     
+}
+.click_btn {
       opacity: 1;
-      transition: opacity 1s  linear;
+      transition: opacity 1s linear;
 }
-
-
-
-
-

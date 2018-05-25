@@ -17,13 +17,11 @@ Page({
     isSplash7: false,
     isSplash8: false,
     isSplash9: false,
-
-
     startInter: false,   // 小鱼原来的动画
     delay_time: {},// 随机小鱼跳出的延迟时间
     //小鱼的位置信息的二维数组
     boss_open: false,//boss开关
-    boss_warter_index: 1,//boss水花
+    boss_warter_index: 7,//boss水花
     boss_warter: false,//水花开关
     boss_jump: false,//boss动画
     animationData: {},//点击动画
@@ -33,17 +31,21 @@ Page({
     gameover: false,//游戏结束可用于关闭所有开关.
     n: 0,//秒数
     lose: 0,// 游戏输了的进入次数
+    boss_before: false,//boss水中的动画
+    round_W: 120,//内圈宽度
+    ok_round_W: 400,//外圈宽度
+    round_Fn: false,//缩圈
     sf_list: [
       {
-        smallfishT: '17%', smallfishL: '17%', sub: 1, sf_category: 1,
+        smallfishT: '17%', smallfishL: '17%', sub: 1, sf_category: 2,
         start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
       },
       {
-        smallfishT: '17%', smallfishL: '1%', sub: 2, sf_category: 2,
+        smallfishT: '17%', smallfishL: '1%', sub: 2, sf_category: 1,
         start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.2s'
       },
       {
-        smallfishT: '17%', smallfishL: '29%', sub: 3, sf_category: 3,
+        smallfishT: '17%', smallfishL: '29%', sub: 3, sf_category: 2,
         start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.1s'
       },
 
@@ -56,7 +58,7 @@ Page({
         start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.9s'
       },
       {
-        smallfishT: '36%', smallfishL: '62%', sub: 6, sf_category: 1,
+        smallfishT: '36%', smallfishL: '62%', sub: 6, sf_category: 3,
         start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.77s'
       },
 
@@ -69,7 +71,7 @@ Page({
         start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.2s'
       },
       {
-        smallfishT: '54%', smallfishL: '74%', sub: 9, sf_category: 1,
+        smallfishT: '54%', smallfishL: '74%', sub: 9, sf_category: 2,
         start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.1s'
       },
     ],
@@ -124,12 +126,20 @@ Page({
     bar_start: false,//能量条的是否显示
     bar_width: 300,//能量条的长度
     fish_timer: {},//小鱼出现的定时器
+    start_time: '',//开始时间
+    end_time: '',
   },
 
   onLoad: function () {
+    // setInterval(()=>{
+    //   console.log("金币的数量"+this.data.coin)
+    // },1000)
+    this.setData({
+      start_time: new Date().getTime()
+    })
+
     var me = this
     this.fish_time();
-
     // 获得使用的手机屏幕的宽度/高度
     wx.getSystemInfo({
       success: function (res) {
@@ -246,7 +256,7 @@ Page({
     // 游戏主页面的声音播放控制
     if (app.globalData.music == true) {
       // 河流声音，鸟叫声音
-      app.AppMusic1.src = 'http://192.168.1.250:8301/Public/music/mq_music/hl.mp3'
+      app.AppMusic1.src = app.globalData.http + 'Public/music/mq_music/hl.mp3'
     }
   },
   getUserInfo: function (e) {
@@ -332,8 +342,8 @@ Page({
         })
       };
       var splash_timer = setInterval(function () {
-        if(splash_water){
-            return
+        if (splash_water) {
+          return
         }
         var splash_water = 1;
         // splash_timer = 1;
@@ -342,7 +352,7 @@ Page({
         })
 
         // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex==12){
+        if (me.data.splashIndex == 12) {
           clearInterval(splash_timer);
           me.setData({
             splashIndex: 1,
@@ -381,8 +391,8 @@ Page({
     // var new_t = e.target.offsetTop * 2 - 170 + 'rpx'
     // var new_l = e.target.offsetLeft * 2 + 'rpx'
     var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'    
-    
+    var new_l = e.target.offsetLeft + 50 + 'px'
+
     this.setData({
       new_fishT1: new_t
     })
@@ -411,7 +421,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -427,23 +437,24 @@ Page({
       })
       // 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
         this.setData({
-          coin: this.data.coin
+          coin: this.data.coin+3
         })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin +2
+            })
       }
       // console.log(this.data.coin)
     }, 2500)
 
- 
+
 
   },
   //2
@@ -534,7 +545,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -550,18 +561,19 @@ Page({
       })
       // 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
-        this.setData({
-          coin: this.data.coin
-        })
+            this.setData({
+                  coin: this.data.coin + 3
+            })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin +1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 2
+            })
       }
       // console.log(this.data.coin)
     }, 2500)
@@ -654,7 +666,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -670,18 +682,19 @@ Page({
       })
       // 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
-        this.setData({
-          coin: this.data.coin
-        })
+            this.setData({
+                  coin: this.data.coin + 3
+            })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 2
+            })
       }
     }, 2500)
 
@@ -774,7 +787,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -788,20 +801,21 @@ Page({
       this.setData({
         tap_start4: false
       })
-      // 根据鱼的种类判断加分
+      /// 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
-        this.setData({
-          coin: this.data.coin
-        })
+            this.setData({
+                  coin: this.data.coin + 3
+            })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin +2
+            })
       }
     }, 2500)
 
@@ -894,7 +908,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -910,18 +924,19 @@ Page({
       })
       // 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
-        this.setData({
-          coin: this.data.coin
-        })
+            this.setData({
+                  coin: this.data.coin + 3
+            })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin +2
+            })
       }
       // console.log(this.data.coin)
     }, 2500)
@@ -1014,7 +1029,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -1030,18 +1045,19 @@ Page({
       })
       // 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
-        this.setData({
-          coin: this.data.coin
-        })
+            this.setData({
+                  coin: this.data.coin + 3
+            })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 1
+            })
       }
 
     }, 2500)
@@ -1135,7 +1151,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -1151,18 +1167,19 @@ Page({
       })
       // 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
-        this.setData({
-          coin: this.data.coin
-        })
+            this.setData({
+                  coin: this.data.coin + 3
+            })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin +1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 2
+            })
       }
     }, 2500)
   },
@@ -1253,7 +1270,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -1269,18 +1286,19 @@ Page({
       })
       // 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
-        this.setData({
-          coin: this.data.coin
-        })
+            this.setData({
+                  coin: this.data.coin + 3
+            })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 2
+            })
       }
     }, 2500)
   },
@@ -1371,7 +1389,7 @@ Page({
     // 设置小鱼入水桶加金币的音效
     if (app.globalData.music == true) {
       setTimeout(() => {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/xycs.mp3'
+        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
         app.AppMusic3.loop = false;
         app.AppMusic3.volume = 1;
       }, 2000)
@@ -1387,18 +1405,19 @@ Page({
       })
       // 根据鱼的种类判断加分
       if (this.data.sf_category == 1) {
-        this.data.coin += 100
-        this.setData({
-          coin: this.data.coin
-        })
+            this.setData({
+                  coin: this.data.coin + 3
+            })
       }
       if (this.data.sf_category == 2) {
-        this.data.coin += 200
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 1
+            })
       }
       if (this.data.sf_category == 3) {
-        this.data.coin += 300
-        coin: this.data.coin
+            this.setData({
+                  coin: this.data.coin + 2
+            })
       }
     }, 2500)
 
@@ -1462,7 +1481,7 @@ Page({
           }, a * 1000)
         })(j)
       }
-    }, 4000)
+    }, 3000)
   },
   onShareAppMessage: function (e) {
     var text = null;
@@ -1470,13 +1489,13 @@ Page({
     text = this.data.share[sub]
     return {
       title: text,
-      path: '/pages/index/index',
+      path: '/pages/start_game/start_game?friend_id=' + app.globalData.uid,
       imageUrl: '../../imgs/share/ace.png'
     }
   },
   random_boss() {
     var this_num = this.data.n;
-    if (this_num >= 30) { this_num = 30 };
+    if (this_num >= 20) { this_num = 20 };
     var boss_open_random = Math.floor(Math.random() * (100 - 1 + 1) + 1);
     if (boss_open_random < this_num) {
       console.log('boss出来了');
@@ -1485,19 +1504,26 @@ Page({
       this.setData({
         show_sf_list: []
       })
-      setTimeout(() => {
-        this.fish_time();
-      }, 200)
+      // setTimeout(() => {
+      //       this.fish_time();
+      // }, 200)
 
       this.setData({
         boss_open: true,      //开启boss模式    //关闭刷鱼的计时器。  //打开红色背景
         boss_warter_bo: true,         //开启大波纹效果。
       });
+      setTimeout(() => {
+        this.setData({
+          boss_before: true,//boss露头。
+          boss_warter_bo: false,//关闭水波纹   
+        });
+      }, 3000);
       // 水花效果
       setTimeout(() => {
         this.setData({
           boss_warter: true,//开启大浪
-          boss_warter_bo: false,//关闭水波纹   
+          boss_jump: true,//出水动画，游戏界面显示
+          boss_before: false,//关闭前期动画
         });
         var warter = setInterval(() => {
           this.setData({
@@ -1506,120 +1532,381 @@ Page({
           if (this.data.boss_warter_index == 12) {
             clearInterval(warter);
             this.setData({
-              boss_warter: false,//关闭大浪
-              boss_warter_index: 1,//初始化大浪
+              boss_warter: false,//开启大浪
+              boss_warter_index: 7,//初始化大浪
             });
             //boss出水音效
 
             if (app.globalData.music == true) {
-              app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/dyls.mp3'
+              app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/dyls.mp3'
               app.AppMusic3.loop = false;
             }
-            this.setData({
-              boss_jump: true,//出水动画，游戏界面显示
-            });
             //开始攻击函数
             setTimeout(() => {
               this.boss_pk();
             }, 2000);
           }
         }, 100)
-      }, 4000);
+      }, 7000);
 
 
     }
   },
   //boss攻击函数
-  boss_pk(this_num) {
-    console.log('进入bosspk函数')
-    this.setData({
-      animationData: {},
-      click_btn: false,
-    })
-    //判断速度
-    var speed_num = this.data.n;
-    console.log(speed_num);
-    var boss_number = this.data.boss_number;
-    var speed = (75 / speed_num);
-
-    var animation = wx.createAnimation({
-      duration: speed * 1000,
-      timingFunction: 'ease-in',
-    });
-    animation.scale(1).step();
-    this.setData({
-      click_btn: true,
-    });
-    setTimeout(() => {
+  boss_pk() {
+    var n = this.data.n;
+    if (this.data.round_W >= 179) {
       this.setData({
-        animationData: animation.export(),
-      })
-    }, 1000)
-    var click_btn = setTimeout(() => {
-      if (this.data.boss_btn) {
-        console.log('我点中了');
-        // 躲避boss的音效
-        //boss出水音效
-
+        click_btn: true,
+        round_W: this.data.round_W,
+      });
+    } else {
+      this.setData({
+        click_btn: true,
+        round_W: this.data.round_W + 2,
+      });
+    }
+    //圆圈缩小
+    this.setData({
+      round_Fn: false,
+    });
+    var round_Fn = setInterval(() => {
+      // console.log(this.data.ok_round_W)
+      if (this.data.round_Fn) {
+        clearInterval(round_Fn);
+      }
+      if (this.data.ok_round_W < this.data.round_W) {
         this.setData({
-          boss_number: this.data.boss_number - 1,
-          boss_btn: false,//重置选择开关
-        });
-        if (this.data.boss_number == 0) {
-          //关闭boss开关，打开随机鱼的方法。
-          this.setData({
-            boss_number: 3,
-            boss_btn: false,//重置选择开关
-            boss_jump: false,
-            boss_open: false,
-            click_btn: false,
-          });
-          //开始计时器
-          this.fish_time();
-          return false;
-        }
-        this.boss_pk();
-      } else {
-        if (this.data.lose == 1) {
-          return
-        }
-        console.log('我输了')
-        this.data.lose = 1;
-        // 关闭小鱼的定时器
-        clearInterval(this.data.fish_timer);
-        // 将页面的总金币和时间传递给gameover页面
-        console.log(this.data.m)
-        console.log(this.data.s)
-        //失败音效（未做）
-        //关闭本页面所有的定时器
-        this.setData({
-          gameover: true,
+          round_Fn: true,
+          boss_number: 3,
           boss_jump: false,
           boss_open: false,
-          click_btn: false,
+          ok_round_W: 400,//初始化最外圈    
         });
-        // 跳转时候将结束的时间传递给gameover页面
-        // console.log("跳入游戏结束页面")
+        this.setData({
+          end_time: new Date().getTime()
+        })
         wx.redirectTo({
-          url: '../gameover/gameover?m=' + this.data.m + '&s=' + this.data.s + '&coin_num=' + this.data.coin
+          url: '../gameover/gameover?m=' + this.data.m + '&s=' + this.data.s + '&coin_num=' + this.data.coin + '&end_time=' + this.data.end_time + '&start_time=' + this.data.start_time
         })
       }
-    }, (speed * 1000) + 1000);
+      this.setData({
+        ok_round_W: this.data.ok_round_W - 3,
+      });
 
+    }, 50);
+  },
+  abc(){
+    console.log('dada')
   },
   click_self() {
-    this.setData({
-      boss_btn: true,
-    });
+    console.log("00000000")
+    if (this.data.ok_round_W >= this.data.round_W && this.data.ok_round_W <= 189) {
+      console.log('我成功了');
+      this.setData({
+        boss_number: this.data.boss_number - 1,
+        ok_round_W: 400,//初始化最外圈    
+      });
+
+    } else {
+      this.setData({
+        round_Fn: true,
+        boss_number: 3,
+        boss_jump: false,
+        boss_open: false,
+        ok_round_W: 400,//初始化最外圈    
+      });
+      this.setData({
+        end_time: new Date().getTime()
+      })
+      wx.redirectTo({
+        url: '../gameover/gameover?m=' + this.data.m + '&s=' + this.data.s + '&coin_num=' + this.data.coin + '&end_time=' + this.data.end_time + '&start_time=' + this.data.start_time
+      })
+    }
+    if (this.data.boss_number == 0) {
+      this.setData({
+        boss_number: 3,
+        boss_jump: false,
+        boss_open: false,
+        round_Fn: true,
+        ok_round_W: 400,//初始化最外圈    
+      });
+      //继续游戏吧
+      this.fish_time();
+    }
   },
   /**
  * 生命周期函数--监听页面隐藏
  */
   onHide: function () {
     clearInterval(this.data.fish_timer);
+    this.setData({
+      hasUserInfo: false,
+      canIUse: wx.canIUse('button.open-type.getUserInfo'),
+      isPeace: true, // 水花的下标变化
+      splashIndex: 1, // 溅水花的样式是否显示
+      isSplash1: false,// 防止定时器重复工作，生成不一样的水花
+      isSplash2: false,
+      isSplash3: false,
+      isSplash4: false,
+      isSplash5: false,
+      isSplash6: false,
+      isSplash7: false,
+      isSplash8: false,
+      isSplash9: false,
+      startInter: false,   // 小鱼原来的动画
+      delay_time: {},// 随机小鱼跳出的延迟时间
+      //小鱼的位置信息的二维数组
+      boss_open: false,//boss开关
+      boss_warter_index: 7,//boss水花
+      boss_warter: false,//水花开关
+      boss_jump: false,//boss动画
+      animationData: {},//点击动画
+      click_btn: false,//boss按钮显示
+      boss_btn: false,//boss下方按钮
+      boss_number: 3,//boss攻击次数
+      gameover: false,//游戏结束可用于关闭所有开关.
+      n: 0,//秒数
+      lose: 0,// 游戏输了的进入次数
+      boss_before: false,//boss水中的动画
+      round_W: 120,//内圈宽度
+      ok_round_W: 400,//外圈宽度
+      round_Fn: false,//缩圈
+      sf_list: [
+        {
+          smallfishT: '17%', smallfishL: '17%', sub: 1, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
+        },
+        {
+          smallfishT: '17%', smallfishL: '1%', sub: 2, sf_category: 1,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.2s'
+        },
+        {
+          smallfishT: '17%', smallfishL: '29%', sub: 3, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.1s'
+        },
+
+        {
+          smallfishT: '39%', smallfishL: '20%', sub: 4, sf_category: 3,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.5s'
+        },
+        {
+          smallfishT: '38%', smallfishL: '42%', sub: 5, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.9s'
+        },
+        {
+          smallfishT: '36%', smallfishL: '62%', sub: 6, sf_category: 3,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.77s'
+        },
+
+        {
+          smallfishT: '62%', smallfishL: '44%', sub: 7, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
+        },
+        {
+          smallfishT: '58%', smallfishL: '64%', sub: 8, sf_category: 3,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.2s'
+        },
+        {
+          smallfishT: '54%', smallfishL: '74%', sub: 9, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.1s'
+        },
+      ],
+      show_sf_list: [],//页面中显示的小鱼
+      // 9个点随机2,3个出现圆圈
+      circle_list: [
+        { cT: '19%', cL: '19%' },
+        { cT: '19%', cL: '5%', },
+        { cT: '19%', cL: '33%' },
+
+        { cT: '40%', cL: '24%' },
+        { cT: '38%', cL: '42%' },
+        { cT: '36%', cL: '62%' },
+
+        { cT: '63%', cL: '53%' },
+        { cT: '58%', cL: '68%' },
+        { cT: '53%', cL: '83%' },
+      ],
+      show_circle_list: [],//页面中的圆圈
+      // start_animation:true,// 小鱼显示原来的动画
+      // go_fishbox:{},//小鱼跳进水娄的动画
+      // is_go_fishbox:false,//是否跳进鱼篓的动画的开关
+      screen_width: {},// 使用的手机屏幕的宽度/高度
+      screen_height: {},
+      m: '00',
+      s: '00',
+      rect_x: 0,//鱼落入的地点
+      rect_y: 0,
+      go_fishbox: {},// 测试小方块的路径
+      share: [
+        ' 喂什么猫粮，一起撸鱼吧......',
+        '这只猫为了抓鱼简直逆天了，快来围观......',
+        '这只猫为了吃鱼竟然进了丛林......',
+        '劳资就是饿死，死外边，也决不自个抓鱼！好多鱼，喵~',
+        '还不把小鱼干交出来，我都看见了~',
+        '来人呐！赶紧给它摁住了，别让跑咯'
+      ],
+      tap_start1: false,//点击1位置处的小鱼是否显示
+      tap_start2: false,
+      tap_start3: false,
+      tap_start4: false,
+      tap_start5: false,
+      tap_start6: false,
+      tap_start7: false,
+      tap_start8: false,
+      tap_start9: false,
+      sf_category: {},//产生的新小鱼的路径
+      new_fishT: {},//新小鱼的top
+      new_fishL: {},
+      coin: 0,//金币的数量
+      rotat: '0deg',  //旋转的角度
+      bar_start: false,//能量条的是否显示
+      bar_width: 300,//能量条的长度
+      fish_timer: {},//小鱼出现的定时器
+      start_time: '',//开始时间
+      end_time: '',
+    })
+    wx.redirectTo({
+      url: '../start_game2/start_game2'
+    })
   },
+  onShareAppMessage: function (e) {
+    var text = null;
+    var sub = parseInt(Math.random() * 5)
+    text = this.data.share[sub]
+    return {
+      title: text,
+      path: '/pages/start_game/start_game?friend_id=' + app.globalData.uid,
+      imageUrl: '../../imgs/share/ace.png',
+    }
+  },
+  // 主页面卸载
+  onUnload: function () {
+    this.setData({
+      hasUserInfo: false,
+      canIUse: wx.canIUse('button.open-type.getUserInfo'),
+      isPeace: true, // 水花的下标变化
+      splashIndex: 1, // 溅水花的样式是否显示
+      isSplash1: false,// 防止定时器重复工作，生成不一样的水花
+      isSplash2: false,
+      isSplash3: false,
+      isSplash4: false,
+      isSplash5: false,
+      isSplash6: false,
+      isSplash7: false,
+      isSplash8: false,
+      isSplash9: false,
 
 
+      startInter: false,   // 小鱼原来的动画
+      delay_time: {},// 随机小鱼跳出的延迟时间
+      //小鱼的位置信息的二维数组
+      boss_open: false,//boss开关
+      boss_warter_index: 1,//boss水花
+      boss_warter: false,//水花开关
+      boss_jump: false,//boss动画
+      animationData: {},//点击动画
+      click_btn: false,//boss按钮显示
+      boss_btn: false,//boss下方按钮
+      boss_number: 3,//boss攻击次数
+      gameover: false,//游戏结束可用于关闭所有开关.
+      n: 0,//秒数
+      lose: 0,// 游戏输了的进入次数
+      sf_list: [
+        {
+          smallfishT: '17%', smallfishL: '17%', sub: 1, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
+        },
+        {
+          smallfishT: '17%', smallfishL: '1%', sub: 2, sf_category: 1,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.2s'
+        },
+        {
+          smallfishT: '17%', smallfishL: '29%', sub: 3, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.1s'
+        },
+
+        {
+          smallfishT: '39%', smallfishL: '20%', sub: 4, sf_category: 3,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.5s'
+        },
+        {
+          smallfishT: '38%', smallfishL: '42%', sub: 5, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.9s'
+        },
+        {
+          smallfishT: '36%', smallfishL: '62%', sub: 6, sf_category: 3,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.77s'
+        },
+
+        {
+          smallfishT: '62%', smallfishL: '44%', sub: 7, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
+        },
+        {
+          smallfishT: '58%', smallfishL: '64%', sub: 8, sf_category: 3,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.2s'
+        },
+        {
+          smallfishT: '54%', smallfishL: '74%', sub: 9, sf_category: 2,
+          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.1s'
+        },
+      ],
+      show_sf_list: [],//页面中显示的小鱼
+      // 9个点随机2,3个出现圆圈
+      circle_list: [
+        { cT: '19%', cL: '19%' },
+        { cT: '19%', cL: '5%', },
+        { cT: '19%', cL: '33%' },
+
+        { cT: '40%', cL: '24%' },
+        { cT: '38%', cL: '42%' },
+        { cT: '36%', cL: '62%' },
+
+        { cT: '63%', cL: '53%' },
+        { cT: '58%', cL: '68%' },
+        { cT: '53%', cL: '83%' },
+      ],
+      show_circle_list: [],//页面中的圆圈
+      // start_animation:true,// 小鱼显示原来的动画
+      // go_fishbox:{},//小鱼跳进水娄的动画
+      // is_go_fishbox:false,//是否跳进鱼篓的动画的开关
+      screen_width: {},// 使用的手机屏幕的宽度/高度
+      screen_height: {},
+      m: '00',
+      s: '00',
+      rect_x: 0,//鱼落入的地点
+      rect_y: 0,
+      go_fishbox: {},// 测试小方块的路径
+      share: [
+        ' 喂什么猫粮，一起撸鱼吧......',
+        '这只猫为了抓鱼简直逆天了，快来围观......',
+        '这只猫为了吃鱼竟然进了丛林......',
+        '劳资就是饿死，死外边，也决不自个抓鱼！好多鱼，喵~',
+        '还不把小鱼干交出来，我都看见了~',
+        '来人呐！赶紧给它摁住了，别让跑咯'
+      ],
+      tap_start1: false,//点击1位置处的小鱼是否显示
+      tap_start2: false,
+      tap_start3: false,
+      tap_start4: false,
+      tap_start5: false,
+      tap_start6: false,
+      tap_start7: false,
+      tap_start8: false,
+      tap_start9: false,
+      sf_category: {},//产生的新小鱼的路径
+      new_fishT: {},//新小鱼的top
+      new_fishL: {},
+      coin: 0,//金币的数量
+      rotat: '0deg',  //旋转的角度
+      bar_start: false,//能量条的是否显示
+      bar_width: 300,//能量条的长度
+      fish_timer: {},//小鱼出现的定时器
+      start_time: '',//开始时间
+      end_time: '',
+    })
+  },
 
 
 

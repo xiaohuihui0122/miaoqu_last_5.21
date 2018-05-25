@@ -43,7 +43,7 @@
   .fly_fish2{
    position: absolute;
      width:25%;
-     height:9%;
+     height:9%; 
      top:30%;
       left:-200rpx;
      z-index:1001;

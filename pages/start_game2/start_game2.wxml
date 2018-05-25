@@ -1,6 +1,7 @@
 <view class="container">
       <!-- 页面的背景 -->
-       <image src="{{is_dark == true?'../../imgs/start/back.png' : '../../imgs/start/dark.png' }}"  style="z-index:{{is_dark == true? 1 : 19}}" class="back"></image> 
+       <image wx:if="{{is_dark == true}}" src="{{bgback}}"  style="z-index:{{is_dark == true? 1 : 19}}" class="back"></image> 
+           <image wx:else  src="{{bgdark}}"  style="z-index:{{is_dark == true? 1 : 19}}" class="back"></image> 
        <!-- logo -->
         <image src="../../imgs/start/logo13.png" class="logo" wx:if="{{logo_show}}"></image> 
       <!-- 开始游戏 -->
@@ -14,10 +15,10 @@
        bindtap="notice"></image>
 
       <!-- 页面上的游戏须知显示 -->
-      <image wx:if="{{start_notice}}" src="../../imgs/start/game_rule.png" class="alert_notice"></image>
+      <image wx:if="{{start_notice}}" src="https://maoqb.5izhuan.com/Public/img/mq_gif/game_rule.png" class="alert_notice"></image>
             <image  wx:if="{{start_notice}}" src="../../imgs/billboard/close.png" class="close_notice" bindtap="close_notice"></image>
       <!-- 喇叭显示 -->
-      <image wx:if="{{start_trump}}" src="../../imgs/start/set_music.png" class="alert_trump"></image>
+      <image wx:if="{{start_trump}}" src="https://maoqb.5izhuan.com/Public/img/mq_gif/set_music.png" class="alert_trump"></image>
             <image wx:if="{{start_trump}}"  src="../../imgs/billboard/close.png" class="close_trump" bindtap="close_trump"></image>
             <!-- 游戏说明的显示 -->
             <text wx:if="{{start_notice}}" class="intro">点击小溪中蹦出来的鱼获取金币，金币越高则排名越高。切记，只能抓小鱼，boss碰不得，否则game over !</text>
@@ -49,5 +50,8 @@
                    <text class="progress">{{pro_text}}%</text>
             </view>
             <!-- 加载样式条 -->
-            <image  wx:if="{{is_loading}}" src="../../imgs/start/progress.png"  class="loading_pro" style="width:{{loading_width}}%"></image>
+          <!-- 加载样式条 -->
+            <view class='loading_pro' wx:if="{{is_loading}}">
+                     <image   src="../../imgs/start/progress.png"   style="width:{{loading_width}}%; height:100%;"></image>
+            </view>
 </view>

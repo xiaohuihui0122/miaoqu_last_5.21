@@ -1,6 +1,7 @@
 // pages/billboard/billboard.js
 const app = getApp()
-
+let MD5 = require('../../utils/md5.js');
+let sign = require('../../utils/sign.js');
 Page({
 
   /**
@@ -32,20 +33,43 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
- 
+     
+      wx.request({
+            url: app.globalData.http + 'index.php?m=Mq&c=Game&a=sort',
+            data: {
+                  uid: app.globalData.uid,
+                  sign: sign.sign({
+                        uid: app.globalData.uid,
+                  }, app.globalData.API_CODE),
+                  API_CHANNEL: app.globalData.API_CHANNEL,
+                  API_SECRET: app.globalData.API_SECRET,
+                  API_ROLE: app.globalData.API_ROLE[1],
+                  API_VER: '1.0',
+                  API_CODE: app.globalData.API_CODE,
+            },
+            success: res => {
+                  console.log(res);
+                  let list = res.data.info.list.splice(0,3);
+                  let user_list = res.data.info.list;
+                  this.setData({
+                        myself_data:res.data.info.user,
+                        user_list,list,
+                  });
+            }
+      })
   
    
   },
  
   close_bill(){
-    if (app.globalData.effect == true && app.globalData.music == true) {
-      app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
-      app.AppMusic3.loop = false
+    if (app.globalData.effect == true) {
+      app.bgm.play()
+    } else {
+      app.bgm.pause()
     }
     wx.redirectTo({
       url: '../../pages/start_game2/start_game2'
@@ -110,16 +134,17 @@ Page({
     if (e.from === 'button') {
       // 来自页面内转发按钮
       // 加上按键音效
-      if (app.globalData.effect == true && app.globalData.music == true) {
-        app.AppMusic3.src = 'http://192.168.1.250:8301/Public/music/mq_music/mq_bt.mp3'
-        app.AppMusic3.loop = false
+      if (app.globalData.effect == true) {
+        app.bgm.play()
+      } else {
+        app.bgm.pause()
       }
       var text = null;
       var sub = parseInt(Math.random()*3)
       text = this.data.share[sub]
       return {
         title: text,
-        path: '/pages/index/index',
+        path: '/pages/start_game/start_game?friend_id=' + app.globalData.uid,
         imageUrl: '../../imgs/share/ace.png',
         success: res => {
           wx.showToast({
@@ -135,7 +160,7 @@ Page({
       text = this.data.share[sub]
       return {
         title: text,
-        path: '/pages/index/index',
+        path: '/pages/start_game/start_game?friend_id=' + app.globalData.uid,
         imageUrl: '../../imgs/share/ace.png'
       }
     }

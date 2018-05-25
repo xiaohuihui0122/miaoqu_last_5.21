@@ -8,13 +8,15 @@
       <image class='boss_th' src='../../imgs/boss_th.png' wx:if='{{boss_warter_bo}}'></image>
       <image wx:if='{{boss_warter}}' src='../../imgs/{{boss_warter_index}}.png' class='boss_warter'></image>
 </view>
-   <view class='boss-border {{boss_jump?"boss_border_active":""}}' wx:if='{{boss_jump}}'>
-             <image src='../../imgs/1.gif' class='boss {{boss_jump?"boss_active":""}}'  ></image>
+   <view class='boss-border {{boss_jump?"boss_border_active":""}}' wx:if='{{boss_before ||boss_jump}}'>
+     <image src='../../imgs/1.gif' class='boss_before {{boss_before?"boss_before_active":""}} {{boss_jump?"boss_active":""}}'  ></image>
+             <!-- <image src='../../imgs/1.jpg' class='boss {{boss_jump?"boss_active":""}}'  ></image> -->
  </view>
-  <!-- wx:if="{{boss_jump}}" -->
-    <view class='click_box' wx:if="{{click_btn}}">
-                  <view class='self_round' bindtap='click_self' ></view>
-                  <view class='pk_round' animation="{{animationData}}"  ></view>
+  <!--  -->
+    <view class='click_box' wx:if="{{boss_jump}}" bindtap='click_self'>
+              <image src='../../imgs/round1.png' class='round1'></image>
+              <image src='../../imgs/round1.png' class='round2' mode='widthFix' style='width:{{round_W}}px' ></image>
+              <image src='../../imgs/comround.png' class='round3' mode='widthFix' style='width:{{ok_round_W}}px'></image>
     </view>
 <!-- boss内容结束 -->
 
@@ -90,24 +92,24 @@
          ></image>  
 
          <!-- 进鱼篓的小鱼一共有九只 -->
-         <image  wx:if="{{tap_start1}}" class="new_fish" src='../../imgs/gif/smallfish1.gif'    style = "top:{{new_fishT1}};left:{{new_fishL1}};transform:rotate({{rotat1}});"></image>
+         <image  wx:if="{{tap_start1}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT1}};left:{{new_fishL1}};transform:rotate({{rotat1}});"></image>
 
-         <image  wx:if="{{tap_start2}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT2}};left:{{new_fishL2}};transform:rotate({{rotat2}})"></image>
+         <image  wx:if="{{tap_start2}}" class="new_fish" src='../../imgs/gif/smallfish1.gif'    style = "top:{{new_fishT2}};left:{{new_fishL2}};transform:rotate({{rotat2}})"></image>
 
-         <image  wx:if="{{tap_start3}}" class="new_fish" src='../../imgs/gif/smallfish3.gif'    style = "top:{{new_fishT3}};left:{{new_fishL3}};transform:rotate({{rotat3}})"></image>
+         <image  wx:if="{{tap_start3}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT3}};left:{{new_fishL3}};transform:rotate({{rotat3}})"></image>
 
          <image  wx:if="{{tap_start4}}" class="new_fish" src='../../imgs/gif/smallfish3.gif'    style = "top:{{new_fishT4}};left:{{new_fishL4}};transform:rotate({{rotat4}})"></image>
 
          <image  wx:if="{{tap_start5}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT5}};left:{{new_fishL5}};transform:rotate({{rotat5}})"></image>
 
-         <image  wx:if="{{tap_start6}}" class="new_fish" src='../../imgs/gif/smallfish1.gif'    style = "top:{{new_fishT6}};left:{{new_fishL6}};transform:rotate({{rotat6}})"></image>
+         <image  wx:if="{{tap_start6}}" class="new_fish" src='../../imgs/gif/smallfish3.gif'    style = "top:{{new_fishT6}};left:{{new_fishL6}};transform:rotate({{rotat6}})"></image>
          
          <image  wx:if="{{tap_start7}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT7}};left:{{new_fishL7}};transform:rotate({{rotat7}})"></image>
 
          <image  wx:if="{{tap_start8}}" class="new_fish" src='../../imgs/gif/smallfish3.gif'    style = "top:{{new_fishT8}};left:{{new_fishL8}};transform:rotate({{rotat8}})"></image>
 
 
-         <image  wx:if="{{tap_start9}}" class="new_fish" src='../../imgs/gif/smallfish1.gif'    style = "top:{{new_fishT9}};left:{{new_fishL9}};transform:rotate({{rotat9}})"></image>
+         <image  wx:if="{{tap_start9}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT9}};left:{{new_fishL9}};transform:rotate({{rotat9}})"></image>
          
         
 
