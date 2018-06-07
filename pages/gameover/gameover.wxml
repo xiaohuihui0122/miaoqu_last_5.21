@@ -20,6 +20,7 @@
 
 
              <!-- 时间 -->
+          <!-- <text class="clock_num">{{view_time}}</text> -->
           <text class="clock_num">{{m}}:{{s}}</text>
 
               <!-- 金币数量 -->

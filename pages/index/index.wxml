@@ -1,133 +1,67 @@
+<view class="container" wx:if="{{!is_gameover}}">
+  <cover-image src='../../imgs/all_kill.png' class='all_kill' bindtap='skill_card' wx:if='{{kill_all_show}}'></cover-image>
+  <image src="../../imgs/game/river.png" class="bg"></image>
+   <image src="../../imgs/game/cha_num.png" class="cha_num"></image> 
 
-  <!--boss开始 boss背景图片 -->
-<image src='../../imgs/boss_bg.png' class='bossbg' wx:if='{{boss_open}}'></image>
-<!-- boss水花 -->
-<view class='boss_box' >
-      <!-- 大波纹 -->
-      <view class='boss_warter_bo'  wx:if='{{boss_warter_bo}}'></view>
-      <image class='boss_th' src='../../imgs/boss_th.png' wx:if='{{boss_warter_bo}}'></image>
-      <image wx:if='{{boss_warter}}' src='../../imgs/{{boss_warter_index}}.png' class='boss_warter'></image>
+  <image wx:for="{{fish_list}}" src="{{item.url}}" class="fish" style="top:{{item.y}}px;left:{{item.currX}}px" data-sub='{{item.sub}}' bindtap="skill_card"></image>
+  <canvas canvas-id="cat_Canvas" class="myCanvas1" disable-scroll bindtouchmove='bindtouchmove' bindtouchend='bindtouchend' bindtouchstart='touchstart'>
+    <!-- 遮挡层，触摸不发生canvas事件 -->
+    <cover-view class="mask"></cover-view>  
+     <cover-view wx:if='{{again}}' class='again' bindtap='again_hide'>
+    <cover-image src='../../imgs/game/tsk.png' class='tsk'></cover-image>
+  </cover-view>
+  </canvas>
+  <view class='num-box'>{{c}}</view>
+  <!-- <view class='coin' style='color:#fff;'>{{coin}}</view> -->
+  <image src='{{all_cz}}' class="all_cz" hidden="{{!kill_all_animate}}"></image>
+  <!-- 金币产生（数组） -->
+  <image wx:for="{{coin_list}}" src='../../imgs/game/coin{{item.score}}.png' data-sub="{{item.sub}}" class="coin1" style="top:{{item.top}}px;left:{{item.left}}px"></image>
 </view>
-   <view class='boss-border {{boss_jump?"boss_border_active":""}}' wx:if='{{boss_before ||boss_jump}}'>
-     <image src='../../imgs/1.gif' class='boss_before {{boss_before?"boss_before_active":""}} {{boss_jump?"boss_active":""}}'  ></image>
-             <!-- <image src='../../imgs/1.jpg' class='boss {{boss_jump?"boss_active":""}}'  ></image> -->
- </view>
-  <!--  -->
-    <view class='click_box' wx:if="{{boss_jump}}" bindtap='click_self'>
-              <image src='../../imgs/round1.png' class='round1'></image>
-              <image src='../../imgs/round1.png' class='round2' mode='widthFix' style='width:{{round_W}}px' ></image>
-              <image src='../../imgs/comround.png' class='round3' mode='widthFix' style='width:{{ok_round_W}}px'></image>
+
+<!-- 大boss的样式-->
+<image wx:if="{{swim_boss}}" src="../../imgs/game/boss1.gif" class="boss" style="top:{{bossT}}px;left:{{bossL}}px" data-sub="boss"></image>
+<image wx:if="{{stand_boss}}" src="../../imgs/game/boss2.gif" class="boss1" style="top:35%;left:6%" data-sub="boss"></image>
+<image wx:if="{{mudra}}" src="../../imgs/game/mudra.gif" class="mudra" style="top:40%;left:23%"></image>
+
+
+
+
+
+
+<!-- gameover页面 -->
+<view class="game_over" wx:if="{{is_gameover}}">
+  <view class="bg">
+      <image  src="https://maoqb.5izhuan.com/Public/img/mq_gif/dark.png" class="darkbackground"></image>
+  </view>
+   <image  src="../../imgs/over/mirror.png" class="mirror"></image>
+    <image  src="../../imgs/over/close.png" class="close" bindtap="go_startgame"></image> 
+   <image  src="../../imgs/over/cat_line.png" class="cat_line"></image>
+    <image  src="../../imgs/over/cat_down.png" class="cat_down" 
+   style = "animation:{{slip_cat ?  'cat_down 1s linear' : ' ' }};top:{{slip_cat? ' ' : '60.3%'}}" ></image> 
+
+
+  <!-- 内部的内容 -->
+    <view class="box" style="opacity:{{opacity_num}}" wx:if="{{is_box}}">
+           <image  src="../../imgs/over/star.png" class="star"></image>
+           <image  src="../../imgs/over/clock.png" class="clock"></image>
+          <image  src="../../imgs/over/coin.png" class="coin"></image>
+          <image  src="../../imgs/over/bill.png" class="bill" bindtap="go_billboard"></image>
+          <image  src="../../imgs/over/back.png" class="back" bindtap="go_startgame"></image>
+          <view class="benju">本局情况</view>
+
+
+             <!-- 时间 -->
+          <!-- <text class="clock_num">{{view_time}}</text> -->
+          <text class="clock_num">{{m}}:{{s}}</text>
+
+              <!-- 金币数量 -->
+          <view class="coin_box">
+              <text class="coin_num">{{coin}}</text>
+          </view>
+             <!-- 黄色星星 需要做判断-->
+           <image wx:if='{{star_num>=1}}'  src="../../imgs/over/yellow.png" class="yellow_l" style = "opacity:{{star_opacity}}"></image>
+           <image wx:if='{{star_num>=3}}' src="../../imgs/over/yellow.png" class="yellow_m" style = "opacity:{{star_opacity}}"></image>
+           <image wx:if='{{star_num>=2}}'  src="../../imgs/over/yellow.png" class="yellow_r" style = "opacity:{{star_opacity}}"></image> 
+
     </view>
-<!-- boss内容结束 -->
-
-
- <!-- 游戏的主页面 -->
-<view class="container">
-  <view style="width:100%;height:100%">
-    <!-- 背景图片 -->
-      <image src='../../imgs/waterbg.png' class='waterbg'></image>
-    <!-- 山水图片 -->
-      <image src='../../imgs/mount_left.png' class='greenbg1'></image>
-      <image src='../../imgs/mount_right.png' class='greenbg2'></image>
-    <!-- 第一个阴影 -->
-      <image src='../../imgs/first.png' class='firstshadow'></image>
-    <!-- 第二个阴影 -->
-      <image src='../../imgs/second.png' class='secondshadow'></image>
-    <!-- 第三个阴影 -->
-      <image src='../../imgs/third.png' class='thirdshadow'></image>
-    <!-- 浪花一 -->
-       <image src='../../imgs/wave1.png' class='topwave'></image> 
-    <!-- 浪花二 -->
-       <image src='../../imgs/wave2.png' class='middlewave'></image> 
-    <!-- 浪花三 -->
-       <image src='../../imgs/wave3.png' class='bottomwave'></image> 
-    <!-- 石头 -->
-       <image src='../../imgs/stone.png' class='stone'></image>
-    <!-- 第一个倒影 -->
-       <image src='../../imgs/firstdaoying.png' class='firstdaoying'></image>
-    <!-- 第二个倒影 -->
-       <image src='../../imgs/seconddaoying.png' class='seconddaoying'></image>
-    <!-- 第三个倒影 -->
-       <image src='../../imgs/thirddaoying.png' class='thirddaoying'></image>
-    <!-- 水中游动的倒影小鱼 -->
-       <image src='../../imgs/fish1.png' class='fish1'></image>
-       <image src='../../imgs/fish2.png' class='fish2'></image>
-       <image src='../../imgs/fish3.png' class='fish3'></image>
-       <image src='../../imgs/fish4.png' class='fish4'></image>
-       <image src='../../imgs/fish5.png' class='fish5'></image>
-       <image src='../../imgs/fish6.png' class='fish6'></image>
-       <image src='../../imgs/fish7.png' class='fish7'></image>
-    <!-- 飞溅起来的浪花 -->
-       <image src='../../imgs/fly_wave1.png'  class='fly_wave1'></image>
-       <image src='../../imgs/fly_wave1.png'  class='fly_wave2'></image>
-       <image src='../../imgs/fly_wave1.png'  class='fly_wave3'></image>
-    <!-- 鱼篓 -->
-       <image src='../../imgs/fishbox.png' class='fishbox'></image>
-    <!-- 鱼篓的边线 -->
-       <image src='../../imgs/fishbox_line.png' class='fishbox_line'></image>
-    <!-- 平静时候鱼篓里面的水 -->
-       <image wx:if="{{isPeace}}" src='../../imgs/water1.png' class='water1'  id='the-id'></image>
-    <!-- 波动时候的水 -->
-       <image wx:if="{{!isPeace}}" src='../../imgs/water2.png' class="water1"></image> 
-    <!-- 当鱼进鱼篓的时候水花的变化 -->
-    <!-- 水花也有9个 -->
-         <image wx:if="{{isSplash1}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-        <image wx:if="{{isSplash2}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-        <image wx:if="{{isSplash3}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-        <image wx:if="{{isSplash4}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-        <image wx:if="{{isSplash5}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-        <image wx:if="{{isSplash6}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-        <image wx:if="{{isSplash7}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-        <image wx:if="{{isSplash8}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-        <image wx:if="{{isSplash9}}" src='../../imgs/{{splashIndex}}.png' class="water2"></image>
-
-    <!-- 页面上的小鱼 -->
-           <image
-        wx:for='{{show_sf_list}}' 
-        src='../../imgs/gif/smallfish{{item.sf_category}}.gif' 
-        class='small_fish' 
-        bindtap='getFish{{item.sub}}'
-        data-sub='{{item.sub}}'
-         style="top:{{item.smallfishT}};left:{{item.smallfishL}};animation:{{item.start_animation? item.jump : ' ' }}"  
-         ></image>  
-
-         <!-- 进鱼篓的小鱼一共有九只 -->
-         <image  wx:if="{{tap_start1}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT1}};left:{{new_fishL1}};transform:rotate({{rotat1}});"></image>
-
-         <image  wx:if="{{tap_start2}}" class="new_fish" src='../../imgs/gif/smallfish1.gif'    style = "top:{{new_fishT2}};left:{{new_fishL2}};transform:rotate({{rotat2}})"></image>
-
-         <image  wx:if="{{tap_start3}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT3}};left:{{new_fishL3}};transform:rotate({{rotat3}})"></image>
-
-         <image  wx:if="{{tap_start4}}" class="new_fish" src='../../imgs/gif/smallfish3.gif'    style = "top:{{new_fishT4}};left:{{new_fishL4}};transform:rotate({{rotat4}})"></image>
-
-         <image  wx:if="{{tap_start5}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT5}};left:{{new_fishL5}};transform:rotate({{rotat5}})"></image>
-
-         <image  wx:if="{{tap_start6}}" class="new_fish" src='../../imgs/gif/smallfish3.gif'    style = "top:{{new_fishT6}};left:{{new_fishL6}};transform:rotate({{rotat6}})"></image>
-         
-         <image  wx:if="{{tap_start7}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT7}};left:{{new_fishL7}};transform:rotate({{rotat7}})"></image>
-
-         <image  wx:if="{{tap_start8}}" class="new_fish" src='../../imgs/gif/smallfish3.gif'    style = "top:{{new_fishT8}};left:{{new_fishL8}};transform:rotate({{rotat8}})"></image>
-
-
-         <image  wx:if="{{tap_start9}}" class="new_fish" src='../../imgs/gif/smallfish2.gif'    style = "top:{{new_fishT9}};left:{{new_fishL9}};transform:rotate({{rotat9}})"></image>
-         
-        
-
-         <!-- 页面上的圆圈 -->
-          <image
-        wx:for='{{show_circle_list}}' 
-        src='../../imgs/middlecircle.png' 
-        class='circle' 
-        style="top:{{item.cT}};left:{{item.cL}};animation:turn_big  3s linear infinite"
-       ></image> 
-  </view>
-  <!-- 页面上的金币和时间图标 -->
-  <image src="../../imgs/start/coin.png" class="coin"></image>
-  <view class="coin_num">
-      <text class="text_coin">{{coin}}</text>
-  </view>
-  <image src="../../imgs/start/time.png" class="time"></image>
-  <text class="time_num">{{m}}:{{s}}</text>
 </view>
-
-

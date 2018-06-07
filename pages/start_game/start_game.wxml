@@ -18,7 +18,7 @@
         <image src="../../imgs/start/logo13.png" class="logo"  wx:if="{{logo_show}}"  style="animation:bounceInDown  3s linear"></image> 
       <!-- 开始游戏 -->
        <image src="../../imgs/start/start_game.png" class="start_game"  wx:if="{{!is_show}}" style="animation:{{animate1.style}} {{animate1.time}} linear {{animate1.freq}}"  bindtap="go_index"></image>
-       <button plain  wx:if="{{getuserinfo&&!is_show}}" class="getuserinfo" open-type="getUserInfo" bindgetuserinfo='bindGetUserInfo'>头像授权</button>
+       <button plain  wx:if="{{getuserinfo&&!is_show}}" class="getuserinfo" open-type="getUserInfo" bindgetuserinfo='bindGetUserInfo'></button>
        
       <!-- 喇叭 -->
       <image src="../../imgs/start/trumpet.png" class="trumpet" wx:if="{{!is_show}}" style="animation:{{is_press_trump==true?'press_down 0.5s linear' : ' ' }}"

@@ -51,10 +51,10 @@ Page({
   /**
    * 生命周期函数--监听页面加载*/
   bindGetUserInfo: function (e) {
-    if (e.detail.userInfo) {
-      this.setData({
-        getuserinfo: false,
-      });
+    this.setData({
+      getuserinfo:false,
+    })
+    if (e.detail.userInfo) {     
       var userInfo = e.detail.userInfo;
       wx.login({
         success: res => {
@@ -67,7 +67,7 @@ Page({
                 nickName: userInfo.nickName,
                 avatarUrl: userInfo.avatarUrl,
                 province: userInfo.province,
-                sign: sign.sign({ code: code, nickName: userInfo.nickName, avatarUrl: userInfo.avatarUrl, province: userInfo.province }, app.globalData.API_CODE),
+                sign: sign.sign({ code: code, avatarUrl: userInfo.avatarUrl}, app.globalData.API_CODE),
                 API_CHANNEL: app.globalData.API_CHANNEL,
                 API_SECRET: app.globalData.API_SECRET,
                 API_ROLE: app.globalData.API_ROLE[0],
@@ -89,25 +89,7 @@ Page({
                     API_CODE: app.globalData.API_CODE,
                   },
                   success: res => {
-                    app.globalData.userInfo = res.data.info[0];
-                    if (options.friend_id ) {
-                      wx.request({
-                        url: app.globalData.http + 'index.php?m=Mq&c=User&a=relationUser',
-                        data: {
-                          user_id: app.globalData.uid,
-                          nexus_user_id: options.friend_id,
-                          sign: sign.sign({ user_id: app.globalData.uid, nexus_user_id: options.friend_id }, app.globalData.API_CODE),
-                          API_CHANNEL: app.globalData.API_CHANNEL,
-                          API_SECRET: app.globalData.API_SECRET,
-                          API_ROLE: app.globalData.API_ROLE[1],
-                          API_VER: '1.0',
-                          API_CODE: app.globalData.API_CODE,
-                        },
-                        success: res => {
-                          console.log(res);
-                        }
-                      })
-                    }
+                    app.globalData.userInfo = res.data.info
                   }
                 })
               }
@@ -118,8 +100,10 @@ Page({
     } else {
       console.log(e.detail.errMsg);
     }
+    this.go_index();
   },
   onLoad: function (options) {
+    // 自动弹出用户授权
     var that = this
     // 将start_game页面的几张图片做一下缓存
     wx.downloadFile({
@@ -163,7 +147,6 @@ Page({
                 // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
                 wx.getUserInfo({
                   success: res => {
-
                     // 可以将 res 发送给后台解码出 unionId
                     var userInfo = res.userInfo;
 
@@ -199,7 +182,7 @@ Page({
                           },
                           success: res => {
 
-                            app.globalData.userInfo = res.data.info[0];
+                            app.globalData.userInfo = res.data.info;
                             if (options.friend_id) {
                               wx.request({
                                 url: app.globalData.http + 'index.php?m=Mq&c=User&a=relationUser',
@@ -241,9 +224,7 @@ Page({
                     API_CODE: app.globalData.API_CODE,
                   },
                   success: res => {
-
                     app.globalData.uid = res.data.info.uid;
-                    console.log(app.globalData.uid)
                     wx.request({
                       url: app.globalData.http + 'index.php?m=Mq&c=Index&a=login',
                       data: {
@@ -428,26 +409,31 @@ Page({
       is_loading: true
     })
     // 滚动条动画
-    // 时间待调整
-    if (this.data.is_loading == true) {
-      var timer = setInterval(() => {
+
+    var timer = setInterval(() => {
+      this.setData({
+        loading_width: this.data.loading_width + 2,
+        pro_text: this.data.pro_text + 2
+      })
+      // 关闭定时器
+      if (this.data.pro_text >= 100) {
+        clearInterval(timer)
         this.setData({
-          loading_width: this.data.loading_width +2
+          loading_width: 100,
+          pro_text: 100
         })
-        this.setData({
-          pro_text: this.data.pro_text + 2
-        })
-        // 关闭定时器
-        if (this.data.pro_text >= 100) {
-          clearInterval(timer)
-          setTimeout(() => {
-                wx.redirectTo({
-                      url: '../index/index'
-                })
-          }, 1000)
-        }
-      }, 100)
-    }
+        setTimeout(() => {
+          this.setData({
+            is_loading: false
+          })
+          // 跳转到游戏的主页面
+          wx.redirectTo({
+            url:'../index/index'
+          })
+        }, 1000)
+      }
+    }, 100)
+
   
   },
   trump() {

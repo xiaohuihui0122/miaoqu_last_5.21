@@ -1,6 +1,0 @@
-<!--pages/splash_page/splash_page.wxml-->
- <!-- 闪屏加载的页面  -->
-  <view class='splash_box  {{index_page?"":"splash_change"}}'>
-          <!-- 闪屏的背景图片 -->
-           <image src='../../imgs/233.jpg'  class='splash_bg'></image>           
- </view>

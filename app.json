@@ -1,11 +1,13 @@
 {
   "pages": [
-    "pages/start_game/start_game",
+      "pages/start_game/start_game",
+        "pages/index/index",
+ 
     "pages/start_game2/start_game2",
-    "pages/index/index",
+
     "pages/gameover/gameover",
-    "pages/billboard/billboard",
-    "pages/logs/logs"
+    "pages/billboard/billboard"
+
   ],
   "window": {
     "backgroundTextStyle": "light",

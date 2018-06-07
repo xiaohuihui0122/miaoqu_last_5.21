@@ -55,13 +55,13 @@ Page({
                   console.log(res);
                   let list = res.data.info.list.splice(0,3);
                   let user_list = res.data.info.list;
+                  // console.log(res.data.info.user)
                   this.setData({
                         myself_data:res.data.info.user,
                         user_list,list,
                   });
             }
       })
-  
    
   },
  

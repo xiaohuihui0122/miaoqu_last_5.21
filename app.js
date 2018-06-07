@@ -2,7 +2,7 @@
 App({
       onLaunch: function () {
 
-      
+            // console.log(this.globalData.userInfo)
 
             // 展示本地存储能力
             // 音乐播放管理器1
@@ -46,12 +46,13 @@ App({
 
       },
       globalData: {
-      //   http:'http://192.168.1.250:8301/',
+        // http:'http://192.168.1.250:8301/',
             http: 'https://maoqb.5izhuan.com/',
             userInfo: null,
             index_page: true,
             music: true,
             effect:true,
+            uid:'',
             getuserinfo:true,
             API_CODE: 'd2c01f59edb4e10583d465bb1667927a',//小程序编码 32位
             API_ROLE: ['ADMIN', 'USER'], //角色 权限
@@ -60,6 +61,16 @@ App({
             btnPath:'',
             dark:'',
             back:'',
+            yy_con:true,
+            yx_con:true,
+            share: [
+                  ' 喂什么猫粮，一起撸鱼吧......',
+                  '这只猫为了抓鱼简直逆天了，快来围观......',
+                  '这只猫为了吃鱼竟然进了丛林......',
+                  '劳资就是饿死，死外边，也决不自个抓鱼！好多鱼，喵~',
+                  '还不把小鱼干交出来，我都看见了~',
+                  '来人呐！赶紧给它摁住了，别让跑咯'
+            ],
       },
 
 

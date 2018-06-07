@@ -1,106 +1,175 @@
-//index.js
-//获取应用实例
-const app = getApp()
+// pages/index/index.js
+let app = getApp();
 
 Page({
+  /**
+   * 页面的初始数据
+   */
   data: {
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    isPeace: true, // 水花的下标变化
-    splashIndex: 1, // 溅水花的样式是否显示
-    isSplash1: false,// 防止定时器重复工作，生成不一样的水花
-    isSplash2: false,
-    isSplash3: false,
-    isSplash4: false,
-    isSplash5: false,
-    isSplash6: false,
-    isSplash7: false,
-    isSplash8: false,
-    isSplash9: false,
-    startInter: false,   // 小鱼原来的动画
-    delay_time: {},// 随机小鱼跳出的延迟时间
-    //小鱼的位置信息的二维数组
-    boss_open: false,//boss开关
-    boss_warter_index: 7,//boss水花
-    boss_warter: false,//水花开关
-    boss_jump: false,//boss动画
-    animationData: {},//点击动画
-    click_btn: false,//boss按钮显示
-    boss_btn: false,//boss下方按钮
-    boss_number: 3,//boss攻击次数
-    gameover: false,//游戏结束可用于关闭所有开关.
-    n: 0,//秒数
-    lose: 0,// 游戏输了的进入次数
-    boss_before: false,//boss水中的动画
-    round_W: 120,//内圈宽度
-    ok_round_W: 400,//外圈宽度
-    round_Fn: false,//缩圈
-    sf_list: [
+    cha_over: false,
+    boss_over: false,
+    //============控制重复跳转两次=========//
+    is_loading: true,
+    loading_width: 50,
+    pro_text: 50,
+    //===========loading页面的数据==================//
+    c: 10,
+    cat_w: 113,//图片宽度,
+    cat_h: 109,//图片高度
+    coin: 0,
+    gameover: false,
+    kill_all_show: false,
+    kill_all_num: 1,
+    kill_all_active: 1,
+    kill_all_animate: false,//飞叉动画
+    c_y: 547,
+    //==============fish=================//
+    fish_list: [
+
       {
-        smallfishT: '17%', smallfishL: '17%', sub: 1, sf_category: 2,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
+        url: '../../imgs/game/1_r.gif', x: -410, y: 250, dir: 0, score: 1,
+        currX: -410, sub: 1
       },
       {
-        smallfishT: '17%', smallfishL: '1%', sub: 2, sf_category: 1,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.2s'
+        url: '../../imgs/game/1_r.gif', x: 480, y: 250, dir: 0, score: 1,
+        currX: 480, sub: 2
       },
       {
-        smallfishT: '17%', smallfishL: '29%', sub: 3, sf_category: 2,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.1s'
+        url: '../../imgs/game/1_l.gif', x: -677, y: 310, dir: 1, score: 1,
+        currX: -677, sub: 3
       },
 
       {
-        smallfishT: '39%', smallfishL: '20%', sub: 4, sf_category: 3,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.5s'
+        url: '../../imgs/game/1_l.gif', x: 810, y: 310, dir: 1, score: 1,
+        currX: 810, sub: 4
       },
       {
-        smallfishT: '38%', smallfishL: '42%', sub: 5, sf_category: 2,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.9s'
-      },
-      {
-        smallfishT: '36%', smallfishL: '62%', sub: 6, sf_category: 3,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.77s'
+        url: '../../imgs/game/1_r.gif', x: -110, y: 370, dir: 0, score: 1,
+        currX: -110, sub: 5
       },
 
       {
-        smallfishT: '62%', smallfishL: '44%', sub: 7, sf_category: 2,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
+        url: '../../imgs/game/1_r.gif', x: 705, y: 370, dir: 0, score: 1,
+        currX: 705, sub: 6
+      },
+
+      {
+        url: '../../imgs/game/1_l.gif', x: 25, y: 430, dir: 1, score: 1,
+        currX: 25, sub: 7
+      },
+
+      {
+        url: '../../imgs/game/1_l.gif', x: 568, y: 430, dir: 1, score: 1,
+        currX: 568, sub: 8
       },
       {
-        smallfishT: '58%', smallfishL: '64%', sub: 8, sf_category: 3,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.2s'
+        url: '../../imgs/game/1_l.gif', x: -437, y: 430, dir: 1, score: 1,
+        currX: -437, sub: 9
+      },
+      //  二分鱼
+      {
+        url: '../../imgs/game/2_r.gif', x: -555, y: 250, dir: 0, score: 2,
+        currX: -555, sub: 10
+      },
+
+      {
+        url: '../../imgs/game/2_r.gif', x: 830, y: 250, dir: 0, score: 2,
+        currX: 830, sub: 11
+      },
+
+      {
+        url: '../../imgs/game/2_l.gif', x: 400, y: 310, dir: 1, score: 2,
+        currX: 400, sub: 12
+      },
+
+      {
+        url: '../../imgs/game/2_r.gif', x: 716, y: 370, dir: 0, score: 2,
+        currX: 716, sub: 13
+      },
+
+      {
+        url: '../../imgs/game/2_l.gif', x: 333, y: 430, dir: 1, score: 2,
+        currX: 333, sub: 14
+      },
+
+      //  三分鱼
+      {
+        url: '../../imgs/game/3_r.gif', x: -650, y: 250, dir: 0, score: 3,
+        currX: -650, sub: 15
+      },
+
+      {
+        url: '../../imgs/game/3_l.gif', x: -40, y: 310, dir: 1, score: 3,
+        currX: -40, sub: 16
+      },
+
+      {
+        url: '../../imgs/game/3_l.gif', x: 940, y: 310, dir: 1, score: 3,
+        currX: 940, sub: 17
+      },
+
+      {
+        url: '../../imgs/game/3_r.gif', x: 369, y: 370, dir: 0, score: 3,
+        currX: 369, sub: 18
+      },
+
+      {
+        url: '../../imgs/game/3_l.gif', x: 90, y: 430, dir: 1, score: 3,
+        currX: 90, sub: 19
+      },
+      //  五分鱼
+      {
+        url: '../../imgs/game/5_r.gif', x: -40, y: 250, dir: 0, score: 5,
+        currX: -40, sub: 20
       },
       {
-        smallfishT: '54%', smallfishL: '74%', sub: 9, sf_category: 2,
-        start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.1s'
+        url: '../../imgs/game/5_l.gif', x: 360, y: 430, dir: 1, score: 5,
+        currX: -360, sub: 22
+      },
+      {
+        url: '../../imgs/game/5_l.gif', x: 670, y: 370, dir: 1, score: 5,
+        currX: 670, sub: 23
       },
     ],
-    show_sf_list: [],//页面中显示的小鱼
-    // 9个点随机2,3个出现圆圈
-    circle_list: [
-      { cT: '19%', cL: '19%' },
-      { cT: '19%', cL: '5%', },
-      { cT: '19%', cL: '33%' },
+    speed_1: 5,// 一分鱼移动的速度
+    speed_2: 6,//二分鱼的速度
+    speed_3: 10,//三分鱼的速度
+    speed_5: 30,//五分鱼的速度
+    speed_boss: 8,//大boss的速度
 
-      { cT: '40%', cL: '24%' },
-      { cT: '38%', cL: '42%' },
-      { cT: '36%', cL: '62%' },
 
-      { cT: '63%', cL: '53%' },
-      { cT: '58%', cL: '68%' },
-      { cT: '53%', cL: '83%' },
-    ],
-    show_circle_list: [],//页面中的圆圈
-    // start_animation:true,// 小鱼显示原来的动画
-    // go_fishbox:{},//小鱼跳进水娄的动画
-    // is_go_fishbox:false,//是否跳进鱼篓的动画的开关
-    screen_width: {},// 使用的手机屏幕的宽度/高度
-    screen_height: {},
+    //================boss的样式=============//
+    bossL: -700,
+    bossT: 0,//220~430
+
+    show_fish: [],
+    is_touzhi: 0,
+    //==========动态金币==============//
+    coin_list: [
+      { top: 0, left: -200, sub: 0,score:1 }
+    ],//小鱼变成金币数组
+    //===========boss==============//
+    swim_boss: true,
+    stand_boss: false,
+    boss_timer: {},
+    //=============游戏时间==========//
     m: '00',
     s: '00',
-    rect_x: 0,//鱼落入的地点
-    rect_y: 0,
-    go_fishbox: {},// 测试小方块的路径
+    //=============金币==========//
+    all_jb: '',
+    //==========gif路径==========//
+    boss1: '',
+    boss2: '',
+    //===========结印==========//
+    mudra: false,
+    user_id: '',
+    fish_timer: {},//小鱼的定时器
+
+
+    // gameover页面的数据
+    is_gameover:false,
+    slip_cat: true,//是否滑动猫
+    opacity_num: 0,//刚开始透明度
     share: [
       ' 喂什么猫粮，一起撸鱼吧......',
       '这只猫为了抓鱼简直逆天了，快来围观......',
@@ -109,70 +178,84 @@ Page({
       '还不把小鱼干交出来，我都看见了~',
       '来人呐！赶紧给它摁住了，别让跑咯'
     ],
-    tap_start1: false,//点击1位置处的小鱼是否显示
-    tap_start2: false,
-    tap_start3: false,
-    tap_start4: false,
-    tap_start5: false,
-    tap_start6: false,
-    tap_start7: false,
-    tap_start8: false,
-    tap_start9: false,
-    sf_category: {},//产生的新小鱼的路径
-    new_fishT: {},//新小鱼的top
-    new_fishL: {},
-    coin: 0,//金币的数量
-    rotat: '0deg',  //旋转的角度
-    bar_start: false,//能量条的是否显示
-    bar_width: 300,//能量条的长度
-    fish_timer: {},//小鱼出现的定时器
-    start_time: '',//开始时间
-    end_time: '',
+    star_opacity: 0,//传入的得到的金币的总数量
+    is_box: false,//刚开始星星的view没有出现
   },
 
-  onLoad: function () {
-    // setInterval(()=>{
-    //   console.log("金币的数量"+this.data.coin)
-    // },1000)
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  again_hide() {
     this.setData({
-      start_time: new Date().getTime()
+      again: false,
+    });
+    var fish_timer = setInterval(() => {
+      if (this.data.gameover) {
+        clearInterval(fish_timer);
+      }
+      this._fish_FN();
+      this._boss_FN();
+    }, 150)
+  },
+  onLoad: function (options) {
+    if (app.globalData.again != 0) {
+      this.setData({
+        again: true,
+      });
+    } else {
+      var fish_timer = setInterval(() => {
+        if (this.data.gameover) {
+          clearInterval(fish_timer);
+        }
+        this._fish_FN();
+        this._boss_FN();
+      }, 150)
+    }
+    this.cat_ctx = wx.createCanvasContext('cat_Canvas');
+    wx.getSystemInfo({
+      success: res => {
+        console.log(res);
+        this.setData({
+          w_h: res.windowHeight,
+          w_w: res.windowWidth,
+          cat_y: res.windowHeight - this.data.cat_h,
+          cat_x: res.windowWidth / 2 - this.data.cat_w / 2,
+          top_end: res.windowHeight - res.windowHeight * 0.7,
+          start_time: new Date().getTime(),
+        });
+        this.cat_ctx.drawImage('../../imgs/cat3.png', this.data.cat_x, this.data.cat_y, this.data.cat_w, this.data.cat_h);
+        this.cat_ctx.draw();
+        if (app.globalData.music == true) {
+          app.AppMusic1.src = app.globalData.http + 'Public/music/mq_music/hl.mp3'
+        }
+      }
     })
 
-    var me = this
-    this.fish_time();
-    // 获得使用的手机屏幕的宽度/高度
-    wx.getSystemInfo({
-      success: function (res) {
-        me.setData({
-          screen_width: res.screenWidth,
-          screen_height: res.screenHeight,
+    wx.downloadFile({
+      url: app.globalData.http + 'Public/img/mq_gif/all_cz.gif',
+      success: res1 => {
+        this.setData({
+          all_cz: res1.tempFilePath,
+        })
+      }
+    })
+    wx.downloadFile({
+      url: app.globalData.http + 'Public/music/mq_music/jjb.mp3',
+      success: res => {
+        this.setData({
+          all_jb: res.tempFilePath,
         })
       }
     })
 
+    //=============鱼的定时器开始==========//
 
 
-    //获得水的高度
-    wx.createSelectorQuery().select('#the-id').boundingClientRect((rect) => {
-      console.log(rect);
-      var x = rect.left + rect.width / 2
-      var y = rect.top
-      this.setData({
-        rect_x: x
-      })
-      this.setData({
-        rect_y: y
-      })
-    }).exec()
+    //============游戏时间的计算===============//
 
-
-
-
-    // 页面右上角的定时器
     function toDub(n) {
       return n < 10 ? "0" + n : "" + n;
     }
-    // clearInterval(timer);
     var n = 0;
     var index_time = setInterval(() => {
       if (this.data.gameover) {
@@ -180,1735 +263,582 @@ Page({
         return false;
       }
       n++;
-      var m1 = parseInt(n / 60);
-      var s1 = parseInt(n % 60);
-      me.data.m = toDub(m1)
-      me.data.s = toDub(s1)
-      me.setData({
-        m: this.data.m,
-      })
-      me.setData({
-        s: this.data.s,
-      })
-      me.setData({
+      this.setData({
+        m: toDub(parseInt(n / 60)),
+        s: toDub(parseInt(n % 60)),
         n: n
       })
-      // console.log(n)
+
     }, 1000);
 
-
-
-    // 页面中9个圆圈
-    var index_round = setInterval(() => {
-      this.data.show_circle_list = [];
-      // 随机选取跳出来哪个0-8下标
-      let sf_number = Math.random() > 0.5 ? 2 : 3;
-      for (var i = 0; i < sf_number; i++) {
-        let sf_index = parseInt(Math.random() * 9);
-        this.data.show_circle_list.push(this.data.circle_list[sf_index])
-      }
-      this.setData({
-        show_circle_list: this.data.show_circle_list
-      })
-    }, 4000)
-
-
-
-
-    // 获取用户信息保存到app中
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
-
-
-    // 水桶中的水波动变化
-    var warter = setInterval(() => {
-      this.setData({
-        isPeace: !this.data.isPeace
-      })
-    }, 500)
-
-
-
-    // 游戏主页面的声音播放控制
-    if (app.globalData.music == true) {
-      // 河流声音，鸟叫声音
-      app.AppMusic1.src = app.globalData.http + 'Public/music/mq_music/hl.mp3'
-    }
   },
-  getUserInfo: function (e) {
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
-  fish_time() {
-    var fish_timer = setInterval(() => {
-      this.random_boss();
-
-      if (this.data.boss_open || this.data.gameover) {
-        clearInterval(fish_timer);
-        return false;
-      }
-      var me = this
-      this.data.show_sf_list = [];
-      // 随机选取跳出来哪个0-8下标的函数
-      //得到随机3个数的函数
-      function f1() {
-        var arr_3 = new Array()
-        function getRandom(min, max) {
-
-          var random = Math.random() * (max - min) + min;
-
-          random = Math.floor(random);
-
-          if (arr_3.length < 3) {
-            for (i = 0; i <= arr_3.length; i++) {
-              if (random == arr_3[i]) {
-                break;
-              }
-              else {
-                if (i == arr_3.length)
-                { arr_3.push(random); break; }
-              }
-            };
-            getRandom(0, 8);
+  //=============鱼的函数==============// 
+  _fish_FN() {
+    var fish_list = this.data.fish_list
+    for (let i = 0; i < fish_list.length; i++) {
+      //==========一分的鱼============//
+      if (fish_list[i].score == 1) {
+        if (fish_list[i].dir == 0) {//向右边移动的鱼        
+          if (fish_list[i].currX >= 1050) {
+            fish_list[i].currX = -700
           }
-
-        }
-        getRandom(0, 8);
-        return arr_3;
-      }
-      var arr3 = f1();
-      var new_str = arr3.join('')
-      let sf_number = Math.random() > 0.5 ? 2 : 3;
-      for (var i = 0; i < sf_number; i++) {
-        // 小鱼的下标      
-        let sf_index = new_str[i]
-        this.data.show_sf_list.push(this.data.sf_list[sf_index])
-      }
-      // 遍历挑选出数组中的小鱼，延时放入显示数组中
-      for (var j = 0; j < this.data.show_sf_list.length; j++) {
-        let sf_index = parseInt(Math.random() * 9);
-        let a = Math.random() * (1 - 0 + 0) + 0;
-        (function (a) {
-          setTimeout(() => {
-            me.setData({
-              show_sf_list: me.data.show_sf_list
-            })
-          }, a * 1000)
-        })(j)
-      }
-    }, 4000)
-  },
-
-
-  // 用户抓到鱼之后的函数
-  getFish1(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash1: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash1: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    // var new_l = (e.detail.x-50)/this.data.screen_width*100+'%'
-    // var new_t = (e.detail.y-37)/this.data.screen_height*100+'%'
-    // var new_t = e.target.offsetTop * 2 - 170 + 'rpx'
-    // var new_l = e.target.offsetLeft * 2 + 'rpx'
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
-
-    this.setData({
-      new_fishT1: new_t
-    })
-    this.setData({
-      new_fishL1: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat1: '30deg'
-      })
-
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT1: '46%'
-      })
-      this.setData({
-        new_fishL1: '13%'
-      })
-      this.setData({
-        rotat1: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start1: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start1: false
-      })
-      // 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-        this.setData({
-          coin: this.data.coin+3
-        })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin + 1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin +2
-            })
-      }
-      // console.log(this.data.coin)
-    }, 2500)
-
-
-
-  },
-  //2
-  getFish2(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash2: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash2: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 60 + 'px'
-    this.setData({
-      new_fishT2: new_t
-    })
-    this.setData({
-      new_fishL2: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat2: '30deg'
-      })
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT2: '46%'
-      })
-      this.setData({
-        new_fishL2: '13%'
-      })
-      this.setData({
-        rotat2: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start2: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start2: false
-      })
-      // 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-            this.setData({
-                  coin: this.data.coin + 3
-            })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin +1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin + 2
-            })
-      }
-      // console.log(this.data.coin)
-    }, 2500)
-  },
-
-  getFish3(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash3: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash3: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
-    this.setData({
-      new_fishT3: new_t
-    })
-    this.setData({
-      new_fishL3: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat3: '30deg'
-      })
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT3: '46%'
-      })
-      this.setData({
-        new_fishL3: '13%'
-      })
-      this.setData({
-        rotat3: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start3: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start3: false
-      })
-      // 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-            this.setData({
-                  coin: this.data.coin + 3
-            })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin + 1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin + 2
-            })
-      }
-    }, 2500)
-
-
-  },
-  getFish4(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash4: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash4: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
-    this.setData({
-      new_fishT4: new_t
-    })
-    this.setData({
-      new_fishL4: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat4: '30deg'
-      })
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT4: '46%'
-      })
-      this.setData({
-        new_fishL4: '13%'
-      })
-      this.setData({
-        rotat4: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start4: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start4: false
-      })
-      /// 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-            this.setData({
-                  coin: this.data.coin + 3
-            })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin + 1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin +2
-            })
-      }
-    }, 2500)
-
-
-  },
-  getFish5(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash5: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash5: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
-    this.setData({
-      new_fishT5: new_t
-    })
-    this.setData({
-      new_fishL5: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat5: '30deg'
-      })
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT5: '46%'
-      })
-      this.setData({
-        new_fishL5: '13%'
-      })
-      this.setData({
-        rotat5: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start5: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start5: false
-      })
-      // 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-            this.setData({
-                  coin: this.data.coin + 3
-            })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin + 1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin +2
-            })
-      }
-      // console.log(this.data.coin)
-    }, 2500)
-
-  },
-  getFish6(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash6: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash6: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
-    this.setData({
-      new_fishT6: new_t
-    })
-    this.setData({
-      new_fishL6: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat6: '30deg'
-      })
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT6: '46%'
-      })
-      this.setData({
-        new_fishL6: '13%'
-      })
-      this.setData({
-        rotat6: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start6: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start6: false
-      })
-      // 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-            this.setData({
-                  coin: this.data.coin + 3
-            })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin + 1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin + 1
-            })
-      }
-
-    }, 2500)
-
-
-  },
-  getFish7(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash7: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash7: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
-    this.setData({
-      new_fishT7: new_t
-    })
-    this.setData({
-      new_fishL7: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat7: '30deg'
-      })
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT7: '46%'
-      })
-      this.setData({
-        new_fishL7: '13%'
-      })
-      this.setData({
-        rotat7: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start7: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start7: false
-      })
-      // 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-            this.setData({
-                  coin: this.data.coin + 3
-            })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin +1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin + 2
-            })
-      }
-    }, 2500)
-  },
-  getFish8(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash8: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash8: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
-    this.setData({
-      new_fishT8: new_t
-    })
-    this.setData({
-      new_fishL8: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat8: '30deg'
-      })
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT8: '46%'
-      })
-      this.setData({
-        new_fishL8: '13%'
-      })
-      this.setData({
-        rotat8: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start8: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start8: false
-      })
-      // 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-            this.setData({
-                  coin: this.data.coin + 3
-            })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin + 1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin + 2
-            })
-      }
-    }, 2500)
-  },
-  getFish9(e) {
-    var me = this
-    setTimeout(() => {
-      // 先控制将水花的图片显示
-      me.setData({
-        isSplash9: true
-      })
-      // 先将水花的下标置为1，控制水花的动态的变化
-      if (me.data.splashIndex > 1) {
-        me.setData({
-          splashIndex: 1
-        })
-      };
-      var splash_timer = setInterval(function () {
-        if (splash_water) {
-          return
-        }
-        var splash_water = 1;
-        // splash_timer = 1;
-        me.setData({
-          splashIndex: me.data.splashIndex + 1
-        })
-
-        // 在定时器中判断水花消失，下标置为1
-        if (me.data.splashIndex == 12) {
-          clearInterval(splash_timer);
-          me.setData({
-            splashIndex: 1,
-            isSplash9: false,
-          })
-        }
-      }, 100);
-    }, 2200)
-
-
-    // 将被点击的小鱼删除
-    var tmp = this.data.show_sf_list
-    // 创建一个获得下标的函数
-    function get_i() {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].sub == e.target.dataset.sub)
-          //  删掉数组中第i个元素
-          // tmp.splice(i, 1)
-          return i
-      }
-    }
-    var i = get_i()
-    tmp.splice(i, 1)
-    this.setData({
-      show_sf_list: tmp
-    })
-    //  获得点击小鱼的图片路径
-    var sub = e.target.dataset.sub
-    var category = this.data.sf_list[sub - 1].sf_category
-    this.setData({
-      sf_category: category
-    })
-    //  保存点击位置，将点击位置处的小鱼激活
-    var new_t = e.target.offsetTop - 80 + 'px'
-    var new_l = e.target.offsetLeft + 50 + 'px'
-    this.setData({
-      new_fishT9: new_t
-    })
-    this.setData({
-      new_fishL9: new_l
-    })
-    // 设置旋转的角度
-    setTimeout(() => {
-      this.setData({
-        rotat9: '30deg'
-      })
-    }, 400)
-    // 3s之后设置top和left为水桶处
-    setTimeout(() => {
-      this.setData({
-        new_fishT9: '46%'
-      })
-      this.setData({
-        new_fishL9: '13%'
-      })
-      this.setData({
-        rotat9: '70deg'
-      })
-    }, 800)
-    // 设置小鱼入水桶加金币的音效
-    if (app.globalData.music == true) {
-      setTimeout(() => {
-        app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/xycs.mp3'
-        app.AppMusic3.loop = false;
-        app.AppMusic3.volume = 1;
-      }, 2000)
-    }
-
-    // 将新建得小鱼显示
-    this.setData({
-      tap_start9: true
-    })
-    setTimeout(() => {
-      this.setData({
-        tap_start9: false
-      })
-      // 根据鱼的种类判断加分
-      if (this.data.sf_category == 1) {
-            this.setData({
-                  coin: this.data.coin + 3
-            })
-      }
-      if (this.data.sf_category == 2) {
-            this.setData({
-                  coin: this.data.coin + 1
-            })
-      }
-      if (this.data.sf_category == 3) {
-            this.setData({
-                  coin: this.data.coin + 2
-            })
-      }
-    }, 2500)
-
-  },
-
-  // 页面中开始跳出鱼,3s
-  fish_time() {
-    this.data.fish_timer = setInterval(() => {
-      // 为调试暂时注释掉
-      this.random_boss();
-      if (this.data.boss_open || this.data.gameover) {
-        clearInterval(this.data.fish_timer);
-        return false;
-      }
-      var me = this
-      this.data.show_sf_list = [];
-      // 随机选取跳出来哪个0-8下标的函数
-      //得到随机3个数的函数
-      function f1() {
-        var arr_3 = new Array()
-        function getRandom(min, max) {
-
-          var random = Math.random() * (max - min) + min;
-
-          random = Math.floor(random);
-
-          if (arr_3.length < 3) {
-            for (i = 0; i <= arr_3.length; i++) {
-              if (random == arr_3[i]) {
-                break;
-              }
-              else {
-                if (i == arr_3.length)
-                { arr_3.push(random); break; }
-              }
-            };
-            getRandom(0, 8);
+          fish_list[i].currX += this.data.speed_1
+        } else {//向左边移动的鱼
+          if (fish_list[i].currX <= -700) {
+            fish_list[i].currX = 1050
           }
+          fish_list[i].currX -= this.data.speed_1
+        }
+      }
+
+      //===========二分的鱼==========//
+      if (fish_list[i].score == 2) {
+        if (fish_list[i].dir == 0) {//向右边移动的鱼        
+          if (fish_list[i].currX >= 1050) {
+            fish_list[i].currX = -700
+          }
+          fish_list[i].currX += this.data.speed_2
+
+        } else {//向左边移动的鱼
+          if (fish_list[i].currX <= -700) {
+            fish_list[i].currX = 1050
+          }
+          fish_list[i].currX -= this.data.speed_2
+        }
+      }
+
+      //===========三分的鱼==========//
+      if (fish_list[i].score == 3) {
+        if (fish_list[i].dir == 0) {//向右边移动的鱼        
+          if (fish_list[i].currX >= 1050) {
+            fish_list[i].currX = -700
+          }
+          fish_list[i].currX += this.data.speed_3
+
+        } else {//向左边移动的鱼
+          if (fish_list[i].currX <= -700) {
+            fish_list[i].currX = 1050
+          }
+          fish_list[i].currX -= this.data.speed_3
 
         }
-        getRandom(0, 8);
-        return arr_3;
       }
-      var arr3 = f1();
-      var new_str = arr3.join('')
-      let sf_number = Math.random() > 0.5 ? 2 : 3;
-      for (var i = 0; i < sf_number; i++) {
-        // 小鱼的下标      
-        let sf_index = new_str[i]
-        this.data.show_sf_list.push(this.data.sf_list[sf_index])
-      }
-      // 遍历挑选出数组中的小鱼，延时放入显示数组中
-      for (var j = 0; j < this.data.show_sf_list.length; j++) {
-        let sf_index = parseInt(Math.random() * 9);
-        let a = Math.random() * (1 - 0 + 0) + 0;
-        (function (a) {
-          setTimeout(() => {
-            me.setData({
-              show_sf_list: me.data.show_sf_list
-            })
-          }, a * 1000)
-        })(j)
-      }
-    }, 3000)
-  },
-  onShareAppMessage: function (e) {
-    var text = null;
-    var sub = parseInt(Math.random() * 5)
-    text = this.data.share[sub]
-    return {
-      title: text,
-      path: '/pages/start_game/start_game?friend_id=' + app.globalData.uid,
-      imageUrl: '../../imgs/share/ace.png'
-    }
-  },
-  random_boss() {
-    var this_num = this.data.n;
-    if (this_num >= 20) { this_num = 20 };
-    var boss_open_random = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-    if (boss_open_random < this_num) {
-      console.log('boss出来了');
-      //清空鱼库（未做）
-      // boss攻击时候页面的小鱼清空
-      this.setData({
-        show_sf_list: []
-      })
-      // setTimeout(() => {
-      //       this.fish_time();
-      // }, 200)
+      // ===========五分的鱼==========//
+      if (fish_list[i].score == 5) {
+        if (fish_list[i].dir == 0) {//向右边移动的鱼        
+          if (fish_list[i].currX >= 1050) {
+            fish_list[i].currX = -700
+          }
+          fish_list[i].currX += this.data.speed_5
 
-      this.setData({
-        boss_open: true,      //开启boss模式    //关闭刷鱼的计时器。  //打开红色背景
-        boss_warter_bo: true,         //开启大波纹效果。
-      });
-      setTimeout(() => {
+        } else {//向左边移动的鱼
+          if (fish_list[i].currX <= -700) {
+            fish_list[i].currX = 1050
+          }
+          fish_list[i].currX -= this.data.speed_5
+        }
+      }
+    }
+    this.setData({
+      fish_list,
+    })
+
+  },
+
+  skill_card() {
+    //关闭飞叉
+    var tmp_list = this.data.fish_list;
+    this.setData({
+      mudra: true,
+
+    })
+    setTimeout(() => {
+      //      增加叉子数量
+      var old_c = this.data.c;
+      var set_c = setInterval(() => {
         this.setData({
-          boss_before: true,//boss露头。
-          boss_warter_bo: false,//关闭水波纹   
+          c: old_c++,
         });
-      }, 3000);
-      // 水花效果
+        if (old_c > 10) {
+          clearInterval(set_c);
+        }
+      }, 100);
+      //====================增加叉子数量到10=================//
+      var tmp_coin = 0;
+      var fish_list = this.data.fish_list;
+      var this_list = [];
+      for (var k = 0; k < fish_list.length; k++) {
+        if (fish_list[k].currX > -120 && fish_list[k].currX < 420) {
+          // 计算视图范围内小鱼的金币总量计算
+          tmp_coin += fish_list[k].score
+        }
+        var co_top = fish_list[k].y
+        var co_left = fish_list[k].currX
+        var sub = fish_list[k].sub
+
+        var new_coin = {}
+        new_coin.top = co_top + 36;
+        new_coin.left = co_left;
+        new_coin.sub = sub;
+        this_list.push(new_coin);
+        fish_list[k].currX = fish_list[k].x;
+      }
+      //=============两秒钟之后将金币的数组清空剩下一个===========//    
+      this.setData({
+        kill_all_show: false,
+        kill_all_num: this.data.kill_all_num - 1,
+        kill_all_animate: true,
+        mudra: false,
+        coin: this.data.coin + tmp_coin,
+        coin_list: this_list,
+        // 将大boss的位置移到最远处
+        bossL: -400,
+        fish_list: [],
+      });
       setTimeout(() => {
-        this.setData({
-          boss_warter: true,//开启大浪
-          boss_jump: true,//出水动画，游戏界面显示
-          boss_before: false,//关闭前期动画
-        });
-        var warter = setInterval(() => {
-          this.setData({
-            boss_warter_index: this.data.boss_warter_index + 1,
-          });
-          if (this.data.boss_warter_index == 12) {
-            clearInterval(warter);
-            this.setData({
-              boss_warter: false,//开启大浪
-              boss_warter_index: 7,//初始化大浪
-            });
-            //boss出水音效
-
-            if (app.globalData.music == true) {
-              app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/dyls.mp3'
-              app.AppMusic3.loop = false;
-            }
-            //开始攻击函数
-            setTimeout(() => {
-              this.boss_pk();
-            }, 2000);
+        for (var k = 0; k < fish_list.length; k++) {
+          if (fish_list[k].currX > -120 && fish_list[k].currX < 500) {
+            fish_list[k].currX -= 500
           }
-        }, 100)
-      }, 7000);
-
-
-    }
+        }
+        this.setData({
+          fish_list, coin_list: [], kill_all_animate: false,
+        })
+      }, 3000)
+    }, 2500)
   },
-  //boss攻击函数
-  boss_pk() {
-    var n = this.data.n;
-    if (this.data.round_W >= 179) {
-      this.setData({
-        click_btn: true,
-        round_W: this.data.round_W,
-      });
-    } else {
-      this.setData({
-        click_btn: true,
-        round_W: this.data.round_W + 2,
-      });
+  //========================猫的函数========================//
+
+
+  touchstart() {
+    if (this.data.again == true) {
+      return
     }
-    //圆圈缩小
+    this.cat_ctx.drawImage('../../imgs/cat1.png', this.data.cat_x, this.data.cat_y, this.data.cat_w, this.data.cat_h);
+    this.cat_ctx.drawImage('../../imgs/cz.png', this.data.cat_x + this.data.cat_w - 15, this.data.cat_y - 20, 70 / 3, 402 / 3);
+    this.cat_ctx.draw();
+  },
+  bindtouchmove(e) {
+    if (this.data.again == true) {
+      return
+    }
+    var cat_x = null;
+    var w_w = this.data.w_w;
+    var cat_w = this.data.cat_w;
+    var cat_y = this.data.cat_y;
+    var cat_h = this.data.cat_h;
+    if (e.changedTouches[0].x < 0) {
+      cat_x = 0 - cat_w / 2;
+    } else if (e.changedTouches[0].x > w_w - (cat_w / 2) - 15) {
+      cat_x = w_w - cat_w - 15;
+    } else {
+      cat_x = e.changedTouches[0].x - (cat_w / 2);
+    }
     this.setData({
-      round_Fn: false,
+      cat_x,
     });
-    var round_Fn = setInterval(() => {
-      // console.log(this.data.ok_round_W)
-      if (this.data.round_Fn) {
-        clearInterval(round_Fn);
-      }
-      if (this.data.ok_round_W < this.data.round_W) {
-        this.setData({
-          round_Fn: true,
-          boss_number: 3,
-          boss_jump: false,
-          boss_open: false,
-          ok_round_W: 400,//初始化最外圈    
-        });
-        this.setData({
-          end_time: new Date().getTime()
-        })
-        wx.redirectTo({
-          url: '../gameover/gameover?m=' + this.data.m + '&s=' + this.data.s + '&coin_num=' + this.data.coin + '&end_time=' + this.data.end_time + '&start_time=' + this.data.start_time
-        })
-      }
-      this.setData({
-        ok_round_W: this.data.ok_round_W - 3,
-      });
+    this.cat_ctx.drawImage('../../imgs/cat1.png', cat_x, cat_y, cat_w, cat_h);
+    this.cat_ctx.drawImage('../../imgs/cz.png', cat_x + cat_w - 15, cat_y - 20, 70 / 3, 402 / 3);
+    this.cat_ctx.draw();
 
+  },
+  _clear_c() {
+    //=========防止叉子的数量可能变为负的=========//
+    if (this.data.c <= 0) {
+      return
+    }
+    this.setData({
+      c: this.data.c - 1,
+    });
+    if (this.data.c <= 1 && this.data.kill_all_num != 0) {
+      this.setData({
+        kill_all_show: true,
+      });
+    }
+    this.gogameover();
+  },
+  gogameover() {
+
+    if (this.data.c == 0) {
+      //游戏失败
+      app.globalData.again = 0;
+      this.setData({
+        gameover: true,
+      });
+      var end_time = new Date().getTime();
+      if (this.data.boss_over == false) {
+        this.setData({
+          cha_over: true,
+        })
+        this.game_over();
+      }
+
+    }
+    return false;
+  },
+  bindtouchend(e) {
+    if (this.data.again == true) {
+      return
+    }
+    this.gogameover();
+    var c_start_x = this.data.cat_x + this.data.cat_w / 2;
+    var c_strat_y = this.data.cat_y;
+    var c_y = c_strat_y;
+    // 音效
+    if (app.globalData.music == true) {
+      app.AppMusic3.src = '/imgs/cz.mp3'
+      app.AppMusic3.loop = false;
+      app.AppMusic3.play()
+    }
+    this._c_FN(c_y, c_start_x, c_strat_y, e);//投掷函数
+    //判断技能卡是否显示
+  },
+  //投掷
+  _c_FN(c_y, c_start_x, c_strat_y, e) {
+    var c_y = c_y;
+    var cx = this.data.cat_x + this.data.cat_w - 15;
+    var fish_list = this.data.fish_list;
+    var w_w = this.data.w_w;
+    var cat_x = this.data.cat_x;
+    var cat_y = this.data.cat_y;
+    var cat_w = this.data.cat_w;
+    var cat_h = this.data.cat_h;
+    var top_end = this.data.top_end;
+    var c_setInt = setInterval(() => {
+      c_y = c_y - 55;
+      //  ================小鱼的碰撞检测================//
+      for (var k = 0; k < fish_list.length; k++) {
+        if (fish_list[k].currX > -120 && fish_list[k].currX < w_w + 120) {
+          if (fish_list[k].currX < cx && fish_list[k].currX + 60 > cx && fish_list[k].y + 50 < c_y && fish_list[k].y + 100 > c_y) {
+            var sub = fish_list[k].sub//获得被点击到的鱼的下标值
+            var score = fish_list[k].score//获得点击小鱼的金币数
+            //============生成动态金币==========//
+            //======音效===================//
+            if (app.globalData.music == true) {
+              app.AppMusic2.src = this.data.all_jb
+              app.AppMusic2.loop = false;
+              app.AppMusic2.play()
+            }
+            var coin_left = fish_list[k].currX
+            var coin_top = fish_list[k].y
+            var coin_list = this.data.coin_list;
+            var new_coin = {}
+            new_coin.top = coin_top + 36
+            new_coin.left = coin_left
+            new_coin.sub = sub
+            new_coin.score = score
+            coin_list.push(new_coin);
+            this.setData({
+              coin_list,
+            })
+            console.log(this.data.coin_list)
+            // 几秒钟之后循环数组，将金币消失
+            setTimeout(() => {
+              var coin_list = this.data.coin_list;
+              for (var t = 0; t < coin_list.length; t++) {
+                if (coin_list[t].sub == sub) {
+                  coin_list.splice(t, 1)
+                  this.setData({
+                    coin_list,
+                  })
+                }
+              }
+            }, 1000)
+            //将被点击的鱼的横坐标变回到原来的x值
+            // 获得鱼的原来的left值
+            if (fish_list[k].x > -120 && fish_list[k].x < w_w + 120) {
+              fish_list[k].currX = fish_list[k].x
+            } else {
+              fish_list[k].currX = -700
+            }
+
+            this.setData({
+              fish_list,
+            })
+            clearInterval(c_setInt);
+            //判断鱼的得分、
+            // 投掷中的动作
+            this.cat_ctx.drawImage('../../imgs/cat1.png', cat_x, cat_y, cat_w, cat_h);
+
+            this.cat_ctx.draw();
+            setTimeout(() => {
+              // 投掷结束的动作
+              this.cat_ctx.drawImage('../../imgs/cat3.png', cat_x, cat_y, cat_w, cat_h);
+              this.cat_ctx.draw();
+            }, 150);
+            this.setData({
+              coin: this.data.coin + fish_list[k].score,
+            });
+            return false;
+          }
+        }
+      }
+
+
+      //==================大boss的碰撞检测=============//
+      if (this.data.bossL + 100 < cx && this.data.bossL + 300 > cx && this.data.bossT < c_y && this.data.bossT + 200 > c_y) {
+        // 音效
+        if (app.globalData.music == true) {
+          app.AppMusic2.src = '../../imgs/dz.mp3'
+          app.AppMusic2.loop = false;
+          app.AppMusic2.play()
+        }
+        // 新建一张大鱼出现的图片
+        this.setData({
+          swim_boss: false,
+          stand_boss: true,
+          boss_over: true,
+        })
+        // 几秒钟之后将Boss图片消失跳向游戏结束页面
+
+        // 将大鱼的定时器关闭
+
+        clearInterval(c_setInt);
+        // 投掷中的动作
+        this.cat_ctx.drawImage('../../imgs/cat1.png', cat_x, cat_y, cat_w, cat_h);
+
+        this.cat_ctx.draw();
+        setTimeout(() => {
+          // 投掷结束的动作
+          this.cat_ctx.drawImage('../../imgs/cat3.png', cat_x, cat_y, cat_w, cat_h);
+          this.cat_ctx.draw();
+          setTimeout(() => {
+            this.setData({
+              stand_boss: false
+            })
+            var end_time = new Date().getTime();
+            if (this.data.cha_over == false) {
+              this.setData({
+                boss_over: true
+              })
+              wx.redirectTo({
+                url: '../gameover/gameover?m=' + this.data.m + '&s=' + this.data.s + '&coin_num=' + this.data.coin + '&end_time=' + end_time + '&start_time=' + this.data.start_time + '&user_id=' + app.globalData.uid
+              })
+            }
+
+          }, 3000)
+        }, 150);
+        return false;
+      }
+      //==================大boss的碰撞检测=============//
+      this.cat_ctx.drawImage('../../imgs/cat1.png', cat_x, cat_y, cat_w, cat_h);
+      if (c_y < top_end) {
+        c_y = top_end
+      }
+      this.cat_ctx.drawImage('../../imgs/cz.png', cat_x + cat_w - 15, c_y, 70 / 5, 402 / 5);
+      this.cat_ctx.draw();
+      if (c_y <= top_end) {
+        //减矛的方法
+        this._clear_c();
+        clearInterval(c_setInt);
+        // 投掷中的动作
+        this.cat_ctx.drawImage('../../imgs/cat1.png', cat_x, cat_y, cat_w, cat_h);
+        this.cat_ctx.drawImage('../../imgs/2.png', cat_x + cat_w - 15 - 10, c_y, 42, 22);
+        this.cat_ctx.draw();
+        setTimeout(() => {
+          // 投掷结束的动作
+          this.cat_ctx.drawImage('../../imgs/cat3.png', cat_x, cat_y, cat_w, cat_h);
+          this.cat_ctx.draw();
+        }, 150);
+      }
     }, 50);
   },
-  abc(){
-    console.log('dada')
-  },
-  click_self() {
-    console.log("00000000")
-    if (this.data.ok_round_W >= this.data.round_W && this.data.ok_round_W <= 189) {
-      console.log('我成功了');
-      this.setData({
-        boss_number: this.data.boss_number - 1,
-        ok_round_W: 400,//初始化最外圈    
-      });
 
-    } else {
-      this.setData({
-        round_Fn: true,
-        boss_number: 3,
-        boss_jump: false,
-        boss_open: false,
-        ok_round_W: 400,//初始化最外圈    
-      });
-      this.setData({
-        end_time: new Date().getTime()
-      })
-      wx.redirectTo({
-        url: '../gameover/gameover?m=' + this.data.m + '&s=' + this.data.s + '&coin_num=' + this.data.coin + '&end_time=' + this.data.end_time + '&start_time=' + this.data.start_time
-      })
-    }
-    if (this.data.boss_number == 0) {
-      this.setData({
-        boss_number: 3,
-        boss_jump: false,
-        boss_open: false,
-        round_Fn: true,
-        ok_round_W: 400,//初始化最外圈    
-      });
-      //继续游戏吧
-      this.fish_time();
-    }
-  },
-  /**
- * 生命周期函数--监听页面隐藏
- */
-  onHide: function () {
-    clearInterval(this.data.fish_timer);
+
+  //=======================boss的函数=======================//
+  _boss_FN() {
     this.setData({
-      hasUserInfo: false,
-      canIUse: wx.canIUse('button.open-type.getUserInfo'),
-      isPeace: true, // 水花的下标变化
-      splashIndex: 1, // 溅水花的样式是否显示
-      isSplash1: false,// 防止定时器重复工作，生成不一样的水花
-      isSplash2: false,
-      isSplash3: false,
-      isSplash4: false,
-      isSplash5: false,
-      isSplash6: false,
-      isSplash7: false,
-      isSplash8: false,
-      isSplash9: false,
-      startInter: false,   // 小鱼原来的动画
-      delay_time: {},// 随机小鱼跳出的延迟时间
-      //小鱼的位置信息的二维数组
-      boss_open: false,//boss开关
-      boss_warter_index: 7,//boss水花
-      boss_warter: false,//水花开关
-      boss_jump: false,//boss动画
-      animationData: {},//点击动画
-      click_btn: false,//boss按钮显示
-      boss_btn: false,//boss下方按钮
-      boss_number: 3,//boss攻击次数
-      gameover: false,//游戏结束可用于关闭所有开关.
-      n: 0,//秒数
-      lose: 0,// 游戏输了的进入次数
-      boss_before: false,//boss水中的动画
-      round_W: 120,//内圈宽度
-      ok_round_W: 400,//外圈宽度
-      round_Fn: false,//缩圈
-      sf_list: [
-        {
-          smallfishT: '17%', smallfishL: '17%', sub: 1, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
-        },
-        {
-          smallfishT: '17%', smallfishL: '1%', sub: 2, sf_category: 1,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.2s'
-        },
-        {
-          smallfishT: '17%', smallfishL: '29%', sub: 3, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.1s'
-        },
-
-        {
-          smallfishT: '39%', smallfishL: '20%', sub: 4, sf_category: 3,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.5s'
-        },
-        {
-          smallfishT: '38%', smallfishL: '42%', sub: 5, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.9s'
-        },
-        {
-          smallfishT: '36%', smallfishL: '62%', sub: 6, sf_category: 3,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.77s'
-        },
-
-        {
-          smallfishT: '62%', smallfishL: '44%', sub: 7, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
-        },
-        {
-          smallfishT: '58%', smallfishL: '64%', sub: 8, sf_category: 3,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.2s'
-        },
-        {
-          smallfishT: '54%', smallfishL: '74%', sub: 9, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.1s'
-        },
-      ],
-      show_sf_list: [],//页面中显示的小鱼
-      // 9个点随机2,3个出现圆圈
-      circle_list: [
-        { cT: '19%', cL: '19%' },
-        { cT: '19%', cL: '5%', },
-        { cT: '19%', cL: '33%' },
-
-        { cT: '40%', cL: '24%' },
-        { cT: '38%', cL: '42%' },
-        { cT: '36%', cL: '62%' },
-
-        { cT: '63%', cL: '53%' },
-        { cT: '58%', cL: '68%' },
-        { cT: '53%', cL: '83%' },
-      ],
-      show_circle_list: [],//页面中的圆圈
-      // start_animation:true,// 小鱼显示原来的动画
-      // go_fishbox:{},//小鱼跳进水娄的动画
-      // is_go_fishbox:false,//是否跳进鱼篓的动画的开关
-      screen_width: {},// 使用的手机屏幕的宽度/高度
-      screen_height: {},
-      m: '00',
-      s: '00',
-      rect_x: 0,//鱼落入的地点
-      rect_y: 0,
-      go_fishbox: {},// 测试小方块的路径
-      share: [
-        ' 喂什么猫粮，一起撸鱼吧......',
-        '这只猫为了抓鱼简直逆天了，快来围观......',
-        '这只猫为了吃鱼竟然进了丛林......',
-        '劳资就是饿死，死外边，也决不自个抓鱼！好多鱼，喵~',
-        '还不把小鱼干交出来，我都看见了~',
-        '来人呐！赶紧给它摁住了，别让跑咯'
-      ],
-      tap_start1: false,//点击1位置处的小鱼是否显示
-      tap_start2: false,
-      tap_start3: false,
-      tap_start4: false,
-      tap_start5: false,
-      tap_start6: false,
-      tap_start7: false,
-      tap_start8: false,
-      tap_start9: false,
-      sf_category: {},//产生的新小鱼的路径
-      new_fishT: {},//新小鱼的top
-      new_fishL: {},
-      coin: 0,//金币的数量
-      rotat: '0deg',  //旋转的角度
-      bar_start: false,//能量条的是否显示
-      bar_width: 300,//能量条的长度
-      fish_timer: {},//小鱼出现的定时器
-      start_time: '',//开始时间
-      end_time: '',
+      bossL: this.data.bossL - 20
     })
+    if (this.data.bossL < -700) {
+      this.setData({
+        bossT: Math.random() * (430 - 220) + 220,
+        bossL: Math.random() * (1400 - 1050) + 1050,
+      })
+    }
+  },
+//==========================gameover页面的函数===================//
+  go_billboard() {
+    if (app.globalData.effect == true) {
+      app.bgm.play()
+    } else {
+      app.bgm.pause()
+    }
+    wx.redirectTo({
+      url: '../../pages/billboard/billboard'
+    })
+  },
+  go_startgame() {
+    if (app.globalData.effect == true) {
+      app.bgm.play()
+    } else {
+      app.bgm.pause()
+    }
+    wx.redirectTo({
+      url: '../../pages/start_game2/start_game2'
+    })
+  },
+  //发送游戏数据FN，在gameover页面
+  _game_setData() {
+    var integral = this.data.coin;
+    var start_time = this.data.start_time.toString().substr(0, 10);
+    var end_time = thi.data.end_time.toString().substr(0, 10);
+    var use_time = this.data.end_time - this.data.start_time;
+    var view_time = parseInt(use_time) / 1000;
+    this.setData({
+      view_time,
+    });
+    wx.request({
+      url: app.globalData.http + 'index.php?m=Mq&c=Data&a=setData',
+      data: {
+        use_time: use_time,
+        start_time: start_time,
+        end_time: end_time,
+        integral: integral,
+        user_id: app.globalData.uid,
+        sign: sign.sign({
+          user_id: app.globalData.uid,
+          use_time: use_time,
+          start_time: start_time,
+          end_time: end_time,
+          integral: integral
+        }, app.globalData.API_CODE),
+        API_CHANNEL: app.globalData.API_CHANNEL,
+        API_SECRET: app.globalData.API_SECRET,
+        API_ROLE: app.globalData.API_ROLE[1],
+        API_VER: '1.0',
+        API_CODE: app.globalData.API_CODE,
+      },
+      success: res => {
+        console.log(res);
+        this.setData({
+          star_num: res.data.info.star,
+        });
+      }
+    })
+  },
+  // gameover页面显示
+  game_over(){
+    this.setData({
+      is_gameover:true,
+    })
+    setTimeout(() => {
+      this.setData({
+        slip_cat: false
+      })
+    }, 1000)
+    // 1s之后设置星星的view为true
+    setTimeout(() => {
+      this.setData({
+        is_box: true
+      })
+    }, 500)
+    setTimeout(() => {
+      this.setData({
+        opacity_num: 1
+      })
+    }, 2000)
+    // 音效
+    // 抓木板
+    if (app.globalData.music == true) {
+      //抓木板声音
+      app.AppMusic1.src = app.globalData.http + 'Public/music/mq_music/zmb.mp3'
+      app.AppMusic1.loop = false
+      //星星点亮(获得星星的情况下)
+      if (this.data.star_num >= 1) {
+        setTimeout(() => {
+          app.AppMusic2.src = app.globalData.http + 'Public/music/mq_music/xxs.mp3'
+          app.AppMusic2.loop = false;
+        }, 3500)
+      } else {
+        app.AppMusic1.pause()
+      }
+    }
+
+    // 星星的透明度变为1
+    setTimeout(() => {
+      this.setData({
+        star_opacity: 1,
+      })
+    }, 3800)
+  },
+
+
+
+
+
+
+
+
+
+
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
     wx.redirectTo({
       url: '../start_game2/start_game2'
     })
+    app.globalData.again = false;
+    //  控制说明框的不显示
+
   },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
   onShareAppMessage: function (e) {
     var text = null;
     var sub = parseInt(Math.random() * 5)
-    text = this.data.share[sub]
+    text = app.globalData.share[sub]
     return {
       title: text,
       path: '/pages/start_game/start_game?friend_id=' + app.globalData.uid,
       imageUrl: '../../imgs/share/ace.png',
+      success: res => {
+        if (res.errMsg && this.data.kill_all_active == 1) {
+          this.setData({
+            kill_all_num: this.data.kill_all_num + 1,
+            kill_all_active: this.data.kill_all_active - 1,
+          });
+          if (this.data.c == 1) {
+            this.setData({
+              kill_all_show: true,
+            });
+          }
+        }
+      }
     }
-  },
-  // 主页面卸载
-  onUnload: function () {
-    this.setData({
-      hasUserInfo: false,
-      canIUse: wx.canIUse('button.open-type.getUserInfo'),
-      isPeace: true, // 水花的下标变化
-      splashIndex: 1, // 溅水花的样式是否显示
-      isSplash1: false,// 防止定时器重复工作，生成不一样的水花
-      isSplash2: false,
-      isSplash3: false,
-      isSplash4: false,
-      isSplash5: false,
-      isSplash6: false,
-      isSplash7: false,
-      isSplash8: false,
-      isSplash9: false,
 
-
-      startInter: false,   // 小鱼原来的动画
-      delay_time: {},// 随机小鱼跳出的延迟时间
-      //小鱼的位置信息的二维数组
-      boss_open: false,//boss开关
-      boss_warter_index: 1,//boss水花
-      boss_warter: false,//水花开关
-      boss_jump: false,//boss动画
-      animationData: {},//点击动画
-      click_btn: false,//boss按钮显示
-      boss_btn: false,//boss下方按钮
-      boss_number: 3,//boss攻击次数
-      gameover: false,//游戏结束可用于关闭所有开关.
-      n: 0,//秒数
-      lose: 0,// 游戏输了的进入次数
-      sf_list: [
-        {
-          smallfishT: '17%', smallfishL: '17%', sub: 1, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
-        },
-        {
-          smallfishT: '17%', smallfishL: '1%', sub: 2, sf_category: 1,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.2s'
-        },
-        {
-          smallfishT: '17%', smallfishL: '29%', sub: 3, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.1s'
-        },
-
-        {
-          smallfishT: '39%', smallfishL: '20%', sub: 4, sf_category: 3,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.5s'
-        },
-        {
-          smallfishT: '38%', smallfishL: '42%', sub: 5, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.9s'
-        },
-        {
-          smallfishT: '36%', smallfishL: '62%', sub: 6, sf_category: 3,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.77s'
-        },
-
-        {
-          smallfishT: '62%', smallfishL: '44%', sub: 7, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch 2s infinite 0.3s'
-        },
-        {
-          smallfishT: '58%', smallfishL: '64%', sub: 8, sf_category: 3,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.2s'
-        },
-        {
-          smallfishT: '54%', smallfishL: '74%', sub: 9, sf_category: 2,
-          start_animation: true, is_go_fishbox: false, go_fishbox: {}, jump: 'before_catch2 2s infinite 0.1s'
-        },
-      ],
-      show_sf_list: [],//页面中显示的小鱼
-      // 9个点随机2,3个出现圆圈
-      circle_list: [
-        { cT: '19%', cL: '19%' },
-        { cT: '19%', cL: '5%', },
-        { cT: '19%', cL: '33%' },
-
-        { cT: '40%', cL: '24%' },
-        { cT: '38%', cL: '42%' },
-        { cT: '36%', cL: '62%' },
-
-        { cT: '63%', cL: '53%' },
-        { cT: '58%', cL: '68%' },
-        { cT: '53%', cL: '83%' },
-      ],
-      show_circle_list: [],//页面中的圆圈
-      // start_animation:true,// 小鱼显示原来的动画
-      // go_fishbox:{},//小鱼跳进水娄的动画
-      // is_go_fishbox:false,//是否跳进鱼篓的动画的开关
-      screen_width: {},// 使用的手机屏幕的宽度/高度
-      screen_height: {},
-      m: '00',
-      s: '00',
-      rect_x: 0,//鱼落入的地点
-      rect_y: 0,
-      go_fishbox: {},// 测试小方块的路径
-      share: [
-        ' 喂什么猫粮，一起撸鱼吧......',
-        '这只猫为了抓鱼简直逆天了，快来围观......',
-        '这只猫为了吃鱼竟然进了丛林......',
-        '劳资就是饿死，死外边，也决不自个抓鱼！好多鱼，喵~',
-        '还不把小鱼干交出来，我都看见了~',
-        '来人呐！赶紧给它摁住了，别让跑咯'
-      ],
-      tap_start1: false,//点击1位置处的小鱼是否显示
-      tap_start2: false,
-      tap_start3: false,
-      tap_start4: false,
-      tap_start5: false,
-      tap_start6: false,
-      tap_start7: false,
-      tap_start8: false,
-      tap_start9: false,
-      sf_category: {},//产生的新小鱼的路径
-      new_fishT: {},//新小鱼的top
-      new_fishL: {},
-      coin: 0,//金币的数量
-      rotat: '0deg',  //旋转的角度
-      bar_start: false,//能量条的是否显示
-      bar_width: 300,//能量条的长度
-      fish_timer: {},//小鱼出现的定时器
-      start_time: '',//开始时间
-      end_time: '',
-    })
-  },
-
-
-
+  }
 })
-

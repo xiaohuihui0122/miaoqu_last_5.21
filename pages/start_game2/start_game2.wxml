@@ -1,7 +1,7 @@
 <view class="container">
       <!-- 页面的背景 -->
-       <image wx:if="{{is_dark == true}}" src="{{bgback}}"  style="z-index:{{is_dark == true? 1 : 19}}" class="back"></image> 
-           <image wx:else  src="{{bgdark}}"  style="z-index:{{is_dark == true? 1 : 19}}" class="back"></image> 
+        <image  src="../../imgs/start/back.png"  style="z-index:{{is_dark == true? 1 : 19}}" class="back"></image> 
+           <image wx:if="{{is_dark == false}}"  src="{{bgdark}}"  style="z-index:{{is_dark == true? 1 : 19}}" class="back"></image> 
        <!-- logo -->
         <image src="../../imgs/start/logo13.png" class="logo" wx:if="{{logo_show}}"></image> 
       <!-- 开始游戏 -->

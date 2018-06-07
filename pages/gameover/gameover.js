@@ -24,6 +24,8 @@ Page({
     star_opacity: 0,//传入的得到的金币的总数量
     coin: 0,//页面显示的金币的变动
     is_box:false,//刚开始星星的view没有出现
+    m:'00',
+    s:'00',
   },
 
   /**
@@ -33,58 +35,11 @@ Page({
     // 将主页面的时间传入
     var setdata = options;
     this.setData({
-      m: options.m,
-      s: options.s
+      m:setdata.m,
+      s:setdata.s
     })
     //发送游戏数据
     this._game_setData(setdata);
-    // 将游戏主页面的金币传入
-    this.setData({
-      coin: options.coin_num
-    })
-    // 调试
-    // setTimeout(() => {
-    //   if (this.data.coin < 100) {
-    //     var coin_timer = setInterval(() => {
-    //       var cha = this.data.coin + 1
-    //       if (cha >= this.data.coin_num) {
-    //         clearInterval(coin_timer)
-    //       }
-    //       this.data.coin = this.data.coin + 1
-    //       this.setData({
-    //         coin: this.data.coin
-    //       })
-    //     }, 50)
-    //   }
-      // 金币大于100小于1000的情况
-      // if (100<this.data.coin < 1000) {
-      //   var coin_timer = setInterval(() => {
-      //     var cha = this.data.coin + this.data.coin_num / 10
-      //     if (cha == this.data.coin_num) {
-      //       clearInterval(coin_timer)
-      //     }
-      //     this.data.coin = this.data.coin + this.data.coin_num / 10
-      //     this.setData({
-      //       coin: this.data.coin
-      //     })
-      //   }, 50)
-      // }
-      // // 金币大于1000的情况
-      // if (this.data.coin>1000) {
-      //   var coin_timer = setInterval(() => {
-      //     var cha = this.data.coin + this.data.coin_num / 100
-      //     if (cha == this.data.coin_num) {
-      //       clearInterval(coin_timer)
-      //     }
-      //     this.data.coin = this.data.coin + this.data.coin_num / 100
-      //     this.setData({
-      //       coin: this.data.coin
-      //     })
-      //   }, 50)
-      // }
-
-    // }, 2000)
-
     setTimeout(() => {
       this.setData({
         slip_cat: false
@@ -107,14 +62,17 @@ Page({
       //抓木板声音
       app.AppMusic1.src = app.globalData.http + 'Public/music/mq_music/zmb.mp3'
       app.AppMusic1.loop = false
-      //星星点亮
-      setTimeout(() => {
-        app.AppMusic2.src = app.globalData.http + 'Public/music/mq_music/xxs.mp3'
-        app.AppMusic2.loop = false;
-      }, 3500)
-    } else {
-      app.AppMusic1.pause()
-    }
+      //星星点亮(获得星星的情况下)
+      if (this.data.star_num >= 1){
+        setTimeout(() => {
+          app.AppMusic2.src = app.globalData.http + 'Public/music/mq_music/xxs.mp3'
+          app.AppMusic2.loop = false;
+        }, 3500)
+      } else {
+        app.AppMusic1.pause()
+      }
+      }
+      
     // 星星的透明度变为1
     setTimeout(() => {
       this.setData({
@@ -153,6 +111,11 @@ Page({
     var start_time = e.start_time.toString().substr(0, 10);
     var end_time = e.end_time.toString().substr(0, 10);
     var use_time = end_time - start_time;
+    var view_time = parseInt(use_time)/1000;
+    console.log(view_time)
+    this.setData({
+          view_time,
+    });
     // console.log(app.globalData.http + 'index.php?m=Mq&c=Data&a=setData&use_time=' + use_time
     //       + '&start_time=' + start_time
     //       +'&end_time=' + end_time
