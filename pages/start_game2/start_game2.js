@@ -15,8 +15,8 @@ Page({
     start_notice: false,
     is_dark: true,//是否打开背景变暗
     is_loading: false,//是否显示加载图标
-    loading_width: 50,//初始化进度条的长度
-    pro_text: 50,//初始化进度多少
+    loading_width: 0,//初始化进度条的长度
+    pro_text: 0,//初始化进度多少
     is_press_trump: false,//喇叭按下
     is_press_notice: false,//游戏须知按下
     yx_control: true,//初始化音效

@@ -28,107 +28,107 @@ Page({
 
       {
         url: '../../imgs/game/1_r.gif', x: -410, y: 250, dir: 0, score: 1,
-        currX: -410, sub: 1
+        currX: -410, sub: 1, z_index: 3,
       },
       {
         url: '../../imgs/game/1_r.gif', x: 480, y: 250, dir: 0, score: 1,
-        currX: 480, sub: 2
+        currX: 480, sub: 2, z_index: 3,
       },
       {
         url: '../../imgs/game/1_l.gif', x: -677, y: 310, dir: 1, score: 1,
-        currX: -677, sub: 3
+        currX: -677, sub: 3, z_index: 3,
       },
 
       {
         url: '../../imgs/game/1_l.gif', x: 810, y: 310, dir: 1, score: 1,
-        currX: 810, sub: 4
+        currX: 810, sub: 4, z_index: 3,
       },
       {
         url: '../../imgs/game/1_r.gif', x: -110, y: 370, dir: 0, score: 1,
-        currX: -110, sub: 5
+        currX: -110, sub: 5, z_index: 3,
       },
 
       {
         url: '../../imgs/game/1_r.gif', x: 705, y: 370, dir: 0, score: 1,
-        currX: 705, sub: 6
+        currX: 705, sub: 6, z_index: 3,
       },
 
       {
         url: '../../imgs/game/1_l.gif', x: 25, y: 430, dir: 1, score: 1,
-        currX: 25, sub: 7
+        currX: 25, sub: 7, z_index: 3,
       },
 
       {
         url: '../../imgs/game/1_l.gif', x: 568, y: 430, dir: 1, score: 1,
-        currX: 568, sub: 8
+        currX: 568, sub: 8, z_index: 3,
       },
       {
         url: '../../imgs/game/1_l.gif', x: -437, y: 430, dir: 1, score: 1,
-        currX: -437, sub: 9
+        currX: -437, sub: 9, z_index: 3,
       },
       //  二分鱼
       {
         url: '../../imgs/game/2_r.gif', x: -555, y: 250, dir: 0, score: 2,
-        currX: -555, sub: 10
+        currX: -555, sub: 10, z_index: 1,
       },
 
       {
         url: '../../imgs/game/2_r.gif', x: 830, y: 250, dir: 0, score: 2,
-        currX: 830, sub: 11
+        currX: 830, sub: 11, z_index: 1,
       },
 
       {
         url: '../../imgs/game/2_l.gif', x: 400, y: 310, dir: 1, score: 2,
-        currX: 400, sub: 12
+        currX: 400, sub: 12, z_index: 1,
       },
 
       {
         url: '../../imgs/game/2_r.gif', x: 716, y: 370, dir: 0, score: 2,
-        currX: 716, sub: 13
+        currX: 716, sub: 13, z_index: 1,
       },
 
       {
         url: '../../imgs/game/2_l.gif', x: 333, y: 430, dir: 1, score: 2,
-        currX: 333, sub: 14
+        currX: 333, sub: 14, z_index: 1,
       },
 
       //  三分鱼
       {
         url: '../../imgs/game/3_r.gif', x: -650, y: 250, dir: 0, score: 3,
-        currX: -650, sub: 15
+        currX: -650, sub: 15, z_index: 4,
       },
 
       {
         url: '../../imgs/game/3_l.gif', x: -40, y: 310, dir: 1, score: 3,
-        currX: -40, sub: 16
+        currX: -40, sub: 16, z_index: 4,
       },
 
       {
         url: '../../imgs/game/3_l.gif', x: 940, y: 310, dir: 1, score: 3,
-        currX: 940, sub: 17
+        currX: 940, sub: 17, z_index: 4,
       },
 
       {
         url: '../../imgs/game/3_r.gif', x: 369, y: 370, dir: 0, score: 3,
-        currX: 369, sub: 18
+        currX: 369, sub: 18, z_index: 4,
       },
 
       {
         url: '../../imgs/game/3_l.gif', x: 90, y: 430, dir: 1, score: 3,
-        currX: 90, sub: 19
+        currX: 90, sub: 19, z_index: 4,
       },
       //  五分鱼
       {
         url: '../../imgs/game/5_r.gif', x: -40, y: 250, dir: 0, score: 5,
-        currX: -40, sub: 20
+        currX: -40, sub: 20, z_index: 2,
       },
       {
         url: '../../imgs/game/5_l.gif', x: 360, y: 430, dir: 1, score: 5,
-        currX: -360, sub: 22
+        currX: -360, sub: 22, z_index: 2,
       },
       {
         url: '../../imgs/game/5_l.gif', x: 670, y: 370, dir: 1, score: 5,
-        currX: 670, sub: 23
+        currX: 670, sub: 23, z_index: 2,
       },
     ],
     speed_1: 5,// 一分鱼移动的速度
@@ -136,8 +136,6 @@ Page({
     speed_3: 10,//三分鱼的速度
     speed_5: 30,//五分鱼的速度
     speed_boss: 8,//大boss的速度
-
-
     //================boss的样式=============//
     bossL: -700,
     bossT: 0,//220~430
@@ -146,7 +144,7 @@ Page({
     is_touzhi: 0,
     //==========动态金币==============//
     coin_list: [
-      { top: 0, left: -200, sub: 0,score:1 }
+      { top: 0, left: -200, sub: 0, score: 1 }
     ],//小鱼变成金币数组
     //===========boss==============//
     swim_boss: true,
@@ -164,10 +162,8 @@ Page({
     mudra: false,
     user_id: '',
     fish_timer: {},//小鱼的定时器
-
-
     // gameover页面的数据
-    is_gameover:false,
+    is_gameover: false,
     slip_cat: true,//是否滑动猫
     opacity_num: 0,//刚开始透明度
     share: [
@@ -180,6 +176,20 @@ Page({
     ],
     star_opacity: 0,//传入的得到的金币的总数量
     is_box: false,//刚开始星星的view没有出现
+    //===================最后一个叉子=========//
+    last_cha: false,
+    //=================任务板刷新（初次进入）==============//
+    one_fish:20,
+    two_fish:10,
+    three_fish:7,
+    five_fish:8,
+    //抓到的鱼的数量
+    get_one:0,
+    get_two:0,
+    get_three:0,
+    get_five:0,
+    //=======倒计时===========//
+    count_down:30,
   },
 
   /**
@@ -198,6 +208,9 @@ Page({
     }, 150)
   },
   onLoad: function (options) {
+    if (app.globalData.music == true) {
+      app.AppMusic1.src = app.globalData.http + 'Public/music/mq_music/hl.mp3'
+    }
     if (app.globalData.again != 0) {
       this.setData({
         again: true,
@@ -214,7 +227,6 @@ Page({
     this.cat_ctx = wx.createCanvasContext('cat_Canvas');
     wx.getSystemInfo({
       success: res => {
-        console.log(res);
         this.setData({
           w_h: res.windowHeight,
           w_w: res.windowWidth,
@@ -224,10 +236,7 @@ Page({
           start_time: new Date().getTime(),
         });
         this.cat_ctx.drawImage('../../imgs/cat3.png', this.data.cat_x, this.data.cat_y, this.data.cat_w, this.data.cat_h);
-        this.cat_ctx.draw();
-        if (app.globalData.music == true) {
-          app.AppMusic1.src = app.globalData.http + 'Public/music/mq_music/hl.mp3'
-        }
+        this.cat_ctx.draw();      
       }
     })
 
@@ -247,10 +256,6 @@ Page({
         })
       }
     })
-
-    //=============鱼的定时器开始==========//
-
-
     //============游戏时间的计算===============//
 
     function toDub(n) {
@@ -258,6 +263,7 @@ Page({
     }
     var n = 0;
     var index_time = setInterval(() => {
+      var count_down = this.data.count_down
       if (this.data.gameover) {
         clearInterval(index_time);
         return false;
@@ -266,15 +272,24 @@ Page({
       this.setData({
         m: toDub(parseInt(n / 60)),
         s: toDub(parseInt(n % 60)),
-        n: n
+        n: n,
+        count_down:count_down-1,
       })
-
     }, 1000);
 
   },
   //=============鱼的函数==============// 
   _fish_FN() {
     var fish_list = this.data.fish_list
+    var count_down = this.data.count_down
+    var get_one = this.data.get_one
+    var get_two = this.data.get_two
+    var get_three = this.data.get_three
+    var get_five = this.data.get_five
+    var one_fish = this.data.one_fish
+    var two_fish = this.data.two_fish
+    var three_fish = this.data.three_fish
+    var five_fish = this.data.five_fish
     for (let i = 0; i < fish_list.length; i++) {
       //==========一分的鱼============//
       if (fish_list[i].score == 1) {
@@ -342,10 +357,21 @@ Page({
     this.setData({
       fish_list,
     })
-
+    //==============定时刷新任务是否完成============//
+    // 1，时间到了任务没有完成，跳向gameover页面
+    if(count_down==0){
+          this.gogameover()
+    }
+    // //2,任务完成跳进游戏结束页面
+    if(get_one >= one_fish && get_two >= two_fish && get_three>= three_fish && get_five >= five_fish ){
+      this.game_over()
+    }
   },
 
   skill_card() {
+    if (this.data.last_cha == true) {
+      return
+    }
     //关闭飞叉
     var tmp_list = this.data.fish_list;
     this.setData({
@@ -375,11 +401,12 @@ Page({
         var co_top = fish_list[k].y
         var co_left = fish_list[k].currX
         var sub = fish_list[k].sub
-
+        var score = fish_list[k].score
         var new_coin = {}
         new_coin.top = co_top + 36;
         new_coin.left = co_left;
         new_coin.sub = sub;
+        new_coin.score = score;
         this_list.push(new_coin);
         fish_list[k].currX = fish_list[k].x;
       }
@@ -408,14 +435,12 @@ Page({
     }, 2500)
   },
   //========================猫的函数========================//
-
-
   touchstart() {
     if (this.data.again == true) {
       return
     }
     this.cat_ctx.drawImage('../../imgs/cat1.png', this.data.cat_x, this.data.cat_y, this.data.cat_w, this.data.cat_h);
-    this.cat_ctx.drawImage('../../imgs/cz.png', this.data.cat_x + this.data.cat_w - 15, this.data.cat_y - 20, 70 / 3, 402 / 3);
+    this.cat_ctx.drawImage('../../imgs/wo_cha.png', this.data.cat_x + this.data.cat_w - 18, this.data.cat_y - 22, 70 / 3, 402 / 3);
     this.cat_ctx.draw();
   },
   bindtouchmove(e) {
@@ -427,8 +452,8 @@ Page({
     var cat_w = this.data.cat_w;
     var cat_y = this.data.cat_y;
     var cat_h = this.data.cat_h;
-    if (e.changedTouches[0].x < 0) {
-      cat_x = 0 - cat_w / 2;
+    if (e.changedTouches[0].x < cat_w) {
+      cat_x = 0
     } else if (e.changedTouches[0].x > w_w - (cat_w / 2) - 15) {
       cat_x = w_w - cat_w - 15;
     } else {
@@ -438,7 +463,7 @@ Page({
       cat_x,
     });
     this.cat_ctx.drawImage('../../imgs/cat1.png', cat_x, cat_y, cat_w, cat_h);
-    this.cat_ctx.drawImage('../../imgs/cz.png', cat_x + cat_w - 15, cat_y - 20, 70 / 3, 402 / 3);
+    this.cat_ctx.drawImage('../../imgs/wo_cha.png', cat_x + cat_w - 18, cat_y - 22, 70 / 3, 402 / 3);
     this.cat_ctx.draw();
 
   },
@@ -450,6 +475,11 @@ Page({
     this.setData({
       c: this.data.c - 1,
     });
+    if (this.data.c == 1) {
+      this.setData({
+        last_cha: true,
+      })
+    }
     if (this.data.c <= 1 && this.data.kill_all_num != 0) {
       this.setData({
         kill_all_show: true,
@@ -458,7 +488,6 @@ Page({
     this.gogameover();
   },
   gogameover() {
-
     if (this.data.c == 0) {
       //游戏失败
       app.globalData.again = 0;
@@ -493,7 +522,7 @@ Page({
     this._c_FN(c_y, c_start_x, c_strat_y, e);//投掷函数
     //判断技能卡是否显示
   },
-  //投掷
+  //======================投掷=======================//
   _c_FN(c_y, c_start_x, c_strat_y, e) {
     var c_y = c_y;
     var cx = this.data.cat_x + this.data.cat_w - 15;
@@ -504,6 +533,11 @@ Page({
     var cat_w = this.data.cat_w;
     var cat_h = this.data.cat_h;
     var top_end = this.data.top_end;
+    var get_one = this.data.get_one
+    var get_two = this.data.get_two
+    var get_three = this.data.get_three
+    var get_five = this.data.get_five
+    // 抓到鱼的个数
     var c_setInt = setInterval(() => {
       c_y = c_y - 55;
       //  ================小鱼的碰撞检测================//
@@ -512,6 +546,16 @@ Page({
           if (fish_list[k].currX < cx && fish_list[k].currX + 60 > cx && fish_list[k].y + 50 < c_y && fish_list[k].y + 100 > c_y) {
             var sub = fish_list[k].sub//获得被点击到的鱼的下标值
             var score = fish_list[k].score//获得点击小鱼的金币数
+            //=======页面统计抓到小鱼的个数===========//
+            if(score = 1){
+              get_one += 1
+            }else if(score = 2){
+              get_two += 1
+            }else if(score = 3){
+              get_three += 1
+            }else if(score = 5){
+              get_five += 1
+            }
             //============生成动态金币==========//
             //======音效===================//
             if (app.globalData.music == true) {
@@ -526,12 +570,15 @@ Page({
             new_coin.top = coin_top + 36
             new_coin.left = coin_left
             new_coin.sub = sub
-            new_coin.score = score
+            new_coin.score =  score
             coin_list.push(new_coin);
             this.setData({
               coin_list,
+              get_one,
+              get_two,
+              get_three,
+              get_five,
             })
-            console.log(this.data.coin_list)
             // 几秒钟之后循环数组，将金币消失
             setTimeout(() => {
               var coin_list = this.data.coin_list;
@@ -551,7 +598,6 @@ Page({
             } else {
               fish_list[k].currX = -700
             }
-
             this.setData({
               fish_list,
             })
@@ -559,7 +605,6 @@ Page({
             //判断鱼的得分、
             // 投掷中的动作
             this.cat_ctx.drawImage('../../imgs/cat1.png', cat_x, cat_y, cat_w, cat_h);
-
             this.cat_ctx.draw();
             setTimeout(() => {
               // 投掷结束的动作
@@ -611,16 +656,13 @@ Page({
               this.setData({
                 boss_over: true
               })
-              wx.redirectTo({
-                url: '../gameover/gameover?m=' + this.data.m + '&s=' + this.data.s + '&coin_num=' + this.data.coin + '&end_time=' + end_time + '&start_time=' + this.data.start_time + '&user_id=' + app.globalData.uid
-              })
+             this.game_over();
             }
 
           }, 3000)
         }, 150);
         return false;
       }
-      //==================大boss的碰撞检测=============//
       this.cat_ctx.drawImage('../../imgs/cat1.png', cat_x, cat_y, cat_w, cat_h);
       if (c_y < top_end) {
         c_y = top_end
@@ -643,8 +685,6 @@ Page({
       }
     }, 50);
   },
-
-
   //=======================boss的函数=======================//
   _boss_FN() {
     this.setData({
@@ -657,7 +697,7 @@ Page({
       })
     }
   },
-//==========================gameover页面的函数===================//
+  //==========================gameover页面的函数===================//
   go_billboard() {
     if (app.globalData.effect == true) {
       app.bgm.play()
@@ -718,9 +758,9 @@ Page({
     })
   },
   // gameover页面显示
-  game_over(){
+  game_over() {
     this.setData({
-      is_gameover:true,
+      is_gameover: true,
     })
     setTimeout(() => {
       this.setData({
@@ -742,8 +782,8 @@ Page({
     // 抓木板
     if (app.globalData.music == true) {
       //抓木板声音
-      app.AppMusic1.src = app.globalData.http + 'Public/music/mq_music/zmb.mp3'
-      app.AppMusic1.loop = false
+      app.AppMusic3.src = app.globalData.http + 'Public/music/mq_music/zmb.mp3'
+      app.AppMusic3.loop = false
       //星星点亮(获得星星的情况下)
       if (this.data.star_num >= 1) {
         setTimeout(() => {
@@ -762,7 +802,21 @@ Page({
       })
     }, 3800)
   },
-
+  //====关闭最后一个叉子=//
+  close_lastcha() {
+    this.setData({
+      last_cha: false
+    })
+  },
+  //=========重置任务板的函数=============//
+  task(){
+    this.setData({
+      first_fish:0,
+      two_fish:0,
+      three_fish:0,
+      five_fish:0,
+    })
+  },
 
 
 

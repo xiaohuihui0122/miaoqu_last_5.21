@@ -1,15 +1,19 @@
 <view class="container" wx:if="{{!is_gameover}}">
   <cover-image src='../../imgs/all_kill.png' class='all_kill' bindtap='skill_card' wx:if='{{kill_all_show}}'></cover-image>
   <image src="../../imgs/game/river.png" class="bg"></image>
-   <image src="../../imgs/game/cha_num.png" class="cha_num"></image> 
-
-  <image wx:for="{{fish_list}}" src="{{item.url}}" class="fish" style="top:{{item.y}}px;left:{{item.currX}}px" data-sub='{{item.sub}}' bindtap="skill_card"></image>
+  <image src="../../imgs/game/cha_num.png" class="cha_num"></image>
+  <!-- 鱼的数组 -->
+   <image wx:for="{{fish_list}}" src="{{item.url}}" class="fish" style="top:{{item.y}}px;left:{{item.currX}}px;z-index:{{item.z_index}}" data-sub='{{item.sub}}' bindtap="skill_card"></image> 
   <canvas canvas-id="cat_Canvas" class="myCanvas1" disable-scroll bindtouchmove='bindtouchmove' bindtouchend='bindtouchend' bindtouchstart='touchstart'>
     <!-- 遮挡层，触摸不发生canvas事件 -->
-    <cover-view class="mask"></cover-view>  
-     <cover-view wx:if='{{again}}' class='again' bindtap='again_hide'>
-    <cover-image src='../../imgs/game/tsk.png' class='tsk'></cover-image>
-  </cover-view>
+    <cover-view class="mask"></cover-view>
+    <cover-view wx:if='{{again}}' class='again' bindtap='again_hide'>
+      <cover-image src='../../imgs/game/tsk.png' class='tsk'></cover-image>
+    </cover-view>
+    <!-- 提示还有最后一个叉子时候的框 -->
+     <cover-view wx:if='{{last_cha}}' class='last_cha_view'> 
+      <cover-image src='../../imgs/last_cha.gif' class='last_cha' bindtap="close_lastcha" ></cover-image>
+    </cover-view> 
   </canvas>
   <view class='num-box'>{{c}}</view>
   <!-- <view class='coin' style='color:#fff;'>{{coin}}</view> -->
@@ -23,6 +27,8 @@
 <image wx:if="{{stand_boss}}" src="../../imgs/game/boss2.gif" class="boss1" style="top:35%;left:6%" data-sub="boss"></image>
 <image wx:if="{{mudra}}" src="../../imgs/game/mudra.gif" class="mudra" style="top:40%;left:23%"></image>
 
+<!-- 任务板和倒计时 -->
+   <view class='task'>{{get_one}}/{{one_fish}}:{{get_two}}/{{two_fish}}:{{get_three}}/{{three_fish}}:{{get_five}}/{{five_fish}}</view>   
 
 
 
@@ -31,37 +37,36 @@
 <!-- gameover页面 -->
 <view class="game_over" wx:if="{{is_gameover}}">
   <view class="bg">
-      <image  src="https://maoqb.5izhuan.com/Public/img/mq_gif/dark.png" class="darkbackground"></image>
+    <image src="https://maoqb.5izhuan.com/Public/img/mq_gif/dark.png" class="darkbackground"></image>
   </view>
-   <image  src="../../imgs/over/mirror.png" class="mirror"></image>
-    <image  src="../../imgs/over/close.png" class="close" bindtap="go_startgame"></image> 
-   <image  src="../../imgs/over/cat_line.png" class="cat_line"></image>
-    <image  src="../../imgs/over/cat_down.png" class="cat_down" 
-   style = "animation:{{slip_cat ?  'cat_down 1s linear' : ' ' }};top:{{slip_cat? ' ' : '60.3%'}}" ></image> 
+  <image src="../../imgs/over/mirror.png" class="mirror"></image>
+  <image src="../../imgs/over/close.png" class="close" bindtap="go_startgame"></image>
+  <image src="../../imgs/over/cat_line.png" class="cat_line"></image>
+  <image src="../../imgs/over/cat_down.png" class="cat_down" style="animation:{{slip_cat ?  'cat_down 1s linear' : ' ' }};top:{{slip_cat? ' ' : '60.3%'}}"></image>
 
 
   <!-- 内部的内容 -->
-    <view class="box" style="opacity:{{opacity_num}}" wx:if="{{is_box}}">
-           <image  src="../../imgs/over/star.png" class="star"></image>
-           <image  src="../../imgs/over/clock.png" class="clock"></image>
-          <image  src="../../imgs/over/coin.png" class="coin"></image>
-          <image  src="../../imgs/over/bill.png" class="bill" bindtap="go_billboard"></image>
-          <image  src="../../imgs/over/back.png" class="back" bindtap="go_startgame"></image>
-          <view class="benju">本局情况</view>
+  <view class="box" style="opacity:{{opacity_num}}" wx:if="{{is_box}}">
+    <image src="../../imgs/over/star.png" class="star"></image>
+    <image src="../../imgs/over/clock.png" class="clock"></image>
+    <image src="../../imgs/over/coin.png" class="coin"></image>
+    <image src="../../imgs/over/bill.png" class="bill" bindtap="go_billboard"></image>
+    <image src="../../imgs/over/back.png" class="back" bindtap="go_startgame"></image>
+    <view class="benju">本局情况</view>
 
 
-             <!-- 时间 -->
-          <!-- <text class="clock_num">{{view_time}}</text> -->
-          <text class="clock_num">{{m}}:{{s}}</text>
+    <!-- 时间 -->
+    <!-- <text class="clock_num">{{view_time}}</text> -->
+    <text class="clock_num">{{m}}:{{s}}</text>
 
-              <!-- 金币数量 -->
-          <view class="coin_box">
-              <text class="coin_num">{{coin}}</text>
-          </view>
-             <!-- 黄色星星 需要做判断-->
-           <image wx:if='{{star_num>=1}}'  src="../../imgs/over/yellow.png" class="yellow_l" style = "opacity:{{star_opacity}}"></image>
-           <image wx:if='{{star_num>=3}}' src="../../imgs/over/yellow.png" class="yellow_m" style = "opacity:{{star_opacity}}"></image>
-           <image wx:if='{{star_num>=2}}'  src="../../imgs/over/yellow.png" class="yellow_r" style = "opacity:{{star_opacity}}"></image> 
-
+    <!-- 金币数量 -->
+    <view class="coin_box">
+      <text class="coin_num">{{coin}}</text>
     </view>
+    <!-- 黄色星星 需要做判断-->
+    <image wx:if='{{star_num>=1}}' src="../../imgs/over/yellow.png" class="yellow_l" style="opacity:{{star_opacity}}"></image>
+    <image wx:if='{{star_num>=3}}' src="../../imgs/over/yellow.png" class="yellow_m" style="opacity:{{star_opacity}}"></image>
+    <image wx:if='{{star_num>=2}}' src="../../imgs/over/yellow.png" class="yellow_r" style="opacity:{{star_opacity}}"></image>
+
+  </view>
 </view>
